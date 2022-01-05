@@ -4,6 +4,9 @@
  */
 package frames;
 
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  *
  * @author LENOVO
@@ -15,6 +18,22 @@ public class Principal_Frame extends javax.swing.JFrame {
      */
     public Principal_Frame() {
         initComponents();
+        
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        
+        Font gadugi_18 = new Font("Gadugi", 1, 18);
+        
+        
+        requests_JScrollPane.getViewport().setOpaque(false);
+        responses_JScrollPane.getViewport().setOpaque(false);
+        requests_JScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new Color(14,194,232)), 
+                "Requests", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
+                javax.swing.border.TitledBorder.DEFAULT_POSITION, gadugi_18, new Color(14,194,232))); // NOI18N
+        
+        responses_JScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new Color(14,194,232)), 
+                "Responses", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
+                javax.swing.border.TitledBorder.DEFAULT_POSITION, gadugi_18, new Color(14,194,232))); // NOI18N
     }
 
     /**
@@ -26,58 +45,88 @@ public class Principal_Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Principal_Panel = new javax.swing.JPanel();
+        logo_JLabel = new javax.swing.JLabel();
+        requests_JScrollPane = new javax.swing.JScrollPane();
+        requests_JTextPane = new javax.swing.JTextPane();
+        responses_JScrollPane = new javax.swing.JScrollPane();
+        responses_JTextPane = new javax.swing.JTextPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CourseRoom Server");
+        setMinimumSize(new java.awt.Dimension(1280, 720));
+        getContentPane().setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+        Principal_Panel.setBackground(new java.awt.Color(14, 30, 64));
+
+        logo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo_JLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"))); // NOI18N
+
+        requests_JScrollPane.setBackground(new java.awt.Color(14, 194, 232));
+        requests_JScrollPane.setBorder(null);
+        requests_JScrollPane.setPreferredSize(new java.awt.Dimension(600, 570));
+
+        requests_JTextPane.setEditable(false);
+        requests_JTextPane.setBorder(null);
+        requests_JTextPane.setContentType("text/html"); // NOI18N
+        requests_JTextPane.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        requests_JTextPane.setForeground(new java.awt.Color(14, 30, 64));
+        requests_JTextPane.setOpaque(false);
+        requests_JScrollPane.setViewportView(requests_JTextPane);
+
+        responses_JScrollPane.setBackground(new java.awt.Color(14, 194, 232));
+        responses_JScrollPane.setBorder(null);
+        responses_JScrollPane.setPreferredSize(new java.awt.Dimension(600, 570));
+
+        responses_JTextPane.setEditable(false);
+        responses_JTextPane.setBorder(null);
+        responses_JTextPane.setContentType("text/html"); // NOI18N
+        responses_JTextPane.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        responses_JTextPane.setForeground(new java.awt.Color(14, 30, 64));
+        responses_JTextPane.setMinimumSize(new java.awt.Dimension(0, 0));
+        responses_JTextPane.setOpaque(false);
+        responses_JScrollPane.setViewportView(responses_JTextPane);
+
+        javax.swing.GroupLayout Principal_PanelLayout = new javax.swing.GroupLayout(Principal_Panel);
+        Principal_Panel.setLayout(Principal_PanelLayout);
+        Principal_PanelLayout.setHorizontalGroup(
+            Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Principal_PanelLayout.createSequentialGroup()
+                .addContainerGap(7, Short.MAX_VALUE)
+                .addComponent(requests_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                .addGap(18, 19, Short.MAX_VALUE)
+                .addComponent(responses_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                .addContainerGap(7, Short.MAX_VALUE))
+            .addGroup(Principal_PanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logo_JLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+        Principal_PanelLayout.setVerticalGroup(
+            Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Principal_PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logo_JLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(requests_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(responses_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        getContentPane().add(Principal_Panel, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal_Frame().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Principal_Panel;
+    private javax.swing.JLabel logo_JLabel;
+    private javax.swing.JScrollPane requests_JScrollPane;
+    private javax.swing.JTextPane requests_JTextPane;
+    private javax.swing.JScrollPane responses_JScrollPane;
+    private javax.swing.JTextPane responses_JTextPane;
     // End of variables declaration//GEN-END:variables
 }

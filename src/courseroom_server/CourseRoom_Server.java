@@ -4,17 +4,27 @@
  */
 package courseroom_server;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import frames.Principal_Frame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author LENOVO
  */
 public class CourseRoom_Server {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String args[]) {
+        try {
+            FlatDarkLaf ui = new FlatDarkLaf();
+            UIManager.setLookAndFeel(ui);
+            Principal_Frame principal_Frame = new Principal_Frame();
+            principal_Frame.setVisible(true);
+
+        } catch (UnsupportedLookAndFeelException ex) {
+
+        }
     }
     
 }
