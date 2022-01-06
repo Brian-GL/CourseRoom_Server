@@ -4,8 +4,16 @@
  */
 package frames;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.CardLayout;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
+import paneles.Peticiones_Panel;
+import paneles.Respuestas_Panel;
+
+
 
 /**
  *
@@ -13,27 +21,29 @@ import java.awt.Font;
  */
 public class Principal_Frame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal_Frame
-     */
+    private Peticiones_Panel peticiones_Panel;
+    private Respuestas_Panel respuestas_Panel;
+    
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Principal_Frame() {
         initComponents();
         
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
-        Font gadugi_18 = new Font("Gadugi", 1, 18);
+        try {
+            this.setIconImage(ImageIO.read(getClass().getResource("/recursos/iconos/Course_Room_Brand.png")));
+        } catch (IOException ex) {
+            
+        }
         
+        peticiones_Panel = new Peticiones_Panel();
+        respuestas_Panel = new Respuestas_Panel();
         
-        requests_JScrollPane.getViewport().setOpaque(false);
-        responses_JScrollPane.getViewport().setOpaque(false);
-        requests_JScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new Color(14,194,232)), 
-                "Requests", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                javax.swing.border.TitledBorder.DEFAULT_POSITION, gadugi_18, new Color(14,194,232))); // NOI18N
+        principal_JPanel.add("Peticiones",peticiones_Panel);
+        principal_JPanel.add("Respuestas", respuestas_Panel);
         
-        responses_JScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new Color(14,194,232)), 
-                "Responses", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                javax.swing.border.TitledBorder.DEFAULT_POSITION, gadugi_18, new Color(14,194,232))); // NOI18N
+        IniciarComponentes();
     }
 
     /**
@@ -45,88 +55,84 @@ public class Principal_Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Principal_Panel = new javax.swing.JPanel();
-        logo_JLabel = new javax.swing.JLabel();
-        requests_JScrollPane = new javax.swing.JScrollPane();
-        requests_JTextPane = new javax.swing.JTextPane();
-        responses_JScrollPane = new javax.swing.JScrollPane();
-        responses_JTextPane = new javax.swing.JTextPane();
+        principal_JPanel = new javax.swing.JPanel();
+        barra_Menu_JMenuBar = new javax.swing.JMenuBar();
+        peticiones_JMenu = new javax.swing.JMenu();
+        respuestas_JMenu = new javax.swing.JMenu();
+        metodos_JMenu = new javax.swing.JMenu();
+        informacion_Servidor_JMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("CourseRoom Server");
-        setMinimumSize(new java.awt.Dimension(1280, 720));
+        setTitle("Servidor De CourseRoom");
+        setFont(new java.awt.Font("Gadugi", 1, 20)); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        Principal_Panel.setBackground(new java.awt.Color(14, 30, 64));
+        principal_JPanel.setOpaque(false);
+        principal_JPanel.setLayout(new java.awt.CardLayout());
+        getContentPane().add(principal_JPanel, "card2");
 
-        logo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo_JLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"))); // NOI18N
+        peticiones_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/request.png"))); // NOI18N
+        peticiones_JMenu.setText("Peticiones");
+        peticiones_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        peticiones_JMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                peticiones_JMenuMouseClicked(evt);
+            }
+        });
+        barra_Menu_JMenuBar.add(peticiones_JMenu);
 
-        requests_JScrollPane.setBackground(new java.awt.Color(14, 194, 232));
-        requests_JScrollPane.setBorder(null);
-        requests_JScrollPane.setPreferredSize(new java.awt.Dimension(600, 570));
+        respuestas_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/responsibility.png"))); // NOI18N
+        respuestas_JMenu.setText("Respuestas");
+        respuestas_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        respuestas_JMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                respuestas_JMenuMouseClicked(evt);
+            }
+        });
+        barra_Menu_JMenuBar.add(respuestas_JMenu);
 
-        requests_JTextPane.setEditable(false);
-        requests_JTextPane.setBorder(null);
-        requests_JTextPane.setContentType("text/html"); // NOI18N
-        requests_JTextPane.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        requests_JTextPane.setForeground(new java.awt.Color(14, 30, 64));
-        requests_JTextPane.setOpaque(false);
-        requests_JScrollPane.setViewportView(requests_JTextPane);
+        metodos_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/programming.png"))); // NOI18N
+        metodos_JMenu.setText("Métodos");
+        metodos_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        barra_Menu_JMenuBar.add(metodos_JMenu);
 
-        responses_JScrollPane.setBackground(new java.awt.Color(14, 194, 232));
-        responses_JScrollPane.setBorder(null);
-        responses_JScrollPane.setPreferredSize(new java.awt.Dimension(600, 570));
+        informacion_Servidor_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/information.png"))); // NOI18N
+        informacion_Servidor_JMenu.setText("Información Del Servidor");
+        informacion_Servidor_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        barra_Menu_JMenuBar.add(informacion_Servidor_JMenu);
 
-        responses_JTextPane.setEditable(false);
-        responses_JTextPane.setBorder(null);
-        responses_JTextPane.setContentType("text/html"); // NOI18N
-        responses_JTextPane.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        responses_JTextPane.setForeground(new java.awt.Color(14, 30, 64));
-        responses_JTextPane.setMinimumSize(new java.awt.Dimension(0, 0));
-        responses_JTextPane.setOpaque(false);
-        responses_JScrollPane.setViewportView(responses_JTextPane);
-
-        javax.swing.GroupLayout Principal_PanelLayout = new javax.swing.GroupLayout(Principal_Panel);
-        Principal_Panel.setLayout(Principal_PanelLayout);
-        Principal_PanelLayout.setHorizontalGroup(
-            Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Principal_PanelLayout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(requests_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-                .addGap(18, 19, Short.MAX_VALUE)
-                .addComponent(responses_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-                .addContainerGap(7, Short.MAX_VALUE))
-            .addGroup(Principal_PanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logo_JLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        Principal_PanelLayout.setVerticalGroup(
-            Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Principal_PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo_JLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(Principal_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(requests_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(responses_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        getContentPane().add(Principal_Panel, "card2");
+        setJMenuBar(barra_Menu_JMenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+    private void peticiones_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peticiones_JMenuMouseClicked
+        // TODO add your handling code here:
+        if(SwingUtilities.isLeftMouseButton(evt)){
+            ((CardLayout)principal_JPanel.getLayout()).show(principal_JPanel, "Peticiones");
+        }
+    }//GEN-LAST:event_peticiones_JMenuMouseClicked
+
+    private void respuestas_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_respuestas_JMenuMouseClicked
+        // TODO add your handling code here:
+        if(SwingUtilities.isLeftMouseButton(evt)){
+            ((CardLayout)principal_JPanel.getLayout()).show(principal_JPanel, "Respuestas");
+        }
+    }//GEN-LAST:event_respuestas_JMenuMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Principal_Panel;
-    private javax.swing.JLabel logo_JLabel;
-    private javax.swing.JScrollPane requests_JScrollPane;
-    private javax.swing.JTextPane requests_JTextPane;
-    private javax.swing.JScrollPane responses_JScrollPane;
-    private javax.swing.JTextPane responses_JTextPane;
+    private javax.swing.JMenuBar barra_Menu_JMenuBar;
+    private javax.swing.JMenu informacion_Servidor_JMenu;
+    private javax.swing.JMenu metodos_JMenu;
+    private javax.swing.JMenu peticiones_JMenu;
+    private javax.swing.JPanel principal_JPanel;
+    private javax.swing.JMenu respuestas_JMenu;
     // End of variables declaration//GEN-END:variables
+
+    private void IniciarComponentes() {
+  
+  
+    }
 }
