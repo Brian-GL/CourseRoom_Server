@@ -10,7 +10,6 @@ import frames.Principal_Frame;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import oshi.OshiGui;
 
 /**
  *
@@ -20,13 +19,11 @@ public class CourseRoom_Server {
     
     private static Faker _faker;
     private Principal_Frame principal_Frame;
-    private OshiGui oshiGui;
 
     public CourseRoom_Server(){
         _faker = new Faker(new Locale("es", "MX"));
         principal_Frame = new Principal_Frame();
         principal_Frame.setVisible(true);
-        oshiGui = new OshiGui();
         
     }
 

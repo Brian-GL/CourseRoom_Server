@@ -67,7 +67,10 @@ public class Peticiones_Panel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(0, 0));
         setPreferredSize(new java.awt.Dimension(1280, 720));
 
+        logo_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
+        logo_JLabel.setForeground(new java.awt.Color(104, 194, 232));
         logo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo_JLabel.setText("Peticiones");
         logo_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
         logo_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
         logo_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
@@ -97,12 +100,10 @@ public class Peticiones_Panel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(peticiones_JScrollPane)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(peticiones_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
+                    .addComponent(logo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

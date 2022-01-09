@@ -15,17 +15,11 @@ public class Celda_Panel extends javax.swing.JPanel {
     /**
      * Creates new form Celda_Panel
      * @param valor
-     * @param tooltip
      */
-    public Celda_Panel(String valor, String tooltip) {
+    public Celda_Panel(Object valor) {
         initComponents();
         
-        valor_JScrollPane.getViewport().setOpaque(false);
-        valor_JScrollPane.getVerticalScrollBar().setUnitIncrement(15);
-        valor_JScrollPane.getHorizontalScrollBar().setUnitIncrement(15);
-        
-        valor_JTextPane.setText(CourseRoom_Server.Formato_HTML_Central(valor));
-        valor_JTextPane.setToolTipText(CourseRoom_Server.Concatenar("<html><h3>", tooltip,"</h3></html>"));
+        valor_JLabel.setText(CourseRoom_Server.Formato_HTML_Central(valor.toString()));
         
     }
 
@@ -38,48 +32,38 @@ public class Celda_Panel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        valor_JScrollPane = new javax.swing.JScrollPane();
-        valor_JTextPane = new javax.swing.JTextPane();
+        valor_JLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(32767, 100));
         setMinimumSize(new java.awt.Dimension(315, 100));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(315, 100));
 
-        valor_JScrollPane.setBorder(null);
-        valor_JScrollPane.setOpaque(false);
-
-        valor_JTextPane.setEditable(false);
-        valor_JTextPane.setBorder(null);
-        valor_JTextPane.setContentType("text/html"); // NOI18N
-        valor_JTextPane.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        valor_JTextPane.setForeground(new java.awt.Color(104, 194, 232));
-        valor_JTextPane.setText("");
-        valor_JTextPane.setToolTipText("");
-        valor_JTextPane.setOpaque(false);
-        valor_JScrollPane.setViewportView(valor_JTextPane);
+        valor_JLabel.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        valor_JLabel.setForeground(new java.awt.Color(104, 194, 232));
+        valor_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        valor_JLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(valor_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .addComponent(valor_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(valor_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(valor_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane valor_JScrollPane;
-    private javax.swing.JTextPane valor_JTextPane;
+    private javax.swing.JLabel valor_JLabel;
     // End of variables declaration//GEN-END:variables
 }

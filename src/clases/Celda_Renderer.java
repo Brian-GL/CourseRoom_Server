@@ -20,10 +20,8 @@ public class Celda_Renderer extends DefaultTableCellRenderer{
             Object value, boolean isSelected, boolean hasFocus, int row,
             int column) {
        
-        Celda_Panel celda = new Celda_Panel(value.toString(),
-                table.getTableHeader().getColumnModel().getColumn(column).getHeaderValue().toString());
+        Celda_Panel celda = new Celda_Panel(value);
         
-       
         return celda;
     }
 }

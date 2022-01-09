@@ -31,7 +31,7 @@ public class Metodos_Panel extends javax.swing.JPanel {
         String[] insercion = new String[3];
         for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 35);i++){
             insercion[0] = CourseRoom_Server.Faker().artist().name();
-            insercion[1] = CourseRoom_Server.Faker().bool().toString();
+            insercion[1] = String.valueOf(CourseRoom_Server.Faker().bool().bool());
             insercion[2] = String.valueOf(CourseRoom_Server.Faker().number().numberBetween(0, 100));
             
             modelo.addRow(insercion);
@@ -66,7 +66,10 @@ public class Metodos_Panel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(0, 0));
         setPreferredSize(new java.awt.Dimension(1280, 720));
 
+        logo_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
+        logo_JLabel.setForeground(new java.awt.Color(104, 194, 232));
         logo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo_JLabel.setText("Métodos");
         logo_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
         logo_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
         logo_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
@@ -85,7 +88,7 @@ public class Metodos_Panel extends javax.swing.JPanel {
                 "Método", "Activo", "Utilizaciones"
             }
         ));
-        metodos_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        metodos_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         metodos_JTable.setRowHeight(100);
         metodos_JTable.setRowMargin(10);
         metodos_JTable.setShowGrid(true);
@@ -98,11 +101,8 @@ public class Metodos_Panel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(logo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(metodos_JScrollPane))
+                    .addComponent(metodos_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
+                    .addComponent(logo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

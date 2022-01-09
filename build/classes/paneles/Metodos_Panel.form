@@ -30,12 +30,8 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="logo_JLabel" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="metodos_JScrollPane" alignment="0" max="32767" attributes="0"/>
+                  <Component id="metodos_JScrollPane" pref="1268" max="32767" attributes="0"/>
+                  <Component id="logo_JLabel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -56,7 +52,14 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="logo_JLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Gadugi" size="48" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="e8" green="c2" red="68" type="rgb"/>
+        </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="M&#xe9;todos"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[175, 125]"/>
         </Property>
@@ -99,7 +102,7 @@
                 <Column editable="true" title="Utilizaciones" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="autoResizeMode" type="int" value="4"/>
+            <Property name="autoResizeMode" type="int" value="3"/>
             <Property name="rowHeight" type="int" value="100"/>
             <Property name="rowMargin" type="int" value="10"/>
             <Property name="showGrid" type="boolean" value="true"/>
