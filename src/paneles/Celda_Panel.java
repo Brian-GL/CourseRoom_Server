@@ -5,12 +5,13 @@
 package paneles;
 
 import courseroom_server.CourseRoom_Server;
+import javax.swing.JLabel;
 
 /**
  *
  * @author LENOVO
  */
-public class Celda_Panel extends javax.swing.JPanel {
+public class Celda_Panel extends javax.swing.JPanel implements Comparable<Object>{
 
     /**
      * Creates new form Celda_Panel
@@ -21,6 +22,10 @@ public class Celda_Panel extends javax.swing.JPanel {
         
         valor_JLabel.setText(CourseRoom_Server.Formato_HTML_Central(valor.toString()));
         
+    }
+    
+    public JLabel Label(){
+        return this.valor_JLabel;
     }
 
     /**
@@ -62,6 +67,39 @@ public class Celda_Panel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public int compareTo(Object o) {
+        if(o != null){
+            
+            if(o instanceof Celda_Panel celda){
+                
+                if(celda.Label().getText() != null &&
+                        this.Label().getText() != null){
+                    
+                    return this.Label().getText().compareTo(celda.Label().getText());
+                }
+                else if (celda.Label().getText() != null &&
+                        this.Label().getText() == null){
+                    
+                    return -1;
+                }
+                else if (celda.Label().getText() == null &&
+                        this.Label().getText() != null){
+                    return 1;
+                }
+                
+                else{
+                    return 0;
+                }
+            }
+            
+            return 1;
+            
+        }
+        
+        return 1;
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel valor_JLabel;

@@ -8,6 +8,7 @@ import java.awt.CardLayout;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
+import paneles.Info_General_Panel;
 import paneles.Metodos_Panel;
 import paneles.Peticiones_Panel;
 import paneles.Respuestas_Panel;
@@ -19,10 +20,6 @@ import paneles.Respuestas_Panel;
  */
 public class Principal_Frame extends javax.swing.JFrame {
 
-    private Peticiones_Panel peticiones_Panel;
-    private Respuestas_Panel respuestas_Panel;
-    private Metodos_Panel metodos_Panel;
-    
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Principal_Frame() {
         initComponents();
@@ -36,14 +33,19 @@ public class Principal_Frame extends javax.swing.JFrame {
             
         }
         
-        peticiones_Panel = new Peticiones_Panel();
+        Peticiones_Panel peticiones_Panel = new Peticiones_Panel();
         principal_JPanel.add("Peticiones",peticiones_Panel);
         
-        respuestas_Panel = new Respuestas_Panel();
+        Respuestas_Panel respuestas_Panel = new Respuestas_Panel();
         principal_JPanel.add("Respuestas",respuestas_Panel);
-        
-        metodos_Panel = new Metodos_Panel();
+
+        Metodos_Panel metodos_Panel = new Metodos_Panel();
         principal_JPanel.add("Metodos",metodos_Panel);
+        
+        Info_General_Panel info_General_Panel = new Info_General_Panel();
+        principal_JPanel.add("Info_General", info_General_Panel);
+        
+        
     }
 
     /**
@@ -60,6 +62,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         peticiones_JMenu = new javax.swing.JMenu();
         respuestas_JMenu = new javax.swing.JMenu();
         metodos_JMenu = new javax.swing.JMenu();
+        info_General_JMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servidor De CourseRoom");
@@ -124,6 +127,22 @@ public class Principal_Frame extends javax.swing.JFrame {
         });
         barra_Menu_JMenuBar.add(metodos_JMenu);
 
+        info_General_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/information.png"))); // NOI18N
+        info_General_JMenu.setText("Info General");
+        info_General_JMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        info_General_JMenu.setFocusCycleRoot(true);
+        info_General_JMenu.setFocusPainted(true);
+        info_General_JMenu.setFocusTraversalPolicyProvider(true);
+        info_General_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        info_General_JMenu.setOpaque(true);
+        info_General_JMenu.setRolloverEnabled(false);
+        info_General_JMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                info_General_JMenuMouseClicked(evt);
+            }
+        });
+        barra_Menu_JMenuBar.add(info_General_JMenu);
+
         setJMenuBar(barra_Menu_JMenuBar);
 
         pack();
@@ -158,9 +177,18 @@ public class Principal_Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_metodos_JMenuMouseClicked
 
+    private void info_General_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_info_General_JMenuMouseClicked
+        // TODO add your handling code here:
+        if(SwingUtilities.isLeftMouseButton(evt)){
+            
+            ((CardLayout)principal_JPanel.getLayout()).show(principal_JPanel, "Info_General");
+        }
+    }//GEN-LAST:event_info_General_JMenuMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barra_Menu_JMenuBar;
+    private javax.swing.JMenu info_General_JMenu;
     private javax.swing.JMenu metodos_JMenu;
     private javax.swing.JMenu peticiones_JMenu;
     private javax.swing.JPanel principal_JPanel;

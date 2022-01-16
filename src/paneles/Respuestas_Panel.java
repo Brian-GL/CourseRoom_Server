@@ -6,9 +6,11 @@ package paneles;
 
 import clases.Celda_Renderer;
 import courseroom_server.CourseRoom_Server;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 
 /**
@@ -25,6 +27,11 @@ public class Respuestas_Panel extends javax.swing.JPanel {
    
         respuestas_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         respuestas_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
+        
+        Font gadugi = new Font("Gadugi", Font.BOLD, 16);
+        respuestas_JTable.getTableHeader().setFont(gadugi);
+        respuestas_JTable.getTableHeader().setBackground(logo_JLabel.getForeground());
+        respuestas_JTable.getTableHeader().setForeground(this.getBackground());
      
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
 
@@ -93,6 +100,7 @@ public class Respuestas_Panel extends javax.swing.JPanel {
         respuestas_JTable.setRowHeight(100);
         respuestas_JTable.setRowMargin(10);
         respuestas_JTable.setShowGrid(true);
+        respuestas_JTable.setRowSorter(new TableRowSorter(respuestas_JTable.getModel()));
         respuestas_JScrollPane.setViewportView(respuestas_JTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

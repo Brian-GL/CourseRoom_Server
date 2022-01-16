@@ -111,6 +111,7 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
             <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="peticiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="peticiones_JTable.setRowSorter(new TableRowSorter(peticiones_JTable.getModel()));"/>
           </AuxValues>
         </Component>
       </SubComponents>

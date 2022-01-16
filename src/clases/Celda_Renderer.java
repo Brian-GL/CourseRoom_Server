@@ -24,4 +24,6 @@ public class Celda_Renderer extends DefaultTableCellRenderer{
         
         return celda;
     }
+    
+    
 }
