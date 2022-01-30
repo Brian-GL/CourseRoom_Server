@@ -8,7 +8,10 @@ import clases.Celda_Renderer;
 import courseroom_server.CourseRoom_Server;
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -30,65 +33,70 @@ public class Principal_Frame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
+        Image logo = null;
         try {
             this.setIconImage(ImageIO.read(getClass().getResource("/recursos/iconos/Course_Room_Brand.png")));
+            logo = ImageIO.read(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"));
         } catch (IOException ex) {
             
         }
         
-        var icono = new ImageIcon(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"));
+        logo = logo.getScaledInstance(125, 100, Image.SCALE_AREA_AVERAGING);
+        ImageIcon icono = new ImageIcon(logo);
         
-        //Respuestas: 
-        logo_Respuestas_JLabel.setIcon(icono);
+        titulo_JLabel.setIcon(icono);
+        
+        logo.flush();
+        ((ImageIcon)titulo_JLabel.getIcon()).getImage().flush();
+        
+        icono.getImage().flush();
    
         respuestas_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         respuestas_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         
         Font gadugi = new Font("Gadugi", Font.BOLD, 16);
         respuestas_JTable.getTableHeader().setFont(gadugi);
-        respuestas_JTable.getTableHeader().setBackground(logo_Respuestas_JLabel.getForeground());
+        respuestas_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
         respuestas_JTable.getTableHeader().setForeground(this.getBackground());
      
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
 
-        String[] insercion = new String[3];
+        String[] insercion = new String[4];
         for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 15);i++){
-            insercion[0] = CourseRoom_Server.Faker().university().name();
-            insercion[1] = CourseRoom_Server.Faker().internet().macAddress();
-            insercion[2] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
+            insercion[0] = String.valueOf(i+1);
+            insercion[1] = CourseRoom_Server.Faker().university().name();
+            insercion[2] = CourseRoom_Server.Faker().internet().macAddress();
+            insercion[3] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
             
             modelo.addRow(insercion);
         }
         
         //Peticiones:
-        logo_Peticiones_JLabel.setIcon(icono);
-   
         peticiones_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         peticiones_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         
         peticiones_JTable.getTableHeader().setFont(gadugi);
-        peticiones_JTable.getTableHeader().setBackground(logo_Peticiones_JLabel.getForeground());
+        peticiones_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
         peticiones_JTable.getTableHeader().setForeground(this.getBackground());
      
         modelo = (DefaultTableModel) peticiones_JTable.getModel();
 
         for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 15);i++){
-            insercion[0] = CourseRoom_Server.Faker().job().field();
-            insercion[1] = CourseRoom_Server.Faker().internet().macAddress();
-            insercion[2] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
+            insercion[0] = String.valueOf(i+1);
+            insercion[1] = CourseRoom_Server.Faker().job().field();
+            insercion[2] = CourseRoom_Server.Faker().internet().macAddress();
+            insercion[3] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
             
             modelo.addRow(insercion);
         }
         
         
         //Metodos:
-         logo_Metodos_JLabel.setIcon(icono);
-   
         metodos_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         metodos_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         
         metodos_JTable.getTableHeader().setFont(gadugi);
-        metodos_JTable.getTableHeader().setBackground(logo_Metodos_JLabel.getForeground());
+        metodos_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
         metodos_JTable.getTableHeader().setForeground(this.getBackground());
      
         modelo = (DefaultTableModel) metodos_JTable.getModel();
@@ -102,18 +110,16 @@ public class Principal_Frame extends javax.swing.JFrame {
         }
         
         //Info General:
-        logo_Info_General_JLabel.setIcon(icono);
-
         courseroom_DB_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         courseroom_DB_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         courseroom_Server_DB_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         courseroom_Server_DB_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         
         courseroom_DB_JTable.getTableHeader().setFont(gadugi);
-        courseroom_DB_JTable.getTableHeader().setBackground(logo_Info_General_JLabel.getForeground());
+        courseroom_DB_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
         courseroom_DB_JTable.getTableHeader().setForeground(this.getBackground());
         courseroom_Server_DB_JTable.getTableHeader().setFont(gadugi);
-        courseroom_Server_DB_JTable.getTableHeader().setBackground(logo_Info_General_JLabel.getForeground());
+        courseroom_Server_DB_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
         courseroom_Server_DB_JTable.getTableHeader().setForeground(this.getBackground());
 
         modelo = (DefaultTableModel) courseroom_DB_JTable.getModel();
@@ -137,6 +143,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             modelo.addRow(insercion);
         }
 
+        titulo_JLabel.setText("Peticiones");
         
     }
 
@@ -149,9 +156,8 @@ public class Principal_Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titulo_JLabel = new javax.swing.JLabel();
         principal_JLayeredPane = new javax.swing.JLayeredPane();
-        peticiones_JPanel = new javax.swing.JPanel();
-        logo_Peticiones_JLabel = new javax.swing.JLabel();
         peticiones_JScrollPane = new javax.swing.JScrollPane();
         peticiones_JTable = new JTable(){
             public Class<?> getColumnClass(int column) {
@@ -163,8 +169,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             }
         };
         peticiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
-        respuestas_JPanel = new javax.swing.JPanel();
-        logo_Respuestas_JLabel = new javax.swing.JLabel();
         respuestas_JScrollPane = new javax.swing.JScrollPane();
         respuestas_JTable = new JTable(){
             public Class<?> getColumnClass(int column) {
@@ -176,8 +180,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             }
         };
         respuestas_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
-        metodos_JPanel = new javax.swing.JPanel();
-        logo_Metodos_JLabel = new javax.swing.JLabel();
         metodos_JScrollPane = new javax.swing.JScrollPane();
         metodos_JTable = new JTable(){
             public Class<?> getColumnClass(int column) {
@@ -190,7 +192,6 @@ public class Principal_Frame extends javax.swing.JFrame {
         };
         metodos_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
         info_General_JPanel = new javax.swing.JPanel();
-        logo_Info_General_JLabel = new javax.swing.JLabel();
         courseroom_DB_JPanel = new javax.swing.JPanel();
         courseroom_DB_JScrollPane = new javax.swing.JScrollPane();
         courseroom_DB_JTable = new JTable(){
@@ -224,25 +225,23 @@ public class Principal_Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servidor De CourseRoom");
         setFont(new java.awt.Font("Gadugi", 1, 20)); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
+        titulo_JLabel.setBackground(new java.awt.Color(14, 30, 64));
+        titulo_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
+        titulo_JLabel.setForeground(new java.awt.Color(104, 194, 232));
+        titulo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_JLabel.setText("Peticiones");
+        titulo_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
+        titulo_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
+        titulo_JLabel.setOpaque(true);
+        titulo_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
+
         principal_JLayeredPane.setLayout(new java.awt.CardLayout());
-
-        peticiones_JPanel.setBackground(new java.awt.Color(14, 30, 64));
-        peticiones_JPanel.setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        logo_Peticiones_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
-        logo_Peticiones_JLabel.setForeground(new java.awt.Color(104, 194, 232));
-        logo_Peticiones_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo_Peticiones_JLabel.setText("Peticiones");
-        logo_Peticiones_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
-        logo_Peticiones_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
-        logo_Peticiones_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
 
         peticiones_JScrollPane.setBorder(null);
 
@@ -255,11 +254,11 @@ public class Principal_Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Petición", "Cliente", "Fecha"
+                "ID Ticket", "Petición", "Cliente", "Fecha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,39 +272,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         peticiones_JTable.setRowSorter(new TableRowSorter(peticiones_JTable.getModel()));
         peticiones_JScrollPane.setViewportView(peticiones_JTable);
 
-        javax.swing.GroupLayout peticiones_JPanelLayout = new javax.swing.GroupLayout(peticiones_JPanel);
-        peticiones_JPanel.setLayout(peticiones_JPanelLayout);
-        peticiones_JPanelLayout.setHorizontalGroup(
-            peticiones_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(peticiones_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(peticiones_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(peticiones_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
-                    .addComponent(logo_Peticiones_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        peticiones_JPanelLayout.setVerticalGroup(
-            peticiones_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(peticiones_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo_Peticiones_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(peticiones_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        principal_JLayeredPane.add(peticiones_JPanel, "Peticiones");
-
-        respuestas_JPanel.setBackground(new java.awt.Color(14, 30, 64));
-        respuestas_JPanel.setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        logo_Respuestas_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
-        logo_Respuestas_JLabel.setForeground(new java.awt.Color(104, 194, 232));
-        logo_Respuestas_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo_Respuestas_JLabel.setText("Respuestas");
-        logo_Respuestas_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
-        logo_Respuestas_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
-        logo_Respuestas_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
+        principal_JLayeredPane.add(peticiones_JScrollPane, "Peticiones");
 
         respuestas_JScrollPane.setBorder(null);
 
@@ -318,11 +285,11 @@ public class Principal_Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Respuesta", "Cliente", "Fecha"
+                "ID Ticket", "Respuesta", "Cliente", "Fecha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -336,39 +303,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         respuestas_JTable.setRowSorter(new TableRowSorter(respuestas_JTable.getModel()));
         respuestas_JScrollPane.setViewportView(respuestas_JTable);
 
-        javax.swing.GroupLayout respuestas_JPanelLayout = new javax.swing.GroupLayout(respuestas_JPanel);
-        respuestas_JPanel.setLayout(respuestas_JPanelLayout);
-        respuestas_JPanelLayout.setHorizontalGroup(
-            respuestas_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(respuestas_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(respuestas_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(respuestas_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
-                    .addComponent(logo_Respuestas_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        respuestas_JPanelLayout.setVerticalGroup(
-            respuestas_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(respuestas_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo_Respuestas_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(respuestas_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        principal_JLayeredPane.add(respuestas_JPanel, "Respuestas");
-
-        metodos_JPanel.setBackground(new java.awt.Color(14, 30, 64));
-        metodos_JPanel.setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        logo_Metodos_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
-        logo_Metodos_JLabel.setForeground(new java.awt.Color(104, 194, 232));
-        logo_Metodos_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo_Metodos_JLabel.setText("Métodos");
-        logo_Metodos_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
-        logo_Metodos_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
-        logo_Metodos_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
+        principal_JLayeredPane.add(respuestas_JScrollPane, "Respuestas");
 
         metodos_JScrollPane.setBorder(null);
 
@@ -399,39 +334,11 @@ public class Principal_Frame extends javax.swing.JFrame {
         metodos_JTable.setRowSorter(new TableRowSorter(metodos_JTable.getModel()));
         metodos_JScrollPane.setViewportView(metodos_JTable);
 
-        javax.swing.GroupLayout metodos_JPanelLayout = new javax.swing.GroupLayout(metodos_JPanel);
-        metodos_JPanel.setLayout(metodos_JPanelLayout);
-        metodos_JPanelLayout.setHorizontalGroup(
-            metodos_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(metodos_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(metodos_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(metodos_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
-                    .addComponent(logo_Metodos_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        metodos_JPanelLayout.setVerticalGroup(
-            metodos_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(metodos_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo_Metodos_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(metodos_JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        principal_JLayeredPane.add(metodos_JPanel, "Metodos");
+        principal_JLayeredPane.add(metodos_JScrollPane, "Metodos");
 
         info_General_JPanel.setBackground(new java.awt.Color(14, 30, 64));
         info_General_JPanel.setPreferredSize(new java.awt.Dimension(1280, 720));
-
-        logo_Info_General_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
-        logo_Info_General_JLabel.setForeground(new java.awt.Color(104, 194, 232));
-        logo_Info_General_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo_Info_General_JLabel.setText("Info General");
-        logo_Info_General_JLabel.setMaximumSize(new java.awt.Dimension(175, 125));
-        logo_Info_General_JLabel.setMinimumSize(new java.awt.Dimension(175, 125));
-        logo_Info_General_JLabel.setPreferredSize(new java.awt.Dimension(175, 125));
+        info_General_JPanel.setLayout(new java.awt.GridLayout(1, 2));
 
         courseroom_DB_JPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CourseRoom DB", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Gadugi", 1, 18), new java.awt.Color(104, 194, 232))); // NOI18N
         courseroom_DB_JPanel.setForeground(new java.awt.Color(104, 194, 232));
@@ -462,6 +369,8 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         courseroom_DB_JPanel.add(courseroom_DB_JScrollPane, "card2");
 
+        info_General_JPanel.add(courseroom_DB_JPanel);
+
         courseroom_Server_DB_JPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CourseRoom Server DB", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Gadugi", 1, 18), new java.awt.Color(104, 194, 232))); // NOI18N
         courseroom_Server_DB_JPanel.setForeground(new java.awt.Color(104, 194, 232));
         courseroom_Server_DB_JPanel.setOpaque(false);
@@ -491,31 +400,7 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         courseroom_Server_DB_JPanel.add(courseroom_Server_DB_JScrollPane, "card2");
 
-        javax.swing.GroupLayout info_General_JPanelLayout = new javax.swing.GroupLayout(info_General_JPanel);
-        info_General_JPanel.setLayout(info_General_JPanelLayout);
-        info_General_JPanelLayout.setHorizontalGroup(
-            info_General_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(info_General_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(info_General_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(logo_Info_General_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
-                    .addGroup(info_General_JPanelLayout.createSequentialGroup()
-                        .addComponent(courseroom_DB_JPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(courseroom_Server_DB_JPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        info_General_JPanelLayout.setVerticalGroup(
-            info_General_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(info_General_JPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logo_Info_General_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(info_General_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(courseroom_Server_DB_JPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                    .addComponent(courseroom_DB_JPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        info_General_JPanel.add(courseroom_Server_DB_JPanel);
 
         principal_JLayeredPane.add(info_General_JPanel, "Info_General");
 
@@ -589,17 +474,20 @@ public class Principal_Frame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addComponent(principal_JLayeredPane)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(principal_JLayeredPane)
+                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(principal_JLayeredPane, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(titulo_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(principal_JLayeredPane, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -608,7 +496,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void peticiones_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peticiones_JMenuMouseClicked
         // TODO add your handling code here:
         if(SwingUtilities.isLeftMouseButton(evt)){
-            
+            titulo_JLabel.setText("Peticiones");
             ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Peticiones");
         }
     }//GEN-LAST:event_peticiones_JMenuMouseClicked
@@ -616,7 +504,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void respuestas_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_respuestas_JMenuMouseClicked
         // TODO add your handling code here:
         if(SwingUtilities.isLeftMouseButton(evt)){
-            
+            titulo_JLabel.setText("Respuestas");
             ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Respuestas");
         }
     }//GEN-LAST:event_respuestas_JMenuMouseClicked
@@ -629,7 +517,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void metodos_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_metodos_JMenuMouseClicked
         // TODO add your handling code here:
         if(SwingUtilities.isLeftMouseButton(evt)){
-            
+            titulo_JLabel.setText("Métodos");
             ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Metodos");
         }
     }//GEN-LAST:event_metodos_JMenuMouseClicked
@@ -637,7 +525,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void info_General_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_info_General_JMenuMouseClicked
         // TODO add your handling code here:
         if(SwingUtilities.isLeftMouseButton(evt)){
-            
+            titulo_JLabel.setText("Info General");
             ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Info_General");
         }
     }//GEN-LAST:event_info_General_JMenuMouseClicked
@@ -653,23 +541,17 @@ public class Principal_Frame extends javax.swing.JFrame {
     private javax.swing.JTable courseroom_Server_DB_JTable;
     private javax.swing.JMenu info_General_JMenu;
     private javax.swing.JPanel info_General_JPanel;
-    private javax.swing.JLabel logo_Info_General_JLabel;
-    private javax.swing.JLabel logo_Metodos_JLabel;
-    private javax.swing.JLabel logo_Peticiones_JLabel;
-    private javax.swing.JLabel logo_Respuestas_JLabel;
     private javax.swing.JMenu metodos_JMenu;
-    private javax.swing.JPanel metodos_JPanel;
     private javax.swing.JScrollPane metodos_JScrollPane;
     private javax.swing.JTable metodos_JTable;
     private javax.swing.JMenu peticiones_JMenu;
-    private javax.swing.JPanel peticiones_JPanel;
     private javax.swing.JScrollPane peticiones_JScrollPane;
     private javax.swing.JTable peticiones_JTable;
     private javax.swing.JLayeredPane principal_JLayeredPane;
     private javax.swing.JMenu respuestas_JMenu;
-    private javax.swing.JPanel respuestas_JPanel;
     private javax.swing.JScrollPane respuestas_JScrollPane;
     private javax.swing.JTable respuestas_JTable;
+    private javax.swing.JLabel titulo_JLabel;
     // End of variables declaration//GEN-END:variables
 
 }
