@@ -4,12 +4,12 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="barra_Menu_JMenuBar">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="peticiones_JMenu">
+        <Menu class="javax.swing.JMenu" name="solicitudes_JMenu">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/recursos/iconos/request.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Peticiones"/>
+            <Property name="text" type="java.lang.String" value="Solicitudes"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
@@ -23,7 +23,7 @@
             <Property name="rolloverEnabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="peticiones_JMenuMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="solicitudes_JMenuMouseClicked"/>
           </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="respuestas_JMenu">
@@ -126,11 +126,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="principal_JLayeredPane" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="titulo_JLabel" max="32767" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-          </Group>
+          <Component id="titulo_JLabel" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -175,7 +171,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="peticiones_JScrollPane">
+        <Container class="javax.swing.JScrollPane" name="solicitudes_JScrollPane">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
@@ -186,13 +182,13 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="Peticiones"/>
+              <CardConstraints cardName="Solicitudes"/>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="peticiones_JTable">
+            <Component class="javax.swing.JTable" name="solicitudes_JTable">
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -207,9 +203,9 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="ID Ticket" type="java.lang.Object"/>
-                    <Column editable="false" title="Petici&#xf3;n" type="java.lang.Object"/>
+                    <Column editable="false" title="Solicitud" type="java.lang.Object"/>
                     <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                    <Column editable="false" title="Fecha" type="java.lang.Object"/>
+                    <Column editable="false" title="Fecha Solicitud" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="autoResizeMode" type="int" value="4"/>
@@ -219,8 +215,8 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="peticiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="peticiones_JTable.setRowSorter(new TableRowSorter(peticiones_JTable.getModel()));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="solicitudes_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="solicitudes_JTable.setRowSorter(new TableRowSorter(solicitudes_JTable.getModel()));"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -259,7 +255,7 @@
                     <Column editable="false" title="ID Ticket" type="java.lang.Object"/>
                     <Column editable="false" title="Respuesta" type="java.lang.Object"/>
                     <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                    <Column editable="false" title="Fecha" type="java.lang.Object"/>
+                    <Column editable="false" title="Fecha Respuesta" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="autoResizeMode" type="int" value="4"/>

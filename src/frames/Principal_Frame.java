@@ -10,14 +10,15 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import java.sql.ResultSet;
+import java.sql.Array;
+import java.sql.SQLException;
 
 
 /**
@@ -26,7 +27,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class Principal_Frame extends javax.swing.JFrame {
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+    @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
     public Principal_Frame() {
         initComponents();
         
@@ -57,51 +58,84 @@ public class Principal_Frame extends javax.swing.JFrame {
         Font gadugi = new Font("Gadugi", Font.BOLD, 16);
         respuestas_JTable.getTableHeader().setFont(gadugi);
         respuestas_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
-        respuestas_JTable.getTableHeader().setForeground(this.getBackground());
+        respuestas_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
      
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
 
-        String[] insercion = new String[4];
-        for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 15);i++){
-            insercion[0] = String.valueOf(i+1);
-            insercion[1] = CourseRoom_Server.Faker().university().name();
-            insercion[2] = CourseRoom_Server.Faker().internet().macAddress();
-            insercion[3] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
-            
-            modelo.addRow(insercion);
+        ResultSet resultados = CourseRoom_Server.sp_ObtenerRespuestas();
+        if(resultados != null){
+            String[] celdas = new String[4];
+            try {
+                while(resultados.next()){
+                    
+                    celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                    celdas[1] = resultados.getString("Respuesta");
+                    celdas[2] = resultados.getString("Cliente");
+                    celdas[3] =  resultados.getString("FechaRespuesta");
+                    
+                    modelo.addRow(celdas);
+                }
+            } catch (SQLException ex) {
+                
+            }
+             
         }
         
-        //Peticiones:
-        peticiones_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
-        peticiones_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
+        try {
+            resultados.close();
+        } catch (SQLException ex) {
+            
+        }
         
-        peticiones_JTable.getTableHeader().setFont(gadugi);
-        peticiones_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
-        peticiones_JTable.getTableHeader().setForeground(this.getBackground());
+        //Solicitudes:
+        solicitudes_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
+        solicitudes_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
+        
+        solicitudes_JTable.getTableHeader().setFont(gadugi);
+        solicitudes_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
+        solicitudes_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
      
-        modelo = (DefaultTableModel) peticiones_JTable.getModel();
-
-        for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 15);i++){
-            insercion[0] = String.valueOf(i+1);
-            insercion[1] = CourseRoom_Server.Faker().job().field();
-            insercion[2] = CourseRoom_Server.Faker().internet().macAddress();
-            insercion[3] = CourseRoom_Server.Faker().date().birthday(21, 22).toString();
-            
-            modelo.addRow(insercion);
+        modelo = (DefaultTableModel) solicitudes_JTable.getModel();
+        
+        resultados = CourseRoom_Server.sp_ObtenerSolicitudes();
+        if(resultados != null){
+            String[] celdas = new String[4];
+            try {
+               
+                while(resultados.next()){
+                    
+                   
+                    celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                    celdas[1] = resultados.getString("Solicitud");
+                    celdas[2] = resultados.getString("Cliente");
+                    celdas[3] =  resultados.getString("FechaSolicitud");
+              
+                    
+                    modelo.addRow(celdas);
+                }
+            } catch (SQLException ex) {
+                
+            }
+             
         }
-        
-        
+
+        try {
+            resultados.close();
+        } catch (SQLException ex) {
+
+        }
+       
         //Metodos:
         metodos_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         metodos_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
         
         metodos_JTable.getTableHeader().setFont(gadugi);
         metodos_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
-        metodos_JTable.getTableHeader().setForeground(this.getBackground());
+        metodos_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
      
         modelo = (DefaultTableModel) metodos_JTable.getModel();
 
-        insercion = new String[2];
+        String[] insercion = new String[2];
         for(int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 35);i++){
             insercion[0] = CourseRoom_Server.Faker().artist().name();
             insercion[1] = String.valueOf(CourseRoom_Server.Faker().bool().bool());
@@ -117,13 +151,14 @@ public class Principal_Frame extends javax.swing.JFrame {
         
         courseroom_DB_JTable.getTableHeader().setFont(gadugi);
         courseroom_DB_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
-        courseroom_DB_JTable.getTableHeader().setForeground(this.getBackground());
+        courseroom_DB_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
         courseroom_Server_DB_JTable.getTableHeader().setFont(gadugi);
         courseroom_Server_DB_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
-        courseroom_Server_DB_JTable.getTableHeader().setForeground(this.getBackground());
+        courseroom_Server_DB_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
 
         modelo = (DefaultTableModel) courseroom_DB_JTable.getModel();
 
+        
         insercion = new String[3];
         for (int i = 0; i < CourseRoom_Server.Faker().number().numberBetween(5, 15); i++) {
             insercion[0] = CourseRoom_Server.Faker().witcher().character();
@@ -143,7 +178,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             modelo.addRow(insercion);
         }
 
-        titulo_JLabel.setText("Peticiones");
+        titulo_JLabel.setText("Solicitudes");
         
     }
 
@@ -158,8 +193,8 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         titulo_JLabel = new javax.swing.JLabel();
         principal_JLayeredPane = new javax.swing.JLayeredPane();
-        peticiones_JScrollPane = new javax.swing.JScrollPane();
-        peticiones_JTable = new JTable(){
+        solicitudes_JScrollPane = new javax.swing.JScrollPane();
+        solicitudes_JTable = new JTable(){
             public Class<?> getColumnClass(int column) {
                 if (0 < this.getRowCount()) {
                     return getValueAt(0, column).getClass();
@@ -168,7 +203,7 @@ public class Principal_Frame extends javax.swing.JFrame {
                 }
             }
         };
-        peticiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
+        solicitudes_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
         respuestas_JScrollPane = new javax.swing.JScrollPane();
         respuestas_JTable = new JTable(){
             public Class<?> getColumnClass(int column) {
@@ -217,7 +252,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         };
         courseroom_DB_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
         barra_Menu_JMenuBar = new javax.swing.JMenuBar();
-        peticiones_JMenu = new javax.swing.JMenu();
+        solicitudes_JMenu = new javax.swing.JMenu();
         respuestas_JMenu = new javax.swing.JMenu();
         metodos_JMenu = new javax.swing.JMenu();
         info_General_JMenu = new javax.swing.JMenu();
@@ -243,18 +278,18 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         principal_JLayeredPane.setLayout(new java.awt.CardLayout());
 
-        peticiones_JScrollPane.setBorder(null);
+        solicitudes_JScrollPane.setBorder(null);
 
-        peticiones_JTable.setAutoCreateRowSorter(true);
-        peticiones_JTable.setBackground(new java.awt.Color(14, 30, 64));
-        peticiones_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
-        peticiones_JTable.setForeground(new java.awt.Color(104, 194, 232));
-        peticiones_JTable.setModel(new javax.swing.table.DefaultTableModel(
+        solicitudes_JTable.setAutoCreateRowSorter(true);
+        solicitudes_JTable.setBackground(new java.awt.Color(14, 30, 64));
+        solicitudes_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        solicitudes_JTable.setForeground(new java.awt.Color(104, 194, 232));
+        solicitudes_JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Ticket", "Petición", "Cliente", "Fecha"
+                "ID Ticket", "Solicitud", "Cliente", "Fecha Solicitud"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -265,14 +300,14 @@ public class Principal_Frame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        peticiones_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        peticiones_JTable.setRowHeight(100);
-        peticiones_JTable.setRowMargin(10);
-        peticiones_JTable.setShowGrid(true);
-        peticiones_JTable.setRowSorter(new TableRowSorter(peticiones_JTable.getModel()));
-        peticiones_JScrollPane.setViewportView(peticiones_JTable);
+        solicitudes_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        solicitudes_JTable.setRowHeight(100);
+        solicitudes_JTable.setRowMargin(10);
+        solicitudes_JTable.setShowGrid(true);
+        solicitudes_JTable.setRowSorter(new TableRowSorter(solicitudes_JTable.getModel()));
+        solicitudes_JScrollPane.setViewportView(solicitudes_JTable);
 
-        principal_JLayeredPane.add(peticiones_JScrollPane, "Peticiones");
+        principal_JLayeredPane.add(solicitudes_JScrollPane, "Solicitudes");
 
         respuestas_JScrollPane.setBorder(null);
 
@@ -285,7 +320,7 @@ public class Principal_Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Ticket", "Respuesta", "Cliente", "Fecha"
+                "ID Ticket", "Respuesta", "Cliente", "Fecha Respuesta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -404,21 +439,21 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         principal_JLayeredPane.add(info_General_JPanel, "Info_General");
 
-        peticiones_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/request.png"))); // NOI18N
-        peticiones_JMenu.setText("Peticiones");
-        peticiones_JMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        peticiones_JMenu.setFocusCycleRoot(true);
-        peticiones_JMenu.setFocusPainted(true);
-        peticiones_JMenu.setFocusTraversalPolicyProvider(true);
-        peticiones_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        peticiones_JMenu.setOpaque(true);
-        peticiones_JMenu.setRolloverEnabled(false);
-        peticiones_JMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        solicitudes_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/request.png"))); // NOI18N
+        solicitudes_JMenu.setText("Solicitudes");
+        solicitudes_JMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        solicitudes_JMenu.setFocusCycleRoot(true);
+        solicitudes_JMenu.setFocusPainted(true);
+        solicitudes_JMenu.setFocusTraversalPolicyProvider(true);
+        solicitudes_JMenu.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        solicitudes_JMenu.setOpaque(true);
+        solicitudes_JMenu.setRolloverEnabled(false);
+        solicitudes_JMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                peticiones_JMenuMouseClicked(evt);
+                solicitudes_JMenuMouseClicked(evt);
             }
         });
-        barra_Menu_JMenuBar.add(peticiones_JMenu);
+        barra_Menu_JMenuBar.add(solicitudes_JMenu);
 
         respuestas_JMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/responsibility.png"))); // NOI18N
         respuestas_JMenu.setText("Respuestas");
@@ -475,10 +510,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(principal_JLayeredPane)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(titulo_JLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,13 +525,13 @@ public class Principal_Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void peticiones_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peticiones_JMenuMouseClicked
+    private void solicitudes_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_solicitudes_JMenuMouseClicked
         // TODO add your handling code here:
         if(SwingUtilities.isLeftMouseButton(evt)){
-            titulo_JLabel.setText("Peticiones");
-            ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Peticiones");
+            titulo_JLabel.setText("Solicitudes");
+            ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Solicitudes");
         }
-    }//GEN-LAST:event_peticiones_JMenuMouseClicked
+    }//GEN-LAST:event_solicitudes_JMenuMouseClicked
 
     private void respuestas_JMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_respuestas_JMenuMouseClicked
         // TODO add your handling code here:
@@ -511,6 +543,7 @@ public class Principal_Frame extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        CourseRoom_Server.Cerrar_Conexion();
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
@@ -544,13 +577,13 @@ public class Principal_Frame extends javax.swing.JFrame {
     private javax.swing.JMenu metodos_JMenu;
     private javax.swing.JScrollPane metodos_JScrollPane;
     private javax.swing.JTable metodos_JTable;
-    private javax.swing.JMenu peticiones_JMenu;
-    private javax.swing.JScrollPane peticiones_JScrollPane;
-    private javax.swing.JTable peticiones_JTable;
     private javax.swing.JLayeredPane principal_JLayeredPane;
     private javax.swing.JMenu respuestas_JMenu;
     private javax.swing.JScrollPane respuestas_JScrollPane;
     private javax.swing.JTable respuestas_JTable;
+    private javax.swing.JMenu solicitudes_JMenu;
+    private javax.swing.JScrollPane solicitudes_JScrollPane;
+    private javax.swing.JTable solicitudes_JTable;
     private javax.swing.JLabel titulo_JLabel;
     // End of variables declaration//GEN-END:variables
 

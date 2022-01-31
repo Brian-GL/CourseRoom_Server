@@ -4,9 +4,11 @@
  */
 package courseroom_server;
 
+import clases.ConexionMySQL;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.github.javafaker.Faker;
 import frames.Principal_Frame;
+import java.sql.ResultSet;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -18,13 +20,33 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class CourseRoom_Server {
     
     private static Faker _faker;
-    private Principal_Frame principal_Frame;
+    private static ConexionMySQL conexionMySQL;
+
+   
+    
 
     public CourseRoom_Server(){
+        conexionMySQL = new ConexionMySQL();
         _faker = new Faker(new Locale("es", "MX"));
-        principal_Frame = new Principal_Frame();
+        Principal_Frame principal_Frame = new Principal_Frame();
         principal_Frame.setVisible(true);
         
+    }
+    
+    public static ResultSet sp_ObtenerSolicitudes() {
+        return ConexionMySQL.sp_ObtenerSolicitudes();
+    }
+
+    public static ResultSet sp_ObtenerRespuestas() {
+        return ConexionMySQL.sp_ObtenerRespuestas();
+    }
+
+    public static int sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud) {
+        return ConexionMySQL.sp_AgregarSolicitud(solicitud, cliente, fecha_Solicitud);
+    }
+
+    public static void Cerrar_Conexion() {
+        ConexionMySQL.Cerrar_Conexion();
     }
 
     public static void main(String args[]) {
