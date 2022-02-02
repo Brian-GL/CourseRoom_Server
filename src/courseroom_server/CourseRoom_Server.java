@@ -23,8 +23,6 @@ public class CourseRoom_Server {
     private static ConexionMySQL conexionMySQL;
 
    
-    
-
     public CourseRoom_Server(){
         conexionMySQL = new ConexionMySQL();
         _faker = new Faker(new Locale("es", "MX"));
@@ -40,10 +38,18 @@ public class CourseRoom_Server {
     public static ResultSet sp_ObtenerRespuestas() {
         return ConexionMySQL.sp_ObtenerRespuestas();
     }
-
-    public static int sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud) {
-        return ConexionMySQL.sp_AgregarSolicitud(solicitud, cliente, fecha_Solicitud);
+    
+    public static ResultSet sp_ObtenerMetodos() {
+        return ConexionMySQL.sp_ObtenerMetodos();
     }
+
+    public static ResultSet sp_ObtenerTablasCourseRoom() {
+        return ConexionMySQL.sp_ObtenerTablasCourseRoom();
+    }
+
+//    public static int sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud) {
+//        return ConexionMySQL.sp_AgregarSolicitud(solicitud, cliente, fecha_Solicitud);
+//    }
 
     public static void Cerrar_Conexion() {
         ConexionMySQL.Cerrar_Conexion();
