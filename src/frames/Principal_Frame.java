@@ -5,7 +5,7 @@
 package frames;
 
 import clases.Celda_Renderer;
-import courseroom_server.CourseRoom_Server;
+import clases.Metodos;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.xmlrpc.WebServer;
 
 
 /**
@@ -27,13 +28,29 @@ import java.sql.SQLException;
 public class Principal_Frame extends javax.swing.JFrame {
 
     private byte carta_Visible;
+    private Metodos metodos;
+    private int DEFAULT_PORT = 3030;
+    private WebServer webServer;
     
     @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
     public Principal_Frame() {
         initComponents();
         
+        
+        
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
+        
+        this.metodos = new Metodos();
+        try {
+            webServer = new WebServer(DEFAULT_PORT);
+
+            webServer.addHandler("CourseRoom_Server", metodos);
+
+            webServer.start();
+        } catch (Exception e) {
+            System.err.println("JavaServer: " + e.getMessage());
+        }
         
         carta_Visible = 0;
         
@@ -431,7 +448,8 @@ public class Principal_Frame extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        CourseRoom_Server.Cerrar_Conexion();
+        metodos.Cerrar_Conexion();
+        webServer.shutdown();
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
@@ -528,7 +546,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void Obtener_Solicitudes(){
         DefaultTableModel modelo = (DefaultTableModel) solicitudes_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = CourseRoom_Server.sp_ObtenerSolicitudes();
+        ResultSet resultados = metodos.sp_ObtenerSolicitudes();
         if (resultados != null) {
             String[] celdas = new String[4];
             try {
@@ -558,7 +576,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = CourseRoom_Server.sp_ObtenerRespuestas();
+        ResultSet resultados = metodos.sp_ObtenerRespuestas();
         if (resultados != null) {
             String[] celdas = new String[4];
             try {
@@ -588,7 +606,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void Obtener_Metodos() {
         DefaultTableModel modelo = (DefaultTableModel) metodos_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = CourseRoom_Server.sp_ObtenerMetodos();
+        ResultSet resultados = metodos.sp_ObtenerMetodos();
         if (resultados != null) {
             String[] celdas = new String[2];
             
@@ -618,7 +636,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void Obtener_Tablas_CourseRoom() {
         DefaultTableModel modelo = (DefaultTableModel) tablas_CourseRoom_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = CourseRoom_Server.sp_ObtenerTablasCourseRoom();
+        ResultSet resultados = metodos.sp_ObtenerTablasCourseRoom();
         if (resultados != null) {
             String[] celdas = new String[3];
             try {

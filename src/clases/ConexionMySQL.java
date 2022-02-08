@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Base64;
-import java.util.Dictionary;
-import java.util.Enumeration;
 
 
 /**
@@ -20,20 +18,20 @@ import java.util.Enumeration;
  */
 public class ConexionMySQL {
     
-    private static Connection conexion;
+    private Connection conexion;
     
     public ConexionMySQL(){
         try {  
             Class.forName("com.mysql.cj.jdbc.Driver");
             byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
             String decodificacion = new String(decoded);
-            ConexionMySQL.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
+            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
         } catch (ClassNotFoundException | SQLException ex) {
             
         }
     }
     
-    public static ResultSet sp_ObtenerSolicitudes(){
+    public ResultSet sp_ObtenerSolicitudes(){
         
         try {
             CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerSolicitudes()}");
@@ -45,7 +43,7 @@ public class ConexionMySQL {
         return null;
     }
     
-    public static ResultSet sp_ObtenerRespuestas(){
+    public ResultSet sp_ObtenerRespuestas(){
         
           try {
             CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerRespuestas()}");
@@ -57,7 +55,7 @@ public class ConexionMySQL {
         return null;
     }
     
-    public static ResultSet sp_ObtenerMetodos(){
+    public ResultSet sp_ObtenerMetodos(){
         
         try {
             CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerMetodos()}");
@@ -69,7 +67,7 @@ public class ConexionMySQL {
         return null;
     }
     
-    public static ResultSet sp_ObtenerTablasCourseRoom(){
+    public ResultSet sp_ObtenerTablasCourseRoom(){
         
         try {
             CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerTablasCourseRoom()}");
@@ -99,7 +97,7 @@ public class ConexionMySQL {
 //        
 //    }
     
-    public static void Cerrar_Conexion(){
+    public void Cerrar_Conexion(){
         try {
             conexion.close();
         } catch (SQLException ex) {

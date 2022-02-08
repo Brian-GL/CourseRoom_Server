@@ -4,14 +4,14 @@
  */
 package courseroom_server;
 
-import clases.ConexionMySQL;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.github.javafaker.Faker;
 import frames.Principal_Frame;
-import java.sql.ResultSet;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+
 
 /**
  *
@@ -20,49 +20,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class CourseRoom_Server {
     
     private static Faker _faker;
-    private static ConexionMySQL conexionMySQL;
-
    
     public CourseRoom_Server(){
-        conexionMySQL = new ConexionMySQL();
+        
         _faker = new Faker(new Locale("es", "MX"));
         Principal_Frame principal_Frame = new Principal_Frame();
         principal_Frame.setVisible(true);
         
-    }
-    
-    public static ResultSet sp_ObtenerSolicitudes() {
-        return ConexionMySQL.sp_ObtenerSolicitudes();
-    }
-
-    public static ResultSet sp_ObtenerRespuestas() {
-        return ConexionMySQL.sp_ObtenerRespuestas();
-    }
-    
-    public static ResultSet sp_ObtenerMetodos() {
-        return ConexionMySQL.sp_ObtenerMetodos();
-    }
-
-    public static ResultSet sp_ObtenerTablasCourseRoom() {
-        return ConexionMySQL.sp_ObtenerTablasCourseRoom();
-    }
-
-//    public static int sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud) {
-//        return ConexionMySQL.sp_AgregarSolicitud(solicitud, cliente, fecha_Solicitud);
-//    }
-
-    public static void Cerrar_Conexion() {
-        ConexionMySQL.Cerrar_Conexion();
-    }
-
-    public static void main(String args[]) {
-        try {
-            FlatDarkLaf ui = new FlatDarkLaf();
-            UIManager.setLookAndFeel(ui);
-            CourseRoom_Server courseRoom_Server = new CourseRoom_Server();
-        } catch (UnsupportedLookAndFeelException ex) {
-
-        }
+       
     }
     
     public static String Concatenar(String cadena, String... args) {
@@ -83,5 +48,17 @@ public class CourseRoom_Server {
     public static Faker Faker() {
         return _faker;
     }
+    
+    
+    public static void main(String args[]) {
+        try {
+            FlatDarkLaf ui = new FlatDarkLaf();
+            UIManager.setLookAndFeel(ui);
+            CourseRoom_Server courseRoom_Server = new CourseRoom_Server();
+        } catch (UnsupportedLookAndFeelException ex) {
+
+        }
+    }
+    
     
 }
