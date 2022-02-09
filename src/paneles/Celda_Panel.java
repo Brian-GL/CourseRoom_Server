@@ -4,7 +4,6 @@
  */
 package paneles;
 
-import courseroom_server.CourseRoom_Server;
 import java.awt.Color;
 import javax.swing.JLabel;
 
@@ -21,7 +20,7 @@ public class Celda_Panel extends javax.swing.JPanel implements Comparable<Object
     public Celda_Panel(Object valor) {
         initComponents();
         
-        valor_JLabel.setText(CourseRoom_Server.Formato_HTML_Central(valor.toString()));
+        valor_JLabel.setText(valor.toString());
         valor_JLabel.setForeground(new Color(104,194,232));
         
     }

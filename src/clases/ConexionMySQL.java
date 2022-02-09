@@ -20,63 +20,31 @@ public class ConexionMySQL {
     
     private Connection conexion;
     
-    public ConexionMySQL(){
-        try {  
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
-            String decodificacion = new String(decoded);
-            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
-        } catch (ClassNotFoundException | SQLException ex) {
-            
-        }
+    public ConexionMySQL() throws ClassNotFoundException, SQLException{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
+        String decodificacion = new String(decoded);
+        this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
     }
     
-    public ResultSet sp_ObtenerSolicitudes(){
-        
-        try {
-            CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerSolicitudes()}");
-            return ejecutor.executeQuery();
-        } catch (SQLException ex) {
-            
-        }
-        
-        return null;
+    public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
+        CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerSolicitudes()}");
+        return ejecutor.executeQuery();
     }
     
-    public ResultSet sp_ObtenerRespuestas(){
-        
-          try {
-            CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerRespuestas()}");
-            return ejecutor.executeQuery();
-        } catch (SQLException ex) {
-            
-        }
-        
-        return null;
+    public ResultSet Sp_ObtenerRespuestas() throws SQLException{
+        CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerRespuestas()}");
+        return ejecutor.executeQuery();
     }
     
-    public ResultSet sp_ObtenerMetodos(){
-        
-        try {
-            CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerMetodos()}");
-            return ejecutor.executeQuery();
-        } catch (SQLException ex) {
-            
-        }
-        
-        return null;
+    public ResultSet Sp_ObtenerMetodos() throws SQLException{
+        CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerMetodos()}");
+        return ejecutor.executeQuery();
     }
     
-    public ResultSet sp_ObtenerTablasCourseRoom(){
-        
-        try {
-            CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerTablasCourseRoom()}");
-            return ejecutor.executeQuery();
-        } catch (SQLException ex) {
-            
-        }
-        
-        return null;
+    public ResultSet Sp_ObtenerTablasCourseRoom() throws SQLException{
+        CallableStatement ejecutor = conexion.prepareCall("{CALL sp_ObtenerTablasCourseRoom()}");
+        return ejecutor.executeQuery();
     }
     
 //    public static Dictionary<Boolean, String> sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
@@ -97,11 +65,7 @@ public class ConexionMySQL {
 //        
 //    }
     
-    public void Cerrar_Conexion(){
-        try {
-            conexion.close();
-        } catch (SQLException ex) {
-            
-        }
+    public void Cerrar_Conexion() throws SQLException{
+        conexion.close();
     }
 }

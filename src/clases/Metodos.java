@@ -4,8 +4,8 @@
  */
 package clases;
 
-import courseroom_server.CourseRoom_Server;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,34 +13,33 @@ import java.sql.ResultSet;
  */
 public class Metodos {
     
-    private ConexionMySQL conexionMySQL;
+    private final ConexionMySQL conexionMySQL;
     
-
-    public Metodos(){
+    public Metodos() throws ClassNotFoundException, SQLException{
         conexionMySQL = new ConexionMySQL();
     }
     
-    public String getSaludo(String name, String sentence){
-        return CourseRoom_Server.Concatenar(name, " - ",sentence);
+    public String Mensaje_Inicial(){
+        return "Hola Desde El Servidor!";
     }
     
-    public ResultSet sp_ObtenerSolicitudes(){
-        return conexionMySQL.sp_ObtenerSolicitudes();
+    public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
+        return conexionMySQL.Sp_ObtenerSolicitudes();
     }
 
-    public ResultSet sp_ObtenerRespuestas() {
-        return conexionMySQL.sp_ObtenerRespuestas();
+    public ResultSet Sp_ObtenerRespuestas() throws SQLException {
+        return conexionMySQL.Sp_ObtenerRespuestas();
     }
 
-    public ResultSet sp_ObtenerMetodos() {
-        return conexionMySQL.sp_ObtenerMetodos();
+    public ResultSet Sp_ObtenerMetodos() throws SQLException {
+        return conexionMySQL.Sp_ObtenerMetodos();
     }
 
-    public ResultSet sp_ObtenerTablasCourseRoom() {
-        return conexionMySQL.sp_ObtenerTablasCourseRoom();
+    public ResultSet Sp_ObtenerTablasCourseRoom() throws SQLException {
+        return conexionMySQL.Sp_ObtenerTablasCourseRoom();
     }
 
-    public void Cerrar_Conexion() {
+    public void Cerrar_Conexion() throws SQLException {
         conexionMySQL.Cerrar_Conexion();
     }
     

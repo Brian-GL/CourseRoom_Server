@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import org.apache.xmlrpc.WebServer;
 
 
@@ -28,42 +30,31 @@ import org.apache.xmlrpc.WebServer;
 public class Principal_Frame extends javax.swing.JFrame {
 
     private byte carta_Visible;
-    private Metodos metodos;
-    private int DEFAULT_PORT = 3030;
-    private WebServer webServer;
+    private final Metodos metodos;
+    private final WebServer webServer;
     
     @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
-    public Principal_Frame() {
+    public Principal_Frame() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
-        
-        
         
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
         this.metodos = new Metodos();
-        try {
-            webServer = new WebServer(DEFAULT_PORT);
-
-            webServer.addHandler("CourseRoom_Server", metodos);
-
-            webServer.start();
-        } catch (Exception e) {
-            System.err.println("JavaServer: " + e.getMessage());
-        }
         
+        webServer = new WebServer(3030);
+        webServer.addHandler("CourseRoom_Server", metodos);
+        webServer.start();
+        System.out.println("WebServer Starting At Port 3030");
+       
         carta_Visible = 0;
         
         titulo_JLabel.setForeground(contenido_JPanel.getBackground());
         titulo_JLabel.setBackground(contenido_JPanel.getForeground());
         
-        Image logo = null;
-        try {
-            this.setIconImage(ImageIO.read(getClass().getResource("/recursos/iconos/Course_Room_Brand.png")));
-            logo = ImageIO.read(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"));
-        } catch (IOException ex) {
-            
-        }
+        Image logo = ImageIO.read(getClass().getResource("/recursos/iconos/Course_Room_Brand.png"));
+        this.setIconImage(logo);
+        logo = ImageIO.read(getClass().getResource("/recursos/imagenes/Course_Room_Brand_Blue.png"));
         
         logo = logo.getScaledInstance(125, 100, Image.SCALE_AREA_AVERAGING);
         ImageIcon icono = new ImageIcon(logo);
@@ -95,7 +86,6 @@ public class Principal_Frame extends javax.swing.JFrame {
      
         Obtener_Solicitudes();
         
-       
         //Metodos:
         metodos_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
         metodos_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
@@ -115,8 +105,8 @@ public class Principal_Frame extends javax.swing.JFrame {
         tablas_CourseRoom_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
         
         Obtener_Tablas_CourseRoom();
-      
-
+        
+        
         solicitudes_JButton.setBackground(contenido_JPanel.getForeground());
         respuestas_JButton.setBackground(contenido_JPanel.getBackground());
         metodos_JButton.setBackground(contenido_JPanel.getBackground());
@@ -192,7 +182,6 @@ public class Principal_Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servidor De CourseRoom");
         setFont(new java.awt.Font("Gadugi", 1, 20)); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -272,8 +261,8 @@ public class Principal_Frame extends javax.swing.JFrame {
         contenido_Titulo_JPanelLayout.setHorizontalGroup(
             contenido_Titulo_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenido_Titulo_JPanelLayout.createSequentialGroup()
-                .addComponent(titulo_JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(solicitudes_JButton)
                 .addGap(18, 18, 18)
                 .addComponent(respuestas_JButton)
@@ -369,11 +358,11 @@ public class Principal_Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Método", "Activo"
+                "Método"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -381,8 +370,8 @@ public class Principal_Frame extends javax.swing.JFrame {
             }
         });
         metodos_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        metodos_JTable.setRowHeight(100);
-        metodos_JTable.setRowMargin(10);
+        metodos_JTable.setRowHeight(50);
+        metodos_JTable.setRowMargin(15);
         metodos_JTable.setShowGrid(true);
         metodos_JTable.setRowSorter(new TableRowSorter(metodos_JTable.getModel()));
         metodos_JScrollPane.setViewportView(metodos_JTable);
@@ -447,10 +436,14 @@ public class Principal_Frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        metodos.Cerrar_Conexion();
-        webServer.shutdown();
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            metodos.Cerrar_Conexion();
+            webServer.shutdown();
+            this.dispose();
+        } catch (SQLException ex) {
+            
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void respuestas_JButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_respuestas_JButtonMouseClicked
@@ -463,7 +456,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getForeground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
-            actualizar_JButton.setBackground(contenido_JPanel.getBackground());
         }
     }//GEN-LAST:event_respuestas_JButtonMouseClicked
 
@@ -477,7 +469,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
-            actualizar_JButton.setBackground(contenido_JPanel.getBackground());
 
         }
     }//GEN-LAST:event_solicitudes_JButtonMouseClicked
@@ -492,7 +483,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getForeground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
-            actualizar_JButton.setBackground(contenido_JPanel.getBackground());
             
         }
     }//GEN-LAST:event_metodos_JButtonMouseClicked
@@ -507,7 +497,6 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getForeground());
-            actualizar_JButton.setBackground(contenido_JPanel.getBackground());
             
         }
     }//GEN-LAST:event_tablas_CourseRoom_JButtonMouseClicked
@@ -517,17 +506,45 @@ public class Principal_Frame extends javax.swing.JFrame {
         if(SwingUtilities.isLeftMouseButton(evt)){
             switch (carta_Visible) {
                 case 0:
-                    Obtener_Solicitudes();
+                {
+                    try {
+                        Obtener_Solicitudes();
+                    } catch (SQLException ex) {
+                        
+                    }
+                }
                     break;
+
                 case 1:
-                    Obtener_Respuestas();
+                {
+                    try {
+                        Obtener_Respuestas();
+                    } catch (SQLException ex) {
+                        
+                    }
+                }
                     break;
+
                 case 2:
-                    Obtener_Metodos();
+                {
+                    try {
+                        Obtener_Metodos();
+                    } catch (SQLException ex) {
+                        
+                    }
+                }
                     break;
+
                 case 3:
-                    Obtener_Tablas_CourseRoom();
+                {
+                    try {
+                        Obtener_Tablas_CourseRoom();
+                    } catch (SQLException ex) {
+                        
+                    }
+                }
                     break;
+
             }
         }
     }//GEN-LAST:event_actualizar_JButtonMouseClicked
@@ -543,126 +560,89 @@ public class Principal_Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_actualizar_JButtonMouseExited
 
     
-    private void Obtener_Solicitudes(){
+    private void Obtener_Solicitudes() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) solicitudes_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.sp_ObtenerSolicitudes();
+        ResultSet resultados = metodos.Sp_ObtenerSolicitudes();
         if (resultados != null) {
             String[] celdas = new String[4];
-            try {
-                while (resultados.next()) {
+            while (resultados.next()) {
 
-                    celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
-                    celdas[1] = resultados.getString("Solicitud");
-                    celdas[2] = resultados.getString("Cliente");
-                    celdas[3] = resultados.getString("FechaSolicitud");
+                celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                celdas[1] = resultados.getString("Solicitud");
+                celdas[2] = resultados.getString("Cliente");
+                celdas[3] = resultados.getString("FechaSolicitud");
 
-                    modelo.addRow(celdas);
-                }
-            } catch (SQLException ex) {
-
+                modelo.addRow(celdas);
             }
 
-        }
-
-        try {
             resultados.close();
-        } catch (SQLException ex) {
-
         }
+
     }
     
-    private void Obtener_Respuestas() {
+    private void Obtener_Respuestas() throws SQLException {
         
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.sp_ObtenerRespuestas();
+        ResultSet resultados = metodos.Sp_ObtenerRespuestas();
         if (resultados != null) {
             String[] celdas = new String[4];
-            try {
-                while (resultados.next()) {
+            
+            while (resultados.next()) {
 
-                    celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
-                    celdas[1] = resultados.getString("Respuesta");
-                    celdas[2] = resultados.getString("Cliente");
-                    celdas[3] = resultados.getString("FechaRespuesta");
+                celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                celdas[1] = resultados.getString("Respuesta");
+                celdas[2] = resultados.getString("Cliente");
+                celdas[3] = resultados.getString("FechaRespuesta");
 
-                    modelo.addRow(celdas);
-                }
-            } catch (SQLException ex) {
-
+                modelo.addRow(celdas);
             }
 
-        }
-
-        try {
             resultados.close();
-        } catch (SQLException ex) {
-
         }
-
     }
     
-    private void Obtener_Metodos() {
+    private void Obtener_Metodos() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) metodos_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.sp_ObtenerMetodos();
+        ResultSet resultados = metodos.Sp_ObtenerMetodos();
         if (resultados != null) {
-            String[] celdas = new String[2];
+            String[] celdas = new String[1];
             
-            try {
-                while (resultados.next()) {
+            while (resultados.next()) {
 
-                    celdas[0] = resultados.getString("Metodo");
-                    celdas[1] = resultados.getBoolean("Activo") ? "Activo" : "Desactivado";
+                celdas[0] = resultados.getString("Metodo");
 
-                    modelo.addRow(celdas);
-                }
-            } catch (SQLException ex) {
-
+                modelo.addRow(celdas);
             }
-
-        }
-
-        try {
+            
             resultados.close();
-        } catch (SQLException ex) {
-
         }
 
     }
     
-    
-    private void Obtener_Tablas_CourseRoom() {
+    private void Obtener_Tablas_CourseRoom() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tablas_CourseRoom_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.sp_ObtenerTablasCourseRoom();
+        ResultSet resultados = metodos.Sp_ObtenerTablasCourseRoom();
         if (resultados != null) {
             String[] celdas = new String[3];
-            try {
+            
+            while (resultados.next()) {
 
-                while (resultados.next()) {
+                celdas[0] = resultados.getString("Tabla");
+                celdas[1] = String.valueOf(resultados.getInt("CantidadRegistros"));
+                celdas[2] = resultados.getString("FechaActualizacion");
 
-                    celdas[0] = resultados.getString("Tabla");
-                    celdas[1] = String.valueOf(resultados.getInt("CantidadRegistros"));
-                    celdas[2] = resultados.getString("FechaActualizacion");
-
-                    modelo.addRow(celdas);
-                }
-            } catch (SQLException ex) {
-
+                modelo.addRow(celdas);
             }
 
-        }
-
-        try {
             resultados.close();
-        } catch (SQLException ex) {
-
         }
-
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizar_JButton;
     private javax.swing.JPanel contenido_JPanel;
