@@ -4,9 +4,19 @@
  */
 package clases;
 
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Vector;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -48,49 +58,50 @@ public class Metodos {
     
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
     
-    public Vector<Vector<String>> ObtenerRespuestas(){
+    
+    public Vector<Integer> Fecha_Hora_Servidor(){
         
-        Vector<Vector<String>> vector = new Vector<>();
-     
-        ResultSet resultados;
-        try {
-            resultados = Sp_ObtenerRespuestas();
-            
-            if (resultados != null) {
-
-                Vector<String> idTickets = new Vector<>();
-                Vector<String> respuestas = new Vector<>();
-                Vector<String> clientes = new Vector<>();
-                Vector<String> fechasRespuesta = new Vector<>();
-                
-                while (resultados.next()) {
-
-                    idTickets.add(String.valueOf(resultados.getInt("IdTicket")));
-                    respuestas.add(resultados.getString("Respuesta"));
-                    clientes.add(resultados.getString("Cliente"));
-                    fechasRespuesta.add(resultados.getString("FechaRespuesta"));
-
-                }
-
-                resultados.close();
-                
-                vector.add(idTickets);
-                vector.add(respuestas);
-                vector.add(clientes);
-                vector.add(fechasRespuesta);
-                
-                return vector;
-               
-            }
-            
-        } catch (SQLException ex) {
-            
-        }
+        LocalDateTime fecha_Hora_Actual = LocalDateTime.now();
+        
+        Vector<Integer> vector = new Vector<>();
+        
+        vector.add(fecha_Hora_Actual.getYear());
+        vector.add(fecha_Hora_Actual.getMonthValue());
+        vector.add(fecha_Hora_Actual.getDayOfMonth());
+        vector.add(fecha_Hora_Actual.getHour());
+        vector.add(fecha_Hora_Actual.getMinute());
+        vector.add(fecha_Hora_Actual.getSecond());
         
         return vector;
-    } 
-//    
-//    public Object[] ObtenerRespuestas(){
+    }
+    
+    public byte[] Imagen_Inicio_Sesion() throws MalformedURLException, IOException{
+        
+        URL url_Imagen = new URL("https://picsum.photos/500/700");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        try {
+            byte[] chunk = new byte[4096];
+            int bytesRead;
+            try(InputStream stream = url_Imagen.openStream()){
+
+                while ((bytesRead = stream.read(chunk)) > 0) {
+                    outputStream.write(chunk, 0, bytesRead);
+                }
+            
+            }
+
+        } catch (IOException e) {
+            return null;
+        }
+
+        return outputStream.toByteArray();  
+       
+    }
+    
+//    public Vector<Vector<String>> ObtenerRespuestas(){
+//        
+//        Vector<Vector<String>> vector = new Vector<>();
 //     
 //        ResultSet resultados;
 //        try {
@@ -98,34 +109,28 @@ public class Metodos {
 //            
 //            if (resultados != null) {
 //
-//                resultados.last();
-//                int numero_Registros = resultados.getRow();
+//                Vector<String> idTickets = new Vector<>();
+//                Vector<String> respuestas = new Vector<>();
+//                Vector<String> clientes = new Vector<>();
+//                Vector<String> fechasRespuesta = new Vector<>();
 //                
-//                int i = 0;
-//                Object[] respuesta = new Object[4];
-//                String[] idTickets = new String[numero_Registros];
-//                String[] respuestas = new String[numero_Registros];
-//                String[] clientes = new String[numero_Registros];
-//                String[] fechasRespuesta = new String[numero_Registros];
-//                
-//                while (resultados.previous()) {
+//                while (resultados.next()) {
 //
-//                    idTickets[i] = String.valueOf(resultados.getInt("IdTicket"));
-//                    respuestas[i] = resultados.getString("Respuesta");
-//                    clientes[i] = resultados.getString("Cliente");
-//                    fechasRespuesta[i] = resultados.getString("FechaRespuesta");
+//                    idTickets.add(String.valueOf(resultados.getInt("IdTicket")));
+//                    respuestas.add(resultados.getString("Respuesta"));
+//                    clientes.add(resultados.getString("Cliente"));
+//                    fechasRespuesta.add(resultados.getString("FechaRespuesta"));
 //
-//                    i++;
 //                }
 //
 //                resultados.close();
 //                
-//                respuesta[0] = idTickets;
-//                respuesta[1] = respuestas;
-//                respuesta[2] = clientes;
-//                respuesta[3] = fechasRespuesta;
+//                vector.add(idTickets);
+//                vector.add(respuestas);
+//                vector.add(clientes);
+//                vector.add(fechasRespuesta);
 //                
-//                return respuesta;
+//                return vector;
 //               
 //            }
 //            
@@ -133,9 +138,9 @@ public class Metodos {
 //            
 //        }
 //        
-//        return new Object[]{new Object[]{""},new Object[]{""},new Object[]{""},new Object[]{""}};
+//        return vector;
 //    } 
-//    
+
     // </editor-fold >
     
     
