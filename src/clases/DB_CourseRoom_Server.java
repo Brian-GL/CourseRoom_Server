@@ -16,11 +16,11 @@ import java.util.Base64;
  *
  * @author LENOVO
  */
-public class ConexionMySQL {
+public class DB_CourseRoom_Server {
     
     private Connection conexion;
     
-    public ConexionMySQL() throws ClassNotFoundException, SQLException{
+    public DB_CourseRoom_Server() throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.cj.jdbc.Driver");
         byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
         String decodificacion = new String(decoded);

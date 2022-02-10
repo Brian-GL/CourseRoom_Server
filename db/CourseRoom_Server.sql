@@ -52,7 +52,6 @@ DROP TABLE IF EXISTS `tb_metodos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tb_metodos` (
   `Metodo` varchar(50) NOT NULL,
-  `Activo` bit(1) NOT NULL,
   PRIMARY KEY (`Metodo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -63,7 +62,7 @@ CREATE TABLE `tb_metodos` (
 
 LOCK TABLES `tb_metodos` WRITE;
 /*!40000 ALTER TABLE `tb_metodos` DISABLE KEYS */;
-INSERT INTO `tb_metodos` VALUES ('PRUEBA METODO',_binary '');
+INSERT INTO `tb_metodos` VALUES ('METODO 1'),('METODO 2');
 /*!40000 ALTER TABLE `tb_metodos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +81,7 @@ CREATE TABLE `tb_tickets` (
   `Respuesta` varchar(100) DEFAULT NULL,
   `FechaRespuesta` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`IdTicket`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +90,7 @@ CREATE TABLE `tb_tickets` (
 
 LOCK TABLES `tb_tickets` WRITE;
 /*!40000 ALTER TABLE `tb_tickets` DISABLE KEYS */;
-INSERT INTO `tb_tickets` VALUES (1,'PRUEBA 1','BRIAN','01/02/22 19:34:31','PRUEBA RESPUESTA','01/02/22 19:37:08');
+INSERT INTO `tb_tickets` VALUES (1,'PRUEBA 1','BRIAN','01/02/22 19:34:31','PRUEBA RESPUESTA','01/02/22 19:37:08'),(2,'SOLICITUD DE PRUEBA','BRIAN GL','09/02/22 18:48:07','PRUEBA RESPUESTA 2 CON RPC','09/02/22 18:48:50'),(3,'SOLICITUD DE PRUEBA 2','BRIAN GL','09/02/22 18:48:19','PRUEBA RESPUESTA 3 CON RPC','09/02/22 18:48:57'),(4,'SOLICITUD DE PRUEBA 3','BRIAN GL','09/02/22 18:48:27',NULL,NULL);
 /*!40000 ALTER TABLE `tb_tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,34 +101,6 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'courseroom_server'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `sp_ActivarMetodo` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivarMetodo`(	
-	IN _Metodo VARCHAR(50),
-    OUT Codigo BIT,
-    OUT Mensaje VARCHAR(100)
-)
-BEGIN
-	IF EXISTS (SELECT Metodo FROM tb_metodos WHERE Metodo = _Metodo AND Activo = 0) THEN
-		UPDATE tb_metodos SET Activo = 1 WHERE Metodo = _Metodo;
-        SELECT 1 AS "Codigo", 'OK' AS "Mensaje";
-    ELSE
-		SELECT 0 AS "Codigo", 'No Existe El Metodo O Ya Se Encuentra Activo' AS "Mensaje";
-    END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_ActualizarCantidadRegistrosTablaCourseroom` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -280,7 +251,7 @@ BEGIN
         IF EXISTS (SELECT Metodo FROM tb_metodos WHERE Metodo = _Metodo) THEN
 			SELECT 0 AS "Codigo", 'El Metodo Ya Se Encuentra Registrado' AS Mensaje;
 		ELSE
-			INSERT INTO tb_metodos(Metodo,Activo) VALUES (UPPER(_Metodo), 1);
+			INSERT INTO tb_metodos(Metodo) VALUES (UPPER(_Metodo));
             SELECT 1 AS "Codigo", 'OK' AS Mensaje;
         END IF;
     END IF;
@@ -411,34 +382,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_DesactivarMetodo` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DesactivarMetodo`(
-	IN _Metodo VARCHAR(50),
-    OUT Codigo BIT,
-    OUT Mensaje VARCHAR(100)
-)
-BEGIN
-	IF EXISTS (SELECT Metodo FROM tb_metodos WHERE Metodo = _Metodo AND Activo = 1) THEN
-		UPDATE tb_metodos SET Activo = 0 WHERE Metodo = _Metodo;
-        SELECT 1 AS "Codigo", 'OK' AS "Mensaje";
-    ELSE
-		SELECT 0 AS "Codigo", 'No Existe El Metodo O Ya Se Encuentra Desactivado' AS "Mensaje";
-    END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_ObtenerMetodos` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -533,4 +476,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-01 19:48:07
+-- Dump completed on 2022-02-09 18:50:58
