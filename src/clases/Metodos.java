@@ -4,19 +4,29 @@
  */
 package clases;
 
-import java.awt.Image;
+import com.mysql.cj.util.Base64Decoder;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.Properties;
 import java.util.Vector;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -24,14 +34,71 @@ import javax.swing.ImageIcon;
  */
 public class Metodos {
     
+    private Session sesion;
+    private StringBuilder mensaje_HTML;
+    private MimeBodyPart parte_Cuerpo_MIME_HTML;
+    private MimeMessage mensaje_MIME;
+    private InternetAddress direccion_Internet;
+    private Multipart multiparte;
     private final DB_CourseRoom_Server db_CourseRoom_Server;
     
     public Metodos() throws ClassNotFoundException, SQLException{
         db_CourseRoom_Server = new DB_CourseRoom_Server();
+        
+        try{
+        
+            //Crear las propiedades para mandar el correo
+            Properties propiedades = new Properties();
+            propiedades.put("mail.smtp.host", "smtp.outlook.com");
+            propiedades.put("mail.smtp.starttls.enable", "true");
+            propiedades.put("mail.smtp.port", "587");
+            propiedades.put("mail.smtp.auth", "true");
+            // Obtener la sesion
+            sesion = Session.getInstance(propiedades, null);
+
+            // Leer la plantilla
+            try (InputStream stream_Entrada = getClass().getResourceAsStream("/recursos/html/mensaje.html")) {
+                try (BufferedReader lector_Buffered = new BufferedReader(new InputStreamReader(stream_Entrada))) {
+                    // Almacenar el contenido de la plantilla en un StringBuffer
+                    String linea = "";
+                    mensaje_HTML = new StringBuilder();
+
+                    while ((linea = lector_Buffered.readLine()) != null) {
+                        mensaje_HTML.append(linea);
+                    }
+
+                }
+            }
+
+            // Crear la parte del mensaje HTML
+            parte_Cuerpo_MIME_HTML = new MimeBodyPart();
+            parte_Cuerpo_MIME_HTML.setContent(mensaje_HTML.toString(), "text/html");
+
+            // Crear el cuerpo del mensaje
+            mensaje_MIME = new MimeMessage(sesion);
+
+            // Agregar el asunto al correo
+            mensaje_MIME.setSubject("CourseRoom -  Mensaje De Recuperación.");
+
+            // Agregar quien envía el correo
+            mensaje_MIME.setFrom(new InternetAddress("Course_Room@outlook.com", "CourseRoom Mensaje De Recuperación"));
+
+            // Crear el multiparte para agregar la parte del mensaje anterior
+            multiparte = new MimeMultipart();
+
+            // Agregar la parte del mensaje  de recuperación HTML al multiPart
+            multiparte.addBodyPart(parte_Cuerpo_MIME_HTML);
+
+            direccion_Internet = new InternetAddress();
+
+        }
+        catch (IOException | MessagingException ex) {
+
+        }
+
     }
-    
    
-    // <editor-fold defaultstate="collapsed" desc="Metodos para frame">
+    // <editor-fold defaultstate="collapsed" desc="Metodos base de datos">
     
     public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
         return db_CourseRoom_Server.Sp_ObtenerSolicitudes();
@@ -59,7 +126,7 @@ public class Metodos {
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
     
     
-    public Vector<Integer> Fecha_Hora_Servidor(){
+    public Vector<Integer> Fecha_Hora_Servidor(String cliente){
         
         LocalDateTime fecha_Hora_Actual = LocalDateTime.now();
         
@@ -72,10 +139,11 @@ public class Metodos {
         vector.add(fecha_Hora_Actual.getMinute());
         vector.add(fecha_Hora_Actual.getSecond());
         
+        
         return vector;
     }
     
-    public byte[] Imagen_Inicio_Sesion() throws MalformedURLException, IOException{
+    public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException{
         
         URL url_Imagen = new URL("https://picsum.photos/500/700");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -97,6 +165,57 @@ public class Metodos {
 
         return outputStream.toByteArray();  
        
+    }
+    
+    
+    public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente) {
+
+        // brianlomeli097@outlook.com
+       //Buscar la contraseña en la base de datos:
+       String contrasena = "contraseña De Prueba";
+
+       try {
+
+           // Destinatario
+           direccion_Internet.setAddress(correo_Electronico);
+
+           // Agregar destinatario al mensaje
+           mensaje_MIME.setRecipient(Message.RecipientType.TO,direccion_Internet); 
+
+           // Crear la parte del mensaje HTML
+           MimeBodyPart mimeBodyPartMensaje = new MimeBodyPart();
+           mimeBodyPartMensaje.setFileName("Credenciales.txt");
+           mimeBodyPartMensaje.setText("Contraseña: "+contrasena);
+
+           // Agregar la parte del mensaje HTML al multiPart
+           multiparte.addBodyPart(mimeBodyPartMensaje);
+
+           // Agregar el multiparte al cuerpo del mensaje
+           mensaje_MIME.setContent(multiparte);
+
+           // Enviar el mensaje
+           try ( Transport transporte = sesion.getTransport("smtp")) {
+               
+               byte[] decoded_Correo = Base64.getDecoder().decode("Q291cnNlX1Jvb21Ab3V0bG9vay5jb20=");
+               byte[] decoded_Password = Base64.getDecoder().decode("Y3VjZWlVREc=");
+               String decodificacion_Correo = new String(decoded_Correo);
+               String decodificacion_Password = new String(decoded_Password);
+               
+               String servidor = sesion.getProperty("mail.smtp.host");
+               int puerto = Integer.parseInt(sesion.getProperty("mail.smtp.port"));
+               transporte.connect(servidor, puerto, decodificacion_Correo, decodificacion_Password);
+               
+               transporte.sendMessage(mensaje_MIME, mensaje_MIME.getAllRecipients());
+               
+           }
+
+       } catch (MessagingException ex) {
+           System.out.println("clases.Metodos.Recuperar_Credenciales(): "+ex.getLocalizedMessage());
+           System.out.println("clases.Metodos.Recuperar_Credenciales(): "+ex.getMessage());
+           return Boolean.FALSE;
+       }
+
+       return Boolean.TRUE;
     }
     
 //    public Vector<Vector<String>> ObtenerRespuestas(){
