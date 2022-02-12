@@ -4,7 +4,7 @@
  */
 package clases;
 
-import com.mysql.cj.util.Base64Decoder;
+import frames.Principal_Frame;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,13 +34,16 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Metodos {
     
+    private final DB_CourseRoom_Server db_CourseRoom_Server;
+    
+    
     private Session sesion;
     private StringBuilder mensaje_HTML;
     private MimeBodyPart parte_Cuerpo_MIME_HTML;
     private MimeMessage mensaje_MIME;
     private InternetAddress direccion_Internet;
     private Multipart multiparte;
-    private final DB_CourseRoom_Server db_CourseRoom_Server;
+    
     
     public Metodos() throws ClassNotFoundException, SQLException{
         db_CourseRoom_Server = new DB_CourseRoom_Server();
@@ -139,6 +142,7 @@ public class Metodos {
         vector.add(fecha_Hora_Actual.getMinute());
         vector.add(fecha_Hora_Actual.getSecond());
         
+        Principal_Frame.Agregar_Conexion(cliente);
         
         return vector;
     }
@@ -163,6 +167,7 @@ public class Metodos {
             return null;
         }
 
+        Principal_Frame.Agregar_Conexion(cliente);
         return outputStream.toByteArray();  
        
     }
@@ -215,6 +220,7 @@ public class Metodos {
            return Boolean.FALSE;
        }
 
+       Principal_Frame.Agregar_Conexion(cliente);
        return Boolean.TRUE;
     }
     

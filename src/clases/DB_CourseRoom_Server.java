@@ -4,6 +4,7 @@
  */
 package clases;
 
+import datos.estructuras.Par;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ import java.util.Base64;
  */
 public class DB_CourseRoom_Server {
     
-    private Connection conexion;
+    private final Connection conexion;
     
     public DB_CourseRoom_Server() throws ClassNotFoundException, SQLException{
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -47,23 +48,27 @@ public class DB_CourseRoom_Server {
         return ejecutor.executeQuery();
     }
     
-//    public static Dictionary<Boolean, String> sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
-//        try {
-//            
-//            CallableStatement ejecutor = conexion.prepareCall("{CALL sp_AgregarSolicitud('?,?,?)}");
-//            
-//            ejecutor.setString("Solicitud", solicitud);
-//            ejecutor.setString("Cliente", cliente);
-//            ejecutor.setString("Fecha_Solicitud", fecha_Solicitud);
-//            
-//            
-//              
-//        } catch (SQLException ex) {
-//            
-//        }
-//        
-//        
-//    }
+    public Par<Boolean, String> sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
+        try {
+            
+            Boolean codigo;
+            String mensaje;
+            try (CallableStatement ejecutor = conexion.prepareCall("{CALL sp_AgregarSolicitud('?,?,?)}")) {
+                ejecutor.setString("Solicitud", solicitud);
+                ejecutor.setString("Cliente", cliente);
+                ejecutor.setString("Fecha_Solicitud", fecha_Solicitud);
+                ejecutor.execute();
+                codigo = ejecutor.getBoolean(0);
+                mensaje = ejecutor.getString(1);
+            }
+            return new Par<>(codigo, mensaje);
+              
+        } catch (SQLException ex) {
+            
+        }
+        
+        return new Par<>(Boolean.FALSE,"Error en MySQL");
+    }
     
     public void Cerrar_Conexion() throws SQLException{
         conexion.close();

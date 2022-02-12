@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.apache.xmlrpc.WebServer;
 
 
@@ -104,11 +106,19 @@ public class Principal_Frame extends javax.swing.JFrame {
         
         Obtener_Tablas_CourseRoom();
         
+        //Tabla Conexiones:
+        conexiones_JScrollPane.getVerticalScrollBar().setUnitIncrement(40);
+        tablas_Courseroom_JScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
+        
+        conexiones_JTable.getTableHeader().setFont(gadugi);
+        conexiones_JTable.getTableHeader().setBackground(titulo_JLabel.getForeground());
+        conexiones_JTable.getTableHeader().setForeground(titulo_JLabel.getBackground());
         
         solicitudes_JButton.setBackground(contenido_JPanel.getForeground());
         respuestas_JButton.setBackground(contenido_JPanel.getBackground());
         metodos_JButton.setBackground(contenido_JPanel.getBackground());
         tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
+        conexiones_JButton.setBackground(contenido_JPanel.getBackground());
         actualizar_JButton.setBackground(contenido_JPanel.getBackground());
         
         titulo_JLabel.setText("Solicitudes");
@@ -131,6 +141,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         metodos_JButton = new javax.swing.JButton();
         tablas_CourseRoom_JButton = new javax.swing.JButton();
         actualizar_JButton = new javax.swing.JButton();
+        conexiones_JButton = new javax.swing.JButton();
         principal_JLayeredPane = new javax.swing.JLayeredPane();
         solicitudes_JScrollPane = new javax.swing.JScrollPane();
         solicitudes_JTable = new JTable(){
@@ -176,6 +187,17 @@ public class Principal_Frame extends javax.swing.JFrame {
             }
         };
         tablas_CourseRoom_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
+        conexiones_JScrollPane = new javax.swing.JScrollPane();
+        conexiones_JTable = new JTable(){
+            public Class<?> getColumnClass(int column) {
+                if (0 < this.getRowCount()) {
+                    return getValueAt(0, column).getClass();
+                } else {
+                    return null;
+                }
+            }
+        };
+        conexiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servidor De CourseRoom");
@@ -254,12 +276,21 @@ public class Principal_Frame extends javax.swing.JFrame {
             }
         });
 
+        conexiones_JButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/verified-user.png"))); // NOI18N
+        conexiones_JButton.setBorder(null);
+        ((ImageIcon)conexiones_JButton.getIcon()).getImage().flush();
+        conexiones_JButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                conexiones_JButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout contenido_Titulo_JPanelLayout = new javax.swing.GroupLayout(contenido_Titulo_JPanel);
         contenido_Titulo_JPanel.setLayout(contenido_Titulo_JPanelLayout);
         contenido_Titulo_JPanelLayout.setHorizontalGroup(
             contenido_Titulo_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenido_Titulo_JPanelLayout.createSequentialGroup()
-                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(solicitudes_JButton)
                 .addGap(18, 18, 18)
@@ -268,6 +299,8 @@ public class Principal_Frame extends javax.swing.JFrame {
                 .addComponent(metodos_JButton)
                 .addGap(18, 18, 18)
                 .addComponent(tablas_CourseRoom_JButton)
+                .addGap(18, 18, 18)
+                .addComponent(conexiones_JButton)
                 .addGap(18, 18, 18)
                 .addComponent(actualizar_JButton))
         );
@@ -279,6 +312,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             .addComponent(metodos_JButton)
             .addComponent(tablas_CourseRoom_JButton)
             .addComponent(actualizar_JButton)
+            .addComponent(conexiones_JButton)
         );
 
         principal_JLayeredPane.setLayout(new java.awt.CardLayout());
@@ -407,6 +441,37 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         principal_JLayeredPane.add(tablas_Courseroom_JScrollPane, "Tablas_CourseRoom");
 
+        conexiones_JScrollPane.setBorder(null);
+
+        conexiones_JTable.setAutoCreateRowSorter(true);
+        conexiones_JTable.setBackground(new java.awt.Color(14, 30, 64));
+        conexiones_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        conexiones_JTable.setForeground(new java.awt.Color(104, 194, 232));
+        conexiones_JTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cliente", "Conectado El"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        conexiones_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        conexiones_JTable.setRowHeight(50);
+        conexiones_JTable.setRowMargin(15);
+        conexiones_JTable.setShowGrid(true);
+        conexiones_JTable.setRowSorter(new TableRowSorter(conexiones_JTable.getModel()));
+        conexiones_JScrollPane.setViewportView(conexiones_JTable);
+
+        principal_JLayeredPane.add(conexiones_JScrollPane, "Conexiones");
+
         javax.swing.GroupLayout contenido_JPanelLayout = new javax.swing.GroupLayout(contenido_JPanel);
         contenido_JPanel.setLayout(contenido_JPanelLayout);
         contenido_JPanelLayout.setHorizontalGroup(
@@ -454,6 +519,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getForeground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
+            conexiones_JButton.setBackground(contenido_JPanel.getBackground());
         }
     }//GEN-LAST:event_respuestas_JButtonMouseClicked
 
@@ -467,6 +533,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
+            conexiones_JButton.setBackground(contenido_JPanel.getBackground());
 
         }
     }//GEN-LAST:event_solicitudes_JButtonMouseClicked
@@ -481,6 +548,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getForeground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
+            conexiones_JButton.setBackground(contenido_JPanel.getBackground());
             
         }
     }//GEN-LAST:event_metodos_JButtonMouseClicked
@@ -495,6 +563,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             respuestas_JButton.setBackground(contenido_JPanel.getBackground());
             metodos_JButton.setBackground(contenido_JPanel.getBackground());
             tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getForeground());
+            conexiones_JButton.setBackground(contenido_JPanel.getBackground());
             
         }
     }//GEN-LAST:event_tablas_CourseRoom_JButtonMouseClicked
@@ -556,6 +625,21 @@ public class Principal_Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         actualizar_JButton.setBackground(contenido_JPanel.getBackground());
     }//GEN-LAST:event_actualizar_JButtonMouseExited
+
+    private void conexiones_JButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conexiones_JButtonMouseClicked
+        // TODO add your handling code here:
+        if(SwingUtilities.isLeftMouseButton(evt)){
+            ((CardLayout)principal_JLayeredPane.getLayout()).show(principal_JLayeredPane, "Conexiones");
+            titulo_JLabel.setText("Conexiones");
+            carta_Visible = 4;
+            solicitudes_JButton.setBackground(contenido_JPanel.getBackground());
+            respuestas_JButton.setBackground(contenido_JPanel.getBackground());
+            metodos_JButton.setBackground(contenido_JPanel.getBackground());
+            tablas_CourseRoom_JButton.setBackground(contenido_JPanel.getBackground());
+            conexiones_JButton.setBackground(contenido_JPanel.getForeground());
+            
+        }
+    }//GEN-LAST:event_conexiones_JButtonMouseClicked
 
     
     private void Obtener_Solicitudes() throws SQLException{
@@ -641,8 +725,31 @@ public class Principal_Frame extends javax.swing.JFrame {
     }
     
     
+    public static void Agregar_Conexion(String cliente){
+        
+        DateTimeFormatter formato_Fecha = DateTimeFormatter.ofPattern("EEEE dd/MM/yyyy hh:mm:ss a");
+        LocalDateTime fecha_Hora_Servidor = LocalDateTime.now();
+        String tiempo = fecha_Hora_Servidor.format(formato_Fecha);
+        DefaultTableModel modelo = (DefaultTableModel) conexiones_JTable.getModel();
+        
+        for(int i = 0; i < modelo.getRowCount();i++){
+            if(modelo.getValueAt(i, 0).equals(cliente)){
+                modelo.setValueAt(tiempo,i, 1);
+                return;
+            }
+        }
+        String[] celdas = new String[2];
+        celdas[0] = cliente;
+        celdas[1] = tiempo;
+        modelo.addRow(celdas);
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizar_JButton;
+    private javax.swing.JButton conexiones_JButton;
+    private javax.swing.JScrollPane conexiones_JScrollPane;
+    private static javax.swing.JTable conexiones_JTable;
     private javax.swing.JPanel contenido_JPanel;
     private javax.swing.JPanel contenido_Titulo_JPanel;
     private javax.swing.JButton metodos_JButton;
