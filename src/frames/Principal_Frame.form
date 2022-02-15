@@ -262,14 +262,14 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="14" style="0"/>
+                      <Font name="Gadugi" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ID Ticket" type="java.lang.Object"/>
+                        <Column editable="false" title="ID Solicitud" type="java.lang.Object"/>
                         <Column editable="false" title="Solicitud" type="java.lang.Object"/>
                         <Column editable="false" title="Cliente" type="java.lang.Object"/>
                         <Column editable="false" title="Fecha Solicitud" type="java.lang.Object"/>
@@ -284,6 +284,7 @@
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
                     <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="solicitudes_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="solicitudes_JTable.setRowSorter(new TableRowSorter(solicitudes_JTable.getModel()));"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -312,14 +313,14 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="14" style="0"/>
+                      <Font name="Gadugi" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ID Ticket" type="java.lang.Object"/>
+                        <Column editable="false" title="ID Respuesta" type="java.lang.Object"/>
                         <Column editable="false" title="Respuesta" type="java.lang.Object"/>
                         <Column editable="false" title="Cliente" type="java.lang.Object"/>
                         <Column editable="false" title="Fecha Respuesta" type="java.lang.Object"/>
@@ -334,6 +335,7 @@
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
                     <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="respuestas_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="respuestas_JTable.setRowSorter(new TableRowSorter(respuestas_JTable.getModel()));"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -409,7 +411,7 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="14" style="0"/>
+                      <Font name="Gadugi" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
@@ -430,6 +432,7 @@
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
                     <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="tablas_CourseRoom_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablas_CourseRoom_JTable.setRowSorter(new TableRowSorter(tablas_CourseRoom_JTable.getModel()));"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -458,7 +461,7 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="14" style="0"/>
+                      <Font name="Gadugi" size="13" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>

@@ -4,6 +4,7 @@
  */
 package clases;
 
+import datos.estructuras.Par;
 import frames.Principal_Frame;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -12,9 +13,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Vector;
@@ -34,7 +39,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Metodos {
     
-    private final DB_CourseRoom_Server db_CourseRoom_Server;
+    private static Connection db_CourseRoom_Server_Conexion;
     
     
     private Session sesion;
@@ -43,10 +48,16 @@ public class Metodos {
     private MimeMessage mensaje_MIME;
     private InternetAddress direccion_Internet;
     private Multipart multiparte;
-    
+    private DateTimeFormatter formato_Fecha;
     
     public Metodos() throws ClassNotFoundException, SQLException{
-        db_CourseRoom_Server = new DB_CourseRoom_Server();
+        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
+        String decodificacion = new String(decoded);
+        db_CourseRoom_Server_Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
+        
+        formato_Fecha = DateTimeFormatter.ofPattern("EEEE dd/MM/yyyy hh:mm:ss a");
         
         try{
         
@@ -101,26 +112,90 @@ public class Metodos {
 
     }
    
-    // <editor-fold defaultstate="collapsed" desc="Metodos base de datos">
+    // <editor-fold defaultstate="collapsed" desc="Metodos base de datos para frame principal">
     
-    public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
-        return db_CourseRoom_Server.Sp_ObtenerSolicitudes();
+     public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerSolicitudes()}");
+        return ejecutor.executeQuery();
     }
-
-    public ResultSet Sp_ObtenerRespuestas() throws SQLException {
-        return db_CourseRoom_Server.Sp_ObtenerRespuestas();
+    
+    public static ResultSet Sp_ObtenerRespuestas() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerRespuestas()}");
+        return ejecutor.executeQuery();
     }
-
-    public ResultSet Sp_ObtenerMetodos() throws SQLException {
-        return db_CourseRoom_Server.Sp_ObtenerMetodos();
+    
+    public static ResultSet Sp_ObtenerMetodos() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerMetodos()}");
+        return ejecutor.executeQuery();
     }
-
-    public ResultSet Sp_ObtenerTablasCourseRoom() throws SQLException {
-        return db_CourseRoom_Server.Sp_ObtenerTablasCourseRoom();
+    
+    public static ResultSet Sp_ObtenerTablasCourseRoom() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerTablasCourseRoom()}");
+        return ejecutor.executeQuery();
     }
-
-    public void Cerrar_Conexion() throws SQLException {
-        db_CourseRoom_Server.Cerrar_Conexion();
+    
+    public Par<Boolean, String> sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
+        
+        Boolean codigo = Boolean.FALSE;
+        String mensaje = "";
+        try {
+            
+            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_AgregarSolicitud(?,?,?)}")) {
+                ejecutor.setString("_Solicitud", solicitud);
+                ejecutor.setString("_Cliente", cliente);
+                ejecutor.setString("_FechaSolicitud", fecha_Solicitud);
+                try (ResultSet resultado = ejecutor.executeQuery()) {
+                    if(resultado != null){
+                        while(resultado.next()){
+                            codigo = resultado.getBoolean("Codigo");
+                            mensaje = resultado.getString("Mensaje");
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            
+              
+        } catch (SQLException ex) {
+            mensaje = ex.getMessage();
+        }
+        
+        return new Par<>(codigo,mensaje);
+    }
+    
+    public Par<Boolean, String> sp_AgregarRespuesta(String respuesta, String cliente, String fecha_Respuesta){
+        
+        Boolean codigo = Boolean.FALSE;
+        String mensaje = "";
+        
+        try {
+            
+            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_AgregarRespuesta(?,?,?)}")) {
+                ejecutor.setString("_Respuesta", respuesta);
+                ejecutor.setString("_Cliente", cliente);
+                ejecutor.setString("_FechaRespuesta", fecha_Respuesta);
+                try (ResultSet resultado = ejecutor.executeQuery()) {
+                    if(resultado != null){
+                        while(resultado.next()){
+                            codigo = resultado.getBoolean("Codigo");
+                            mensaje = resultado.getString("Mensaje");
+                            break;
+                        }
+                    }
+                }
+            }
+            
+              
+        } catch (SQLException ex) {
+            mensaje = ex.getMessage();
+        }
+        
+        return new Par<>(codigo, mensaje);
+    }
+    
+    public void Cerrar_Conexion() throws SQLException{
+        db_CourseRoom_Server_Conexion.close();
     }
     
     
@@ -129,7 +204,15 @@ public class Metodos {
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
     
     
-    public Vector<Integer> Fecha_Hora_Servidor(String cliente){
+    public Vector<Integer> Fecha_Hora_Servidor(String cliente) throws SQLException{
+        
+        //Agregar solicitud:
+        Par<Boolean, String> respuesta = 
+                sp_AgregarSolicitud("Obtener Fecha & Hora Del Servidor", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
         
         LocalDateTime fecha_Hora_Actual = LocalDateTime.now();
         
@@ -144,10 +227,29 @@ public class Metodos {
         
         Principal_Frame.Agregar_Conexion(cliente);
         
+        //Agregar respuesta:
+        respuesta = 
+                sp_AgregarRespuesta("Fecha & Hora: "+vector.toString(), cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Principal_Frame.Obtener_Solicitudes();
+        Principal_Frame.Obtener_Respuestas();
+        
         return vector;
     }
     
-    public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException{
+    public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException, SQLException{
+        
+        //Agregar solicitud:
+        Par<Boolean, String> respuesta = 
+                sp_AgregarSolicitud("Obtener Imagen Inicio Sesión", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
         
         URL url_Imagen = new URL("https://picsum.photos/500/700");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -168,14 +270,34 @@ public class Metodos {
         }
 
         Principal_Frame.Agregar_Conexion(cliente);
+        
+        //Agregar respuesta:
+        respuesta = 
+                sp_AgregarRespuesta("Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Principal_Frame.Obtener_Solicitudes();
+        Principal_Frame.Obtener_Respuestas();
+        
         return outputStream.toByteArray();  
        
     }
     
     
-    public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente) {
+    public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente) throws SQLException {
 
-        // brianlomeli097@outlook.com
+        //Agregar solicitud:
+        Par<Boolean, String> respuesta = 
+                sp_AgregarSolicitud("Recuperar Credenciales Por Correo Electrónico", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        
        //Buscar la contraseña en la base de datos:
        String contrasena = "contraseña De Prueba";
 
@@ -221,6 +343,18 @@ public class Metodos {
        }
 
        Principal_Frame.Agregar_Conexion(cliente);
+       
+       //Agregar respuesta:
+        respuesta = 
+                sp_AgregarRespuesta("Credenciales Enviadas Al Correo: "+correo_Electronico, cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Principal_Frame.Obtener_Solicitudes();
+        Principal_Frame.Obtener_Respuestas();
+       
        return Boolean.TRUE;
     }
     

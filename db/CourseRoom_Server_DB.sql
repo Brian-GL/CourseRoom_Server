@@ -67,31 +67,55 @@ INSERT INTO `tb_metodos` VALUES ('METODO 1'),('METODO 2');
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_tickets`
+-- Table structure for table `tb_respuestas`
 --
 
-DROP TABLE IF EXISTS `tb_tickets`;
+DROP TABLE IF EXISTS `tb_respuestas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tb_tickets` (
-  `IdTicket` int NOT NULL AUTO_INCREMENT,
-  `Solicitud` varchar(100) NOT NULL,
-  `Cliente` varchar(40) NOT NULL,
-  `FechaSolicitud` varchar(50) NOT NULL,
-  `Respuesta` varchar(100) DEFAULT NULL,
-  `FechaRespuesta` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`IdTicket`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `tb_respuestas` (
+  `IdRespuesta` int NOT NULL AUTO_INCREMENT,
+  `Respuesta` varchar(100) NOT NULL,
+  `Cliente` varchar(45) NOT NULL,
+  `FechaRespuesta` varchar(75) NOT NULL,
+  PRIMARY KEY (`IdRespuesta`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COMMENT='Tabla para guardar las respuestas realizadas del servidor hacia los clientes';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_tickets`
+-- Dumping data for table `tb_respuestas`
 --
 
-LOCK TABLES `tb_tickets` WRITE;
-/*!40000 ALTER TABLE `tb_tickets` DISABLE KEYS */;
-INSERT INTO `tb_tickets` VALUES (1,'PRUEBA 1','BRIAN','01/02/22 19:34:31','PRUEBA RESPUESTA','01/02/22 19:37:08'),(2,'SOLICITUD DE PRUEBA','BRIAN GL','09/02/22 18:48:07','PRUEBA RESPUESTA 2 CON RPC','09/02/22 18:48:50'),(3,'SOLICITUD DE PRUEBA 2','BRIAN GL','09/02/22 18:48:19','PRUEBA RESPUESTA 3 CON RPC','09/02/22 18:48:57'),(4,'SOLICITUD DE PRUEBA 3','BRIAN GL','09/02/22 18:48:27',NULL,NULL);
-/*!40000 ALTER TABLE `tb_tickets` ENABLE KEYS */;
+LOCK TABLES `tb_respuestas` WRITE;
+/*!40000 ALTER TABLE `tb_respuestas` DISABLE KEYS */;
+INSERT INTO `tb_respuestas` VALUES (1,'IMAGEN ENVIADA Y OBTENIDA DESDE HTTPS://PICSUM.PHOTOS/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:44:17 p. m.'),(2,'IMAGEN ENVIADA Y OBTENIDA DESDE: \nHTTPS://PICSUM.PHOTOS/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:45:32 p. m.'),(3,'IMAGEN ENVIADA Y OBTENIDA DESDE: HTTPS://PICSUM.PHOTOS/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:46:21 p. m.'),(4,'FECHA & HORA: [2022, 2, 14, 20, 47, 27]','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:47:27 p. m.');
+/*!40000 ALTER TABLE `tb_respuestas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_solicitudes`
+--
+
+DROP TABLE IF EXISTS `tb_solicitudes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tb_solicitudes` (
+  `IdSolicitud` int NOT NULL AUTO_INCREMENT,
+  `Solicitud` varchar(100) NOT NULL,
+  `Cliente` varchar(45) NOT NULL,
+  `FechaSolicitud` varchar(75) NOT NULL,
+  PRIMARY KEY (`IdSolicitud`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COMMENT='Tabla para guardar las solicitudes de los clientes hacia el servidor';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_solicitudes`
+--
+
+LOCK TABLES `tb_solicitudes` WRITE;
+/*!40000 ALTER TABLE `tb_solicitudes` DISABLE KEYS */;
+INSERT INTO `tb_solicitudes` VALUES (1,'OBTENER IMAGEN INICIO SESIÓN','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:44:15 p. m.'),(2,'OBTENER IMAGEN INICIO SESIÓN','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:45:30 p. m.'),(3,'OBTENER IMAGEN INICIO SESIÓN','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:46:18 p. m.'),(4,'OBTENER FECHA & HORA DEL SERVIDOR','C6CC0026-C2C2-11E8-B5F5-E86A64292601','lunes 14/02/2022 08:47:27 p. m.');
+/*!40000 ALTER TABLE `tb_solicitudes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -273,31 +297,23 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_AgregarRespuesta`(
-	IN _IdTicket INT, 
 	IN _Respuesta VARCHAR(100),
-    IN _FechaRespuesta VARCHAR(50),
-    OUT Codigo BIT,
-    OUT Mensaje VARCHAR(100)
+    IN _Cliente VARCHAR(45),
+    IN _FechaRespuesta VARCHAR(75)
 )
 BEGIN
 
-	IF _Respuesta IS NULL OR LENGTH(_Respuesta) = 0  THEN
-		SELECT 0 AS "Codigo", 'La Respuesta Es Nula' AS "Mensaje";
+	IF _Respuesta IS NULL OR LENGTH(_Respuesta) = 0 
+		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0  THEN
+        SELECT 0 AS "Codigo", 'La Respuesta O El Cliente Tienen Valores Nulos' AS "Mensaje";
 	ELSE 
 		
-        IF EXISTS (SELECT IdTicket FROM tb_tickets WHERE IdTicket = _IdTicket) THEN
-		
-			UPDATE tb_tickets SET Respuesta = UPPER(_Respuesta), 
-			FechaRespuesta  = IF(_FechaRespuesta IS NULL OR LENGTH(_FechaRespuesta) = 0 ,
-            DATE_FORMAT(NOW(), '%d/%m/%y %T'),
-            _FechaRespuesta)
-			WHERE IdTicket = _IdTicket;
-			
-			SELECT 1 AS "Codigo", 'OK' AS "Mensaje";
-			
-		ELSE
-			SELECT 0 AS "Codigo", 'No Se Encontro El Ticket A Modificar' AS "Mensaje";
-		END IF;
+        INSERT INTO tb_respuestas(Respuesta, Cliente, FechaRespuesta)
+		VALUES (UPPER(_Respuesta), UPPER(_Cliente), 
+        IF(_FechaRespuesta IS NULL OR 
+        LENGTH(_FechaRespuesta) = 0, DATE_FORMAT(NOW(), '%y/%m/%d %T'), _FechaRespuesta));
+        SELECT 1 AS "Codigo", 'OK' AS "Mensaje";
+       
 	END IF;
 END ;;
 DELIMITER ;
@@ -317,22 +333,20 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_AgregarSolicitud`(
 	IN _Solicitud VARCHAR(100),
-	IN _Cliente VARCHAR(40),
-	IN _FechaSolicitud VARCHAR(50),
-    OUT Codigo BIT,
-    OUT Mensaje VARCHAR(100)
+	IN _Cliente VARCHAR(45),
+	IN _FechaSolicitud VARCHAR(75)
 )
 BEGIN
 
 	IF _Solicitud IS NULL OR LENGTH(_Solicitud) = 0 
 		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0  THEN
-		SELECT 0 AS "Codigo", 'La Solicitud O El Cliente Tienen Valores Nulos' AS "Mensaje";
+        SELECT 0 AS "Codigo", 'La Solicitud O El Cliente Tienen Valores Nulos' AS "Mensaje";
 	ELSE
     
-		INSERT INTO tb_tickets(Solicitud, Cliente, FechaSolicitud)
+		INSERT INTO tb_solicitudes(Solicitud, Cliente, FechaSolicitud)
 		VALUES (UPPER(_Solicitud), UPPER(_Cliente), 
         IF(_FechaSolicitud IS NULL OR 
-        LENGTH(_FechaSolicitud) = 0, DATE_FORMAT(NOW(), '%d/%m/%y %T'), _FechaSolicitud));
+        LENGTH(_FechaSolicitud) = 0, DATE_FORMAT(NOW(), '%y/%m/%d %T'), _FechaSolicitud));
         
 		SELECT 1 AS "Codigo", 'OK' AS "Mensaje";
         
@@ -414,8 +428,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ObtenerRespuestas`()
 BEGIN
 
-	SELECT IdTicket, Respuesta, Cliente, FechaRespuesta FROM tb_tickets 
-    WHERE Respuesta IS NOT NULL AND FechaRespuesta IS NOT NULL
+	SELECT IdRespuesta, Respuesta, Cliente, FechaRespuesta FROM tb_respuestas 
     ORDER BY FechaRespuesta DESC LIMIT 20;
     
 END ;;
@@ -436,8 +449,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ObtenerSolicitudes`()
 BEGIN
-	SELECT IdTicket, Solicitud, Cliente, FechaSolicitud FROM tb_tickets 
-    WHERE Respuesta IS NULL AND FechaRespuesta IS NULL
+	SELECT IdSolicitud, Solicitud, Cliente, FechaSolicitud FROM tb_solicitudes 
     ORDER BY FechaSolicitud DESC LIMIT 20;
 END ;;
 DELIMITER ;
@@ -476,4 +488,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-09 18:50:58
+-- Dump completed on 2022-02-14 20:48:41

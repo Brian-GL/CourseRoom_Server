@@ -30,7 +30,7 @@ import org.apache.xmlrpc.WebServer;
 public class Principal_Frame extends javax.swing.JFrame {
 
     private byte carta_Visible;
-    private final Metodos metodos;
+    private static Metodos metodos;
     private final WebServer webServer;
     
     @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
@@ -40,7 +40,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
-        this.metodos = new Metodos();
+        Principal_Frame.metodos = new Metodos();
         
         webServer = new WebServer(3030);
         webServer.addHandler("CourseRoom_Server", metodos);
@@ -321,14 +321,14 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         solicitudes_JTable.setAutoCreateRowSorter(true);
         solicitudes_JTable.setBackground(new java.awt.Color(14, 30, 64));
-        solicitudes_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        solicitudes_JTable.setFont(new java.awt.Font("Gadugi", 0, 13)); // NOI18N
         solicitudes_JTable.setForeground(new java.awt.Color(104, 194, 232));
         solicitudes_JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Ticket", "Solicitud", "Cliente", "Fecha Solicitud"
+                "ID Solicitud", "Solicitud", "Cliente", "Fecha Solicitud"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -352,14 +352,14 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         respuestas_JTable.setAutoCreateRowSorter(true);
         respuestas_JTable.setBackground(new java.awt.Color(14, 30, 64));
-        respuestas_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        respuestas_JTable.setFont(new java.awt.Font("Gadugi", 0, 13)); // NOI18N
         respuestas_JTable.setForeground(new java.awt.Color(104, 194, 232));
         respuestas_JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Ticket", "Respuesta", "Cliente", "Fecha Respuesta"
+                "ID Respuesta", "Respuesta", "Cliente", "Fecha Respuesta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -414,7 +414,7 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         tablas_CourseRoom_JTable.setAutoCreateRowSorter(true);
         tablas_CourseRoom_JTable.setBackground(new java.awt.Color(14, 30, 64));
-        tablas_CourseRoom_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        tablas_CourseRoom_JTable.setFont(new java.awt.Font("Gadugi", 0, 13)); // NOI18N
         tablas_CourseRoom_JTable.setForeground(new java.awt.Color(104, 194, 232));
         tablas_CourseRoom_JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -445,7 +445,7 @@ public class Principal_Frame extends javax.swing.JFrame {
 
         conexiones_JTable.setAutoCreateRowSorter(true);
         conexiones_JTable.setBackground(new java.awt.Color(14, 30, 64));
-        conexiones_JTable.setFont(new java.awt.Font("Gadugi", 0, 14)); // NOI18N
+        conexiones_JTable.setFont(new java.awt.Font("Gadugi", 0, 13)); // NOI18N
         conexiones_JTable.setForeground(new java.awt.Color(104, 194, 232));
         conexiones_JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -642,7 +642,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_conexiones_JButtonMouseClicked
 
     
-    private void Obtener_Solicitudes() throws SQLException{
+    public static void Obtener_Solicitudes() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) solicitudes_JTable.getModel();
         modelo.setRowCount(0);
         ResultSet resultados = metodos.Sp_ObtenerSolicitudes();
@@ -650,7 +650,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             String[] celdas = new String[4];
             while (resultados.next()) {
 
-                celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                celdas[0] = String.valueOf(resultados.getInt("IdSolicitud"));
                 celdas[1] = resultados.getString("Solicitud");
                 celdas[2] = resultados.getString("Cliente");
                 celdas[3] = resultados.getString("FechaSolicitud");
@@ -663,17 +663,17 @@ public class Principal_Frame extends javax.swing.JFrame {
 
     }
     
-    private void Obtener_Respuestas() throws SQLException {
+    public static void Obtener_Respuestas() throws SQLException {
         
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.Sp_ObtenerRespuestas();
+        ResultSet resultados = Metodos.Sp_ObtenerRespuestas();
         if (resultados != null) {
             String[] celdas = new String[4];
             
             while (resultados.next()) {
 
-                celdas[0] = String.valueOf(resultados.getInt("IdTicket"));
+                celdas[0] = String.valueOf(resultados.getInt("IdRespuesta"));
                 celdas[1] = resultados.getString("Respuesta");
                 celdas[2] = resultados.getString("Cliente");
                 celdas[3] = resultados.getString("FechaRespuesta");
@@ -688,7 +688,7 @@ public class Principal_Frame extends javax.swing.JFrame {
     private void Obtener_Metodos() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) metodos_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.Sp_ObtenerMetodos();
+        ResultSet resultados = Metodos.Sp_ObtenerMetodos();
         if (resultados != null) {
             String[] celdas = new String[1];
             
@@ -704,10 +704,10 @@ public class Principal_Frame extends javax.swing.JFrame {
 
     }
     
-    private void Obtener_Tablas_CourseRoom() throws SQLException {
+    private static void Obtener_Tablas_CourseRoom() throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) tablas_CourseRoom_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.Sp_ObtenerTablasCourseRoom();
+        ResultSet resultados = Metodos.Sp_ObtenerTablasCourseRoom();
         if (resultados != null) {
             String[] celdas = new String[3];
             
@@ -758,12 +758,12 @@ public class Principal_Frame extends javax.swing.JFrame {
     private javax.swing.JLayeredPane principal_JLayeredPane;
     private javax.swing.JButton respuestas_JButton;
     private javax.swing.JScrollPane respuestas_JScrollPane;
-    private javax.swing.JTable respuestas_JTable;
+    private static javax.swing.JTable respuestas_JTable;
     private javax.swing.JButton solicitudes_JButton;
     private javax.swing.JScrollPane solicitudes_JScrollPane;
-    private javax.swing.JTable solicitudes_JTable;
+    private static javax.swing.JTable solicitudes_JTable;
     private javax.swing.JButton tablas_CourseRoom_JButton;
-    private javax.swing.JTable tablas_CourseRoom_JTable;
+    private static javax.swing.JTable tablas_CourseRoom_JTable;
     private javax.swing.JScrollPane tablas_Courseroom_JScrollPane;
     private javax.swing.JLabel titulo_JLabel;
     // End of variables declaration//GEN-END:variables
