@@ -86,17 +86,11 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="titulo_JLabel" pref="912" max="32767" attributes="0"/>
+                      <Component id="titulo_JLabel" pref="1062" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="solicitudes_JButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                       <Component id="respuestas_JButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                      <Component id="metodos_JButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                      <Component id="tablas_CourseRoom_JButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="conexiones_JButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="actualizar_JButton" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -107,10 +101,7 @@
                   <Component id="titulo_JLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="solicitudes_JButton" min="-2" max="-2" attributes="0"/>
                   <Component id="respuestas_JButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="metodos_JButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="tablas_CourseRoom_JButton" min="-2" max="-2" attributes="0"/>
                   <Component id="actualizar_JButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="conexiones_JButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -166,38 +157,6 @@
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="((ImageIcon)solicitudes_JButton.getIcon()).getImage().flush();"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="metodos_JButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/recursos/iconos/programming.png"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="metodos_JButtonMouseClicked"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="((ImageIcon)metodos_JButton.getIcon()).getImage().flush();"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="tablas_CourseRoom_JButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/recursos/iconos/information.png"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tablas_CourseRoom_JButtonMouseClicked"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="((ImageIcon)tablas_CourseRoom_JButton.getIcon()).getImage().flush();"/>
-              </AuxValues>
-            </Component>
             <Component class="javax.swing.JButton" name="actualizar_JButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -214,22 +173,6 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="((ImageIcon)actualizar_JButton.getIcon()).getImage().flush();"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="conexiones_JButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/recursos/iconos/verified-user.png"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="conexiones_JButtonMouseClicked"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="((ImageIcon)conexiones_JButton.getIcon()).getImage().flush();"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -262,27 +205,24 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="13" style="0"/>
+                      <Font name="Segoe UI" size="14" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ID Solicitud" type="java.lang.Object"/>
-                        <Column editable="false" title="Solicitud" type="java.lang.Object"/>
-                        <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                        <Column editable="false" title="Fecha Solicitud" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="&#xd;&#xa;&#xd;&#xa;new javax.swing.table.DefaultTableModel(&#xd;&#xa;    new Object [][] {&#xd;&#xa;&#xd;&#xa;    },&#xd;&#xa;    new String [] {&#xd;&#xa;        &quot;Id Solicitud&quot;, &quot;Solicitud&quot;, &quot;Cliente&quot;, &quot;Fecha&quot;&#xd;&#xa;    }&#xd;&#xa;) {&#xd;&#xa;    boolean[] canEdit = new boolean [] {&#xd;&#xa;        false, false, false, false&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xd;&#xa;        return canEdit [columnIndex];&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    @Override&#xd;&#xa;    public Class getColumnClass(int column)&#xd;&#xa;    {&#xd;&#xa;        for(int i = 0; i &lt; solicitudes_JTable.getRowCount(); i++)&#xd;&#xa;        {&#xd;&#xa;            //The first valid value of a cell of given column is retrieved.&#xd;&#xa;            if(getValueAt(i,column) != null)&#xd;&#xa;            {&#xd;&#xa;                return getValueAt(i, column).getClass();&#xd;&#xa;            }&#xd;&#xa;        }&#xd;&#xa;        //if no valid value is found, default renderer is returned.&#xd;&#xa;        return super.getColumnClass(column);&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
                     </Property>
                     <Property name="autoResizeMode" type="int" value="4"/>
+                    <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="e8" green="c2" red="68" type="rgb"/>
+                    </Property>
                     <Property name="rowHeight" type="int" value="100"/>
-                    <Property name="rowMargin" type="int" value="10"/>
+                    <Property name="rowMargin" type="int" value="8"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="solicitudes_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="solicitudes_JTable.setDefaultRenderer(Celda_Renderer.class, new Celda_Renderer());"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="solicitudes_JTable.setRowSorter(new TableRowSorter(solicitudes_JTable.getModel()));"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
@@ -313,174 +253,25 @@
                       <Color blue="40" green="1e" red="e" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="13" style="0"/>
+                      <Font name="Segoe UI" size="14" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="0">
-                        <Column editable="false" title="ID Respuesta" type="java.lang.Object"/>
-                        <Column editable="false" title="Respuesta" type="java.lang.Object"/>
-                        <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                        <Column editable="false" title="Fecha Respuesta" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="&#xd;&#xa;&#xd;&#xa;new javax.swing.table.DefaultTableModel(&#xd;&#xa;    new Object [][] {&#xd;&#xa;&#xd;&#xa;    },&#xd;&#xa;    new String [] {&#xd;&#xa;        &quot;Id Respuesta&quot;, &quot;Respuesta&quot;, &quot;Cliente&quot;, &quot;Fecha&quot;&#xd;&#xa;    }&#xd;&#xa;) {&#xd;&#xa;    boolean[] canEdit = new boolean [] {&#xd;&#xa;        false, false, false, false&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xd;&#xa;        return canEdit [columnIndex];&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    @Override&#xd;&#xa;    public Class getColumnClass(int column)&#xd;&#xa;    {&#xd;&#xa;        for(int i = 0; i &lt; respuestas_JTable.getRowCount(); i++)&#xd;&#xa;        {&#xd;&#xa;            //The first valid value of a cell of given column is retrieved.&#xd;&#xa;            if(getValueAt(i,column) != null)&#xd;&#xa;            {&#xd;&#xa;                return getValueAt(i, column).getClass();&#xd;&#xa;            }&#xd;&#xa;        }&#xd;&#xa;        //if no valid value is found, default renderer is returned.&#xd;&#xa;        return super.getColumnClass(column);&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
                     </Property>
                     <Property name="autoResizeMode" type="int" value="4"/>
+                    <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="e8" green="c2" red="68" type="rgb"/>
+                    </Property>
                     <Property name="rowHeight" type="int" value="100"/>
-                    <Property name="rowMargin" type="int" value="10"/>
+                    <Property name="rowMargin" type="int" value="8"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="respuestas_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="respuestas_JTable.setDefaultRenderer(Celda_Renderer.class, new Celda_Renderer());"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="respuestas_JTable.setRowSorter(new TableRowSorter(respuestas_JTable.getModel()));"/>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="metodos_JScrollPane">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Metodos"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="metodos_JTable">
-                  <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="40" green="1e" red="e" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="14" style="0"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="e8" green="c2" red="68" type="rgb"/>
-                    </Property>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="1" rowCount="0">
-                        <Column editable="false" title="M&#xe9;todo" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                    <Property name="autoResizeMode" type="int" value="3"/>
-                    <Property name="rowHeight" type="int" value="50"/>
-                    <Property name="rowMargin" type="int" value="15"/>
-                    <Property name="showGrid" type="boolean" value="true"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="metodos_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="metodos_JTable.setRowSorter(new TableRowSorter(metodos_JTable.getModel()));"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="tablas_Courseroom_JScrollPane">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Tablas_CourseRoom"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="tablas_CourseRoom_JTable">
-                  <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="40" green="1e" red="e" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="13" style="0"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="e8" green="c2" red="68" type="rgb"/>
-                    </Property>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="3" rowCount="0">
-                        <Column editable="false" title="Tabla" type="java.lang.Object"/>
-                        <Column editable="false" title="# Registros" type="java.lang.Object"/>
-                        <Column editable="false" title="Actualizado" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                    <Property name="autoResizeMode" type="int" value="4"/>
-                    <Property name="rowHeight" type="int" value="100"/>
-                    <Property name="rowMargin" type="int" value="10"/>
-                    <Property name="showGrid" type="boolean" value="true"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="tablas_CourseRoom_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablas_CourseRoom_JTable.setRowSorter(new TableRowSorter(tablas_CourseRoom_JTable.getModel()));"/>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="conexiones_JScrollPane">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Conexiones"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="conexiones_JTable">
-                  <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="40" green="1e" red="e" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Gadugi" size="13" style="0"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="e8" green="c2" red="68" type="rgb"/>
-                    </Property>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="0">
-                        <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                        <Column editable="false" title="Conectado El" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
-                    <Property name="autoResizeMode" type="int" value="3"/>
-                    <Property name="rowHeight" type="int" value="50"/>
-                    <Property name="rowMargin" type="int" value="15"/>
-                    <Property name="showGrid" type="boolean" value="true"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    public Class&lt;?&gt; getColumnClass(int column) {&#xd;&#xa;        if (0 &lt; this.getRowCount()) {&#xd;&#xa;            return getValueAt(0, column).getClass();&#xd;&#xa;        } else {&#xd;&#xa;            return null;&#xd;&#xa;        }&#xd;&#xa;    }&#xd;&#xa;};"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="conexiones_JTable.setDefaultRenderer(String.class, new Celda_Renderer());"/>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="conexiones_JTable.setRowSorter(new TableRowSorter(conexiones_JTable.getModel()));"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
                   </AuxValues>
                 </Component>

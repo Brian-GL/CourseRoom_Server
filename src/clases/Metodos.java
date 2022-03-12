@@ -74,7 +74,7 @@ public class Metodos {
             try (InputStream stream_Entrada = getClass().getResourceAsStream("/recursos/html/mensaje.html")) {
                 try (BufferedReader lector_Buffered = new BufferedReader(new InputStreamReader(stream_Entrada))) {
                     // Almacenar el contenido de la plantilla en un StringBuffer
-                    String linea = "";
+                    String linea;
                     mensaje_HTML = new StringBuilder();
 
                     while ((linea = lector_Buffered.readLine()) != null) {
@@ -114,33 +114,23 @@ public class Metodos {
    
     // <editor-fold defaultstate="collapsed" desc="Metodos base de datos para frame principal">
     
-     public ResultSet Sp_ObtenerSolicitudes() throws SQLException{
-        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerSolicitudes()}");
+     public ResultSet ObtenerSolicitudes() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_ObtenerSolicitudes()}");
         return ejecutor.executeQuery();
     }
     
-    public static ResultSet Sp_ObtenerRespuestas() throws SQLException{
-        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerRespuestas()}");
+    public static ResultSet ObtenerRespuestas() throws SQLException{
+        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_ObtenerRespuestas()}");
         return ejecutor.executeQuery();
     }
-    
-    public static ResultSet Sp_ObtenerMetodos() throws SQLException{
-        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerMetodos()}");
-        return ejecutor.executeQuery();
-    }
-    
-    public static ResultSet Sp_ObtenerTablasCourseRoom() throws SQLException{
-        CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_ObtenerTablasCourseRoom()}");
-        return ejecutor.executeQuery();
-    }
-    
-    public Par<Boolean, String> sp_AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
+  
+    public Par<Boolean, String> AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
         
         Boolean codigo = Boolean.FALSE;
         String mensaje = "";
         try {
             
-            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_AgregarSolicitud(?,?,?)}")) {
+            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_AgregarSolicitud(?,?,?)}")) {
                 ejecutor.setString("_Solicitud", solicitud);
                 ejecutor.setString("_Cliente", cliente);
                 ejecutor.setString("_FechaSolicitud", fecha_Solicitud);
@@ -164,14 +154,14 @@ public class Metodos {
         return new Par<>(codigo,mensaje);
     }
     
-    public Par<Boolean, String> sp_AgregarRespuesta(String respuesta, String cliente, String fecha_Respuesta){
+    public Par<Boolean, String> AgregarRespuesta(String respuesta, String cliente, String fecha_Respuesta){
         
         Boolean codigo = Boolean.FALSE;
         String mensaje = "";
         
         try {
             
-            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_AgregarRespuesta(?,?,?)}")) {
+            try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_AgregarRespuesta(?,?,?)}")) {
                 ejecutor.setString("_Respuesta", respuesta);
                 ejecutor.setString("_Cliente", cliente);
                 ejecutor.setString("_FechaRespuesta", fecha_Respuesta);
@@ -204,11 +194,13 @@ public class Metodos {
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
     
     
-    public Vector<Integer> Fecha_Hora_Servidor(String cliente) throws SQLException{
+    public Integer[] Fecha_Hora_Servidor(String cliente) throws SQLException{
+        
+        Integer[] response = new Integer[6];
         
         //Agregar solicitud:
         Par<Boolean, String> respuesta = 
-                sp_AgregarSolicitud("Obtener Fecha & Hora Del Servidor", cliente, LocalDateTime.now().format(formato_Fecha));
+                AgregarSolicitud("Obtener Fecha & Hora Del Servidor", cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -216,20 +208,18 @@ public class Metodos {
         
         LocalDateTime fecha_Hora_Actual = LocalDateTime.now();
         
-        Vector<Integer> vector = new Vector<>();
+        //Vector<Integer> response = new Vector<>();
         
-        vector.add(fecha_Hora_Actual.getYear());
-        vector.add(fecha_Hora_Actual.getMonthValue());
-        vector.add(fecha_Hora_Actual.getDayOfMonth());
-        vector.add(fecha_Hora_Actual.getHour());
-        vector.add(fecha_Hora_Actual.getMinute());
-        vector.add(fecha_Hora_Actual.getSecond());
-        
-        Principal_Frame.Agregar_Conexion(cliente);
+        response[0] = fecha_Hora_Actual.getYear();
+        response[1] = fecha_Hora_Actual.getMonthValue();
+        response[2] = fecha_Hora_Actual.getDayOfMonth();
+        response[3] = fecha_Hora_Actual.getHour();
+        response[4] = fecha_Hora_Actual.getMinute();
+        response[5] = fecha_Hora_Actual.getSecond();
         
         //Agregar respuesta:
         respuesta = 
-                sp_AgregarRespuesta("Fecha & Hora: "+vector.toString(), cliente, LocalDateTime.now().format(formato_Fecha));
+                AgregarRespuesta("Fecha & Hora Entregadas", cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -238,14 +228,14 @@ public class Metodos {
         Principal_Frame.Obtener_Solicitudes();
         Principal_Frame.Obtener_Respuestas();
         
-        return vector;
+        return response;
     }
     
     public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException, SQLException{
         
         //Agregar solicitud:
         Par<Boolean, String> respuesta = 
-                sp_AgregarSolicitud("Obtener Imagen Inicio Sesión", cliente, LocalDateTime.now().format(formato_Fecha));
+                AgregarSolicitud("Obtener Imagen Inicio Sesión", cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -255,7 +245,7 @@ public class Metodos {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {
-            byte[] chunk = new byte[4096];
+            byte[] chunk = new byte[1024];
             int bytesRead;
             try(InputStream stream = url_Imagen.openStream()){
 
@@ -269,11 +259,10 @@ public class Metodos {
             return null;
         }
 
-        Principal_Frame.Agregar_Conexion(cliente);
         
         //Agregar respuesta:
         respuesta = 
-                sp_AgregarRespuesta("Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700", cliente, LocalDateTime.now().format(formato_Fecha));
+                AgregarRespuesta("Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700", cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -285,13 +274,12 @@ public class Metodos {
         return outputStream.toByteArray();  
        
     }
-    
-    
+     
     public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente) throws SQLException {
 
         //Agregar solicitud:
         Par<Boolean, String> respuesta = 
-                sp_AgregarSolicitud("Recuperar Credenciales Por Correo Electrónico", cliente, LocalDateTime.now().format(formato_Fecha));
+               AgregarSolicitud("Recuperar Credenciales Por Correo Electrónico", cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -342,11 +330,10 @@ public class Metodos {
            return Boolean.FALSE;
        }
 
-       Principal_Frame.Agregar_Conexion(cliente);
        
        //Agregar respuesta:
         respuesta = 
-                sp_AgregarRespuesta("Credenciales Enviadas Al Correo: "+correo_Electronico, cliente, LocalDateTime.now().format(formato_Fecha));
+                AgregarRespuesta("Credenciales Enviadas Al Correo: "+correo_Electronico, cliente, LocalDateTime.now().format(formato_Fecha));
         
         if(!respuesta.first()){
             System.err.println(respuesta.second());
@@ -360,7 +347,7 @@ public class Metodos {
     
 //    public Vector<Vector<String>> ObtenerRespuestas(){
 //        
-//        Vector<Vector<String>> vector = new Vector<>();
+//        Vector<Vector<String>> response = new Vector<>();
 //     
 //        ResultSet resultados;
 //        try {
@@ -384,12 +371,12 @@ public class Metodos {
 //
 //                resultados.close();
 //                
-//                vector.add(idTickets);
-//                vector.add(respuestas);
-//                vector.add(clientes);
-//                vector.add(fechasRespuesta);
+//                response.add(idTickets);
+//                response.add(respuestas);
+//                response.add(clientes);
+//                response.add(fechasRespuesta);
 //                
-//                return vector;
+//                return response;
 //               
 //            }
 //            
@@ -397,7 +384,7 @@ public class Metodos {
 //            
 //        }
 //        
-//        return vector;
+//        return response;
 //    } 
 
     // </editor-fold >
