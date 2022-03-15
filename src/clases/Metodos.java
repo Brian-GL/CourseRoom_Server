@@ -233,6 +233,8 @@ public class Metodos {
     
     public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException, SQLException{
         
+        byte[] response = null;
+        
         //Agregar solicitud:
         Par<Boolean, String> respuesta = 
                 AgregarSolicitud("Obtener Imagen Inicio Sesión", cliente, LocalDateTime.now().format(formato_Fecha));
@@ -242,9 +244,9 @@ public class Metodos {
         }
         
         URL url_Imagen = new URL("https://picsum.photos/500/700");
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        
 
-        try {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
             byte[] chunk = new byte[1024];
             int bytesRead;
             try(InputStream stream = url_Imagen.openStream()){
@@ -253,12 +255,12 @@ public class Metodos {
                     outputStream.write(chunk, 0, bytesRead);
                 }
             
+                response =  outputStream.toByteArray();
             }
 
         } catch (IOException e) {
-            return null;
+            
         }
-
         
         //Agregar respuesta:
         respuesta = 
@@ -268,10 +270,11 @@ public class Metodos {
             System.err.println(respuesta.second());
         }
         
+        
         Principal_Frame.Obtener_Solicitudes();
         Principal_Frame.Obtener_Respuestas();
         
-        return outputStream.toByteArray();  
+        return response;  
        
     }
      
