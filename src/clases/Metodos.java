@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Properties;
-import java.util.Vector;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -40,7 +39,7 @@ import javax.mail.internet.MimeMultipart;
 public class Metodos {
     
     private static Connection db_CourseRoom_Server_Conexion;
-    
+    private Connection db_CourseRoom_Conexion;
     
     private Session sesion;
     private StringBuilder mensaje_HTML;
@@ -56,7 +55,7 @@ public class Metodos {
         byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
         String decodificacion = new String(decoded);
         db_CourseRoom_Server_Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
-        
+        db_CourseRoom_Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom", "root", decodificacion);
         formato_Fecha = DateTimeFormatter.ofPattern("EEEE dd/MM/yyyy hh:mm:ss a");
         
         try{
@@ -111,10 +110,11 @@ public class Metodos {
         }
 
     }
+    
    
     // <editor-fold defaultstate="collapsed" desc="Metodos base de datos para frame principal">
     
-     public ResultSet ObtenerSolicitudes() throws SQLException{
+    public ResultSet ObtenerSolicitudes() throws SQLException{
         CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_ObtenerSolicitudes()}");
         return ejecutor.executeQuery();
     }
@@ -186,6 +186,7 @@ public class Metodos {
     
     public void Cerrar_Conexion() throws SQLException{
         db_CourseRoom_Server_Conexion.close();
+        db_CourseRoom_Conexion.close();   
     }
     
     
