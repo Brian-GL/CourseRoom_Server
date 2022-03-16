@@ -4,6 +4,7 @@
  */
 package clases;
 
+import datos.colecciones.Lista;
 import datos.estructuras.Par;
 import frames.Principal_Frame;
 import java.io.BufferedReader;
@@ -111,6 +112,7 @@ public class Metodos {
 
     }
     
+    
    
     // <editor-fold defaultstate="collapsed" desc="Metodos base de datos para frame principal">
     
@@ -189,6 +191,42 @@ public class Metodos {
         db_CourseRoom_Conexion.close();   
     }
     
+    
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Metodos base de datos courseroom">
+    public Lista<String> ObtenerEstados() throws SQLException{
+        Lista<String> lista = new Lista<>();
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerEstados()}")){
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        lista.push_back(resultado.getString("Estado"));
+                    }
+                }
+            }
+        }
+        
+        return lista;
+        
+    }
+    
+    public Lista<String> ObtenerLocalidadesPorEstado(String estado) throws SQLException{
+        Lista<String> lista = new Lista<>();
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerLocalidadesPorEstado(?)}")){
+            ejecutor.setString("_Estado", estado);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        lista.push_back(resultado.getString("Localidad"));
+                    }
+                }
+            }
+        }
+        
+        return lista;
+    }
     
     // </editor-fold>
     
@@ -349,6 +387,73 @@ public class Metodos {
        return Boolean.TRUE;
     }
     
+    public String[] Obtener_Estados(String cliente) throws SQLException {
+        
+        //Agregar solicitud:
+        Par<Boolean, String> respuesta = 
+                AgregarSolicitud("Obtener Estados", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Lista<String> estados = ObtenerEstados();
+        
+        String[] response = new String[estados.size()];
+        int cuenta = 0;
+        while(!estados.is_empty()){
+            response[cuenta] = estados.delist();
+            cuenta++;
+        }
+        
+        //Agregar respuesta:
+        respuesta = 
+                AgregarRespuesta("Estados Enviados", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Principal_Frame.Obtener_Solicitudes();
+        Principal_Frame.Obtener_Respuestas();
+        
+        return response;
+    }
+    
+    public String[] Obtener_Localidades_Por_Estado(String estado, String cliente) throws SQLException {
+        
+        //Agregar solicitud:
+        Par<Boolean, String> respuesta = 
+                AgregarSolicitud("Obtener Localidades Del Estado De "+estado, cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Lista<String> localidades = ObtenerLocalidadesPorEstado(estado);
+        
+        String[] response = new String[localidades.size()];
+        int cuenta = 0;
+        while(!localidades.is_empty()){
+            response[cuenta] = localidades.delist();
+            cuenta++;
+        }
+        
+        //Agregar respuesta:
+        respuesta = 
+                AgregarRespuesta("Localidades Enviadas", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(!respuesta.first()){
+            System.err.println(respuesta.second());
+        }
+        
+        Principal_Frame.Obtener_Solicitudes();
+        Principal_Frame.Obtener_Respuestas();
+        
+        return response;
+    }
+    
+    
 //    public Vector<Vector<String>> ObtenerRespuestas(){
 //        
 //        Vector<Vector<String>> response = new Vector<>();
@@ -392,8 +497,5 @@ public class Metodos {
 //    } 
 
     // </editor-fold >
-    
-    
-    
     
 }
