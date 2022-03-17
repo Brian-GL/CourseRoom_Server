@@ -17,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import org.apache.xmlrpc.WebServer;
 
 
@@ -128,13 +126,13 @@ public class Principal_Frame extends javax.swing.JFrame {
         contenido_JPanel.setBackground(new java.awt.Color(14, 30, 64));
         contenido_JPanel.setForeground(new java.awt.Color(104, 194, 232));
 
-        contenido_Titulo_JPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contenido_Titulo_JPanel.setMaximumSize(new java.awt.Dimension(32767, 68));
         contenido_Titulo_JPanel.setOpaque(false);
         contenido_Titulo_JPanel.setPreferredSize(new java.awt.Dimension(276, 68));
 
         titulo_JLabel.setFont(new java.awt.Font("Gadugi", 1, 48)); // NOI18N
         titulo_JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_JLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         titulo_JLabel.setMaximumSize(new java.awt.Dimension(449, 68));
         titulo_JLabel.setMinimumSize(new java.awt.Dimension(449, 68));
         titulo_JLabel.setOpaque(true);
@@ -142,7 +140,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         titulo_JLabel.setRequestFocusEnabled(false);
 
         respuestas_JButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/responsibility.png"))); // NOI18N
-        respuestas_JButton.setBorder(null);
+        respuestas_JButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ((ImageIcon)respuestas_JButton.getIcon()).getImage().flush();
         respuestas_JButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -151,7 +149,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         });
 
         solicitudes_JButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/request.png"))); // NOI18N
-        solicitudes_JButton.setBorder(null);
+        solicitudes_JButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ((ImageIcon)solicitudes_JButton.getIcon()).getImage().flush();
         solicitudes_JButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -160,7 +158,7 @@ public class Principal_Frame extends javax.swing.JFrame {
         });
 
         actualizar_JButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/iconos/updated.png"))); // NOI18N
-        actualizar_JButton.setBorder(null);
+        actualizar_JButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ((ImageIcon)actualizar_JButton.getIcon()).getImage().flush();
         actualizar_JButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -179,12 +177,12 @@ public class Principal_Frame extends javax.swing.JFrame {
         contenido_Titulo_JPanelLayout.setHorizontalGroup(
             contenido_Titulo_JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenido_Titulo_JPanelLayout.createSequentialGroup()
-                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(titulo_JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(solicitudes_JButton)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(respuestas_JButton)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(actualizar_JButton))
         );
         contenido_Titulo_JPanelLayout.setVerticalGroup(
@@ -239,7 +237,7 @@ public class Principal_Frame extends javax.swing.JFrame {
             solicitudes_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
             solicitudes_JTable.setGridColor(new java.awt.Color(104, 194, 232));
             solicitudes_JTable.setRowHeight(100);
-            solicitudes_JTable.setRowMargin(8);
+            solicitudes_JTable.setRowMargin(5);
             solicitudes_JTable.setShowGrid(true);
             solicitudes_JTable.setRowSorter(new TableRowSorter(solicitudes_JTable.getModel()));
             solicitudes_JScrollPane.setViewportView(solicitudes_JTable);
@@ -288,7 +286,7 @@ public class Principal_Frame extends javax.swing.JFrame {
                 respuestas_JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
                 respuestas_JTable.setGridColor(new java.awt.Color(104, 194, 232));
                 respuestas_JTable.setRowHeight(100);
-                respuestas_JTable.setRowMargin(8);
+                respuestas_JTable.setRowMargin(5);
                 respuestas_JTable.setShowGrid(true);
                 respuestas_JTable.setRowSorter(new TableRowSorter(respuestas_JTable.getModel()));
                 respuestas_JScrollPane.setViewportView(respuestas_JTable);
@@ -400,11 +398,13 @@ public class Principal_Frame extends javax.swing.JFrame {
         if (resultados != null) {
             Celda_Renderer[] celdas = new Celda_Renderer[4];
             Celda_Renderer celda;
+            String solicitud;
             while (resultados.next()) {
-
+                
                 celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdSolicitud")));
                 celdas[0] = celda;
-                celda = new Celda_Renderer(resultados.getString("Solicitud"));
+                solicitud = resultados.getString("Solicitud");
+                celda = new Celda_Renderer(solicitud);
                 celdas[1] = celda;
                 celda = new Celda_Renderer(resultados.getString("Cliente"));
                 celdas[2] = celda;
@@ -412,6 +412,9 @@ public class Principal_Frame extends javax.swing.JFrame {
                 celdas[3] = celda;
 
                 modelo.addRow(celdas);
+                solicitudes_JTable.setRowHeight(modelo.getRowCount()-1, 
+                        Altura_Fila_Tabla(solicitud != null ? solicitud.length() : 96));
+                
             }
 
             resultados.close();
@@ -427,12 +430,13 @@ public class Principal_Frame extends javax.swing.JFrame {
         if (resultados != null) {
             Celda_Renderer[] celdas = new Celda_Renderer[4];
             Celda_Renderer celda;
-            
+            String respuesta;
             while (resultados.next()) {
 
                 celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdRespuesta")));
                 celdas[0] = celda;
-                celda = new Celda_Renderer(resultados.getString("Respuesta"));
+                respuesta = resultados.getString("Respuesta");
+                celda = new Celda_Renderer(respuesta);
                 celdas[1] = celda;
                 celda = new Celda_Renderer(resultados.getString("Cliente"));
                 celdas[2] = celda;
@@ -440,12 +444,17 @@ public class Principal_Frame extends javax.swing.JFrame {
                 celdas[3] = celda;
 
                 modelo.addRow(celdas);
+                respuestas_JTable.setRowHeight(modelo.getRowCount()-1, 
+                        Altura_Fila_Tabla(respuesta != null ? respuesta.length() : 96));
             }
 
             resultados.close();
         }
     }
     
+    private static int Altura_Fila_Tabla(int numero_Letras){
+        return (int)((numero_Letras/60) * 20) + 44;
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizar_JButton;

@@ -68,11 +68,6 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="contenido_Titulo_JPanel">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-                <BevelBorder/>
-              </Border>
-            </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[32767, 68]"/>
             </Property>
@@ -86,12 +81,12 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="titulo_JLabel" pref="1062" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="titulo_JLabel" pref="1054" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="solicitudes_JButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="respuestas_JButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="actualizar_JButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -112,6 +107,11 @@
                   <Font name="Gadugi" size="48" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder bevelType="1"/>
+                  </Border>
+                </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[449, 68]"/>
                 </Property>
@@ -131,7 +131,9 @@
                   <Image iconType="3" name="/recursos/iconos/responsibility.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
                 </Property>
               </Properties>
               <Events>
@@ -147,7 +149,9 @@
                   <Image iconType="3" name="/recursos/iconos/request.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
                 </Property>
               </Properties>
               <Events>
@@ -163,7 +167,9 @@
                   <Image iconType="3" name="/recursos/iconos/updated.png"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
                 </Property>
               </Properties>
               <Events>
@@ -218,7 +224,7 @@
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
                     <Property name="rowHeight" type="int" value="100"/>
-                    <Property name="rowMargin" type="int" value="8"/>
+                    <Property name="rowMargin" type="int" value="5"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
@@ -266,7 +272,7 @@
                       <Color blue="e8" green="c2" red="68" type="rgb"/>
                     </Property>
                     <Property name="rowHeight" type="int" value="100"/>
-                    <Property name="rowMargin" type="int" value="8"/>
+                    <Property name="rowMargin" type="int" value="5"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
