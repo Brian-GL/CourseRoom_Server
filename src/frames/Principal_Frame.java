@@ -19,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.xmlrpc.WebServer;
 
-
 /**
  *
  * @author LENOVO
@@ -394,68 +393,109 @@ public class Principal_Frame extends javax.swing.JFrame {
     public static void Obtener_Solicitudes() throws SQLException{
         DefaultTableModel modelo = (DefaultTableModel) solicitudes_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = metodos.ObtenerSolicitudes();
-        if (resultados != null) {
-            Celda_Renderer[] celdas = new Celda_Renderer[4];
-            Celda_Renderer celda;
-            String solicitud;
-            while (resultados.next()) {
-                
-                celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdSolicitud")));
-                celdas[0] = celda;
-                solicitud = resultados.getString("Solicitud");
-                celda = new Celda_Renderer(solicitud);
-                celdas[1] = celda;
-                celda = new Celda_Renderer(resultados.getString("Cliente"));
-                celdas[2] = celda;
-                celda = new Celda_Renderer(resultados.getString("FechaSolicitud"));
-                celdas[3] = celda;
+        try(ResultSet resultados = metodos.ObtenerSolicitudes()){
+            if (resultados != null) {
+                Celda_Renderer[] celdas = new Celda_Renderer[4];
+                Celda_Renderer celda;
+                String solicitud;
+                while (resultados.next()) {
 
-                modelo.addRow(celdas);
-                solicitudes_JTable.setRowHeight(modelo.getRowCount()-1, 
-                        Altura_Fila_Tabla(solicitud != null ? solicitud.length() : 96));
-                
+                    celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdSolicitud")));
+                    celdas[0] = celda;
+                    solicitud = resultados.getString("Solicitud");
+                    celda = new Celda_Renderer(solicitud);
+                    celdas[1] = celda;
+                    celda = new Celda_Renderer(resultados.getString("Cliente"));
+                    celdas[2] = celda;
+                    celda = new Celda_Renderer(resultados.getString("FechaSolicitud"));
+                    celdas[3] = celda;
+
+                    modelo.addRow(celdas);
+                    solicitudes_JTable.setRowHeight(modelo.getRowCount()-1, 
+                            Metodos.Altura_Fila_Tabla(solicitud != null ? solicitud.length() : 96));
+
+                }
+
+                resultados.close();
             }
-
-            resultados.close();
         }
-
     }
     
     public static void Obtener_Respuestas() throws SQLException {
         
         DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
         modelo.setRowCount(0);
-        ResultSet resultados = Metodos.ObtenerRespuestas();
-        if (resultados != null) {
-            Celda_Renderer[] celdas = new Celda_Renderer[4];
-            Celda_Renderer celda;
-            String respuesta;
-            while (resultados.next()) {
+        try(ResultSet resultados = Metodos.ObtenerRespuestas()){
+            if (resultados != null) {
+                Celda_Renderer[] celdas = new Celda_Renderer[4];
+                Celda_Renderer celda;
+                String respuesta;
+                while (resultados.next()) {
 
-                celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdRespuesta")));
-                celdas[0] = celda;
-                respuesta = resultados.getString("Respuesta");
-                celda = new Celda_Renderer(respuesta);
-                celdas[1] = celda;
-                celda = new Celda_Renderer(resultados.getString("Cliente"));
-                celdas[2] = celda;
-                celda = new Celda_Renderer(resultados.getString("FechaRespuesta"));
-                celdas[3] = celda;
+                    celda = new Celda_Renderer(String.valueOf(resultados.getInt("IdRespuesta")));
+                    celdas[0] = celda;
+                    respuesta = resultados.getString("Respuesta");
+                    celda = new Celda_Renderer(respuesta);
+                    celdas[1] = celda;
+                    celda = new Celda_Renderer(resultados.getString("Cliente"));
+                    celdas[2] = celda;
+                    celda = new Celda_Renderer(resultados.getString("FechaRespuesta"));
+                    celdas[3] = celda;
 
-                modelo.addRow(celdas);
-                respuestas_JTable.setRowHeight(modelo.getRowCount()-1, 
-                        Altura_Fila_Tabla(respuesta != null ? respuesta.length() : 96));
+                    modelo.addRow(celdas);
+                    respuestas_JTable.setRowHeight(modelo.getRowCount()-1, 
+                            Metodos.Altura_Fila_Tabla(respuesta != null ? respuesta.length() : 96));
+                }
+
+                resultados.close();
             }
-
-            resultados.close();
         }
     }
     
-    private static int Altura_Fila_Tabla(int numero_Letras){
-        return (int)((numero_Letras/60) * 20) + 44;
+    public static void Agregar_Solicitud(String IdSolicitud,String Solicitud, String Cliente,String FechaSolicitud){
+        DefaultTableModel modelo = (DefaultTableModel) solicitudes_JTable.getModel();
+        Celda_Renderer[] celdas = new Celda_Renderer[4];
+        Celda_Renderer celda;
+        celda = new Celda_Renderer(IdSolicitud);
+        celdas[0] = celda;
+        celda = new Celda_Renderer(Solicitud);
+        celdas[1] = celda;
+        celda = new Celda_Renderer(Cliente);
+        celdas[2] = celda;
+        celda = new Celda_Renderer(FechaSolicitud);
+        celdas[3] = celda;
+        
+        modelo.insertRow(0, celdas);
+        solicitudes_JTable.setRowHeight(0, Metodos.Altura_Fila_Tabla(Solicitud != null ? Solicitud.length() : 96));
+        
+        if(modelo.getRowCount() >= 200){
+            modelo.removeRow(modelo.getRowCount()-1);
+        }
+        
     }
-   
+    
+    public static void Agregar_Respuesta(String IdRespuesta,String Respuesta, String Cliente,String FechaRespuesta){
+        DefaultTableModel modelo = (DefaultTableModel) respuestas_JTable.getModel();
+        Celda_Renderer[] celdas = new Celda_Renderer[4];
+        Celda_Renderer celda;
+        celda = new Celda_Renderer(IdRespuesta);
+        celdas[0] = celda;
+        celda = new Celda_Renderer(Respuesta);
+        celdas[1] = celda;
+        celda = new Celda_Renderer(Cliente);
+        celdas[2] = celda;
+        celda = new Celda_Renderer(FechaRespuesta);
+        celdas[3] = celda;
+        
+        modelo.insertRow(0, celdas);
+        respuestas_JTable.setRowHeight(0, Metodos.Altura_Fila_Tabla(Respuesta != null ? Respuesta.length() : 96));
+        
+        if(modelo.getRowCount() >= 200){
+            modelo.removeRow(modelo.getRowCount()-1);
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizar_JButton;
     private javax.swing.JPanel contenido_JPanel;

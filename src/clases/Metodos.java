@@ -4,7 +4,6 @@
  */
 package clases;
 
-import datos.colecciones.Lista;
 import datos.estructuras.Par;
 import frames.Principal_Frame;
 import java.io.BufferedReader;
@@ -23,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Properties;
+import java.util.Vector;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -53,6 +53,7 @@ public class Metodos {
     public Metodos() throws ClassNotFoundException, SQLException{
         
         Class.forName("com.mysql.cj.jdbc.Driver");
+        //Aqui va su contrasena codificada en base64
         byte[] decoded = Base64.getDecoder().decode("QmgrMzMxMDcxMjAyMA==");
         String decodificacion = new String(decoded);
         db_CourseRoom_Server_Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/courseroom_server", "root", decodificacion);
@@ -112,8 +113,30 @@ public class Metodos {
 
     }
     
+    // <editor-fold defaultstate="collapsed" desc="Metodos generales">
     
-   
+    private String Decodificacion(String codificacion){
+        
+        byte[] decoded = Base64.getDecoder().decode(codificacion);
+        
+        return new String(decoded);
+    }
+    
+    private String Concatenar(String cadena, String... args) {
+            StringBuilder constructor_Cadena = new StringBuilder(cadena);
+            for (String arg : args) {
+                constructor_Cadena.append(arg);
+            }
+            return constructor_Cadena.toString();
+        }
+    
+    public static int Altura_Fila_Tabla(int numero_Letras){
+        return (int)((numero_Letras/60) * 20) + 44;
+    }
+    
+    
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Metodos base de datos para frame principal">
     
     public ResultSet ObtenerSolicitudes() throws SQLException{
@@ -126,10 +149,10 @@ public class Metodos {
         return ejecutor.executeQuery();
     }
   
-    public Par<Boolean, String> AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
+    public Par<Integer, String> AgregarSolicitud(String solicitud, String cliente, String fecha_Solicitud){
         
-        Boolean codigo = Boolean.FALSE;
-        String mensaje = "";
+        Integer codigo = -1;
+        String mensaje = new String();
         try {
             
             try (CallableStatement ejecutor = db_CourseRoom_Server_Conexion.prepareCall("{CALL sp_crs_AgregarSolicitud(?,?,?)}")) {
@@ -139,8 +162,11 @@ public class Metodos {
                 try (ResultSet resultado = ejecutor.executeQuery()) {
                     if(resultado != null){
                         while(resultado.next()){
-                            codigo = resultado.getBoolean("Codigo");
+                            codigo = resultado.getInt("Codigo");
                             mensaje = resultado.getString("Mensaje");
+                            
+                            Principal_Frame.Agregar_Solicitud(codigo.toString(), solicitud, cliente, fecha_Solicitud);
+                            
                             break;
                         }
                     }
@@ -148,7 +174,6 @@ public class Metodos {
                 
             }
             
-              
         } catch (SQLException ex) {
             mensaje = ex.getMessage();
         }
@@ -156,10 +181,10 @@ public class Metodos {
         return new Par<>(codigo,mensaje);
     }
     
-    public Par<Boolean, String> AgregarRespuesta(String respuesta, String cliente, String fecha_Respuesta){
+    public Par<Integer, String> AgregarRespuesta(String respuesta, String cliente, String fecha_Respuesta){
         
-        Boolean codigo = Boolean.FALSE;
-        String mensaje = "";
+        Integer codigo = -1;
+        String mensaje = new String();
         
         try {
             
@@ -170,8 +195,11 @@ public class Metodos {
                 try (ResultSet resultado = ejecutor.executeQuery()) {
                     if(resultado != null){
                         while(resultado.next()){
-                            codigo = resultado.getBoolean("Codigo");
+                            codigo = resultado.getInt("Codigo");
                             mensaje = resultado.getString("Mensaje");
+                            
+                            Principal_Frame.Agregar_Respuesta(codigo.toString(), respuesta, cliente, fecha_Respuesta);
+                            
                             break;
                         }
                     }
@@ -194,38 +222,49 @@ public class Metodos {
     
     // </editor-fold>
     
-    
     // <editor-fold defaultstate="collapsed" desc="Metodos base de datos courseroom">
-    public Lista<String> ObtenerEstados() throws SQLException{
-        Lista<String> lista = new Lista<>();
+    
+    public Vector<String> ObtenerEstados() throws SQLException{
+        Vector<String> response = new Vector<>();
+        byte[] bytes;
+        String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerEstados()}")){
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
+                    
                     while(resultado.next()){
-                        lista.push_back(resultado.getString("Estado"));
+                        bytes = resultado.getString("Estado").getBytes();
+                        bytes = Base64.getEncoder().encode(bytes);
+                        codificacion = new String(bytes);
+                        response.add(codificacion);
                     }
                 }
             }
         }
         
-        return lista;
+        return response;
         
     }
     
-    public Lista<String> ObtenerLocalidadesPorEstado(String estado) throws SQLException{
-        Lista<String> lista = new Lista<>();
+    public Vector<String> ObtenerLocalidadesPorEstado(String estado) throws SQLException{
+        Vector<String> response = new Vector<>();
+        byte[] bytes;
+        String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerLocalidadesPorEstado(?)}")){
             ejecutor.setString("_Estado", estado);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        lista.push_back(resultado.getString("Localidad"));
+                        bytes = resultado.getString("Localidad").getBytes();
+                        bytes = Base64.getEncoder().encode(bytes);
+                        codificacion = new String(bytes);
+                        response.add(codificacion);
                     }
                 }
             }
         }
         
-        return lista;
+        return response;
     }
     
     // </editor-fold>
@@ -233,60 +272,58 @@ public class Metodos {
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
     
     
-    public Integer[] Fecha_Hora_Servidor(String cliente) throws SQLException{
+    public Vector<Integer> Fecha_Hora_Servidor(String cliente) throws SQLException{
         
-        Integer[] response = new Integer[6];
+        cliente = Decodificacion(cliente);
+        
+        Vector<Integer> response = new Vector<>();
         
         //Agregar solicitud:
-        Par<Boolean, String> respuesta = 
+        Par<Integer, String> respuesta = 
                 AgregarSolicitud("Obtener Fecha & Hora Del Servidor", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
         LocalDateTime fecha_Hora_Actual = LocalDateTime.now();
         
-        //Vector<Integer> response = new Vector<>();
-        
-        response[0] = fecha_Hora_Actual.getYear();
-        response[1] = fecha_Hora_Actual.getMonthValue();
-        response[2] = fecha_Hora_Actual.getDayOfMonth();
-        response[3] = fecha_Hora_Actual.getHour();
-        response[4] = fecha_Hora_Actual.getMinute();
-        response[5] = fecha_Hora_Actual.getSecond();
+        response.add(fecha_Hora_Actual.getYear());
+        response.add(fecha_Hora_Actual.getMonthValue());
+        response.add(fecha_Hora_Actual.getDayOfMonth());
+        response.add(fecha_Hora_Actual.getHour());
+        response.add(fecha_Hora_Actual.getMinute());
+        response.add(fecha_Hora_Actual.getSecond());
         
         //Agregar respuesta:
         respuesta = 
                 AgregarRespuesta("Fecha & Hora Entregadas", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
-        
-        Principal_Frame.Obtener_Solicitudes();
-        Principal_Frame.Obtener_Respuestas();
         
         return response;
     }
     
     public byte[] Imagen_Inicio_Sesion(String cliente) throws MalformedURLException, IOException, SQLException{
         
+        cliente = Decodificacion(cliente);
+        
         byte[] response = null;
         
         //Agregar solicitud:
-        Par<Boolean, String> respuesta = 
+        Par<Integer, String> respuesta = 
                 AgregarSolicitud("Obtener Imagen Inicio Sesión", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
         URL url_Imagen = new URL("https://picsum.photos/500/700");
         
-
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
-            byte[] chunk = new byte[1024];
+            byte[] chunk = new byte[512];
             int bytesRead;
             try(InputStream stream = url_Imagen.openStream()){
 
@@ -305,13 +342,9 @@ public class Metodos {
         respuesta = 
                 AgregarRespuesta("Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
-        
-        
-        Principal_Frame.Obtener_Solicitudes();
-        Principal_Frame.Obtener_Respuestas();
         
         return response;  
        
@@ -319,19 +352,21 @@ public class Metodos {
      
     public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente) throws SQLException {
 
+        cliente = Decodificacion(cliente);
+        correo_Electronico = Decodificacion(correo_Electronico);
+        
         //Agregar solicitud:
-        Par<Boolean, String> respuesta = 
+        Par<Integer, String> respuesta = 
                AgregarSolicitud("Recuperar Credenciales Por Correo Electrónico", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
-        
-       //Buscar la contraseña en la base de datos:
-       String contrasena = "contraseña De Prueba";
+        //Buscar la contraseña en la base de datos:
+        String contrasena = "contraseña De Prueba";
 
-       try {
+        try {
 
            // Destinatario
            direccion_Internet.setAddress(correo_Electronico);
@@ -366,7 +401,7 @@ public class Metodos {
                
            }
 
-       } catch (MessagingException ex) {
+        } catch (MessagingException ex) {
            System.out.println("clases.Metodos.Recuperar_Credenciales(): "+ex.getLocalizedMessage());
            System.out.println("clases.Metodos.Recuperar_Credenciales(): "+ex.getMessage());
            return Boolean.FALSE;
@@ -377,78 +412,60 @@ public class Metodos {
         respuesta = 
                 AgregarRespuesta("Credenciales Enviadas Al Correo: "+correo_Electronico, cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
-        Principal_Frame.Obtener_Solicitudes();
-        Principal_Frame.Obtener_Respuestas();
-       
-       return Boolean.TRUE;
+        return Boolean.TRUE;
     }
     
-    public String[] Obtener_Estados(String cliente) throws SQLException {
+    public Vector<String> Obtener_Estados(String cliente) throws SQLException {
+        
+        cliente = Decodificacion(cliente);
         
         //Agregar solicitud:
-        Par<Boolean, String> respuesta = 
+        Par<Integer, String> respuesta = 
                 AgregarSolicitud("Obtener Estados", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
-        Lista<String> estados = ObtenerEstados();
-        
-        String[] response = new String[estados.size()];
-        int cuenta = 0;
-        while(!estados.is_empty()){
-            response[cuenta] = estados.delist();
-            cuenta++;
-        }
+        Vector<String> response = ObtenerEstados();
         
         //Agregar respuesta:
         respuesta = 
                 AgregarRespuesta("Estados Enviados", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
-        
-        Principal_Frame.Obtener_Solicitudes();
-        Principal_Frame.Obtener_Respuestas();
         
         return response;
     }
     
-    public String[] Obtener_Localidades_Por_Estado(String estado, String cliente) throws SQLException {
+    public Vector<String> Obtener_Localidades_Por_Estado(String estado, String cliente) throws SQLException {
+        
+        cliente = Decodificacion(cliente);
+        estado = Decodificacion(estado);
         
         //Agregar solicitud:
-        Par<Boolean, String> respuesta = 
-                AgregarSolicitud("Obtener Localidades Del Estado De "+estado, cliente, LocalDateTime.now().format(formato_Fecha));
+        Par<Integer, String> respuesta = 
+                AgregarSolicitud(Concatenar("Obtener Localidades Del Estado ",estado), cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
         
-        Lista<String> localidades = ObtenerLocalidadesPorEstado(estado);
-        
-        String[] response = new String[localidades.size()];
-        int cuenta = 0;
-        while(!localidades.is_empty()){
-            response[cuenta] = localidades.delist();
-            cuenta++;
-        }
+        Vector<String> response = ObtenerLocalidadesPorEstado(estado);
         
         //Agregar respuesta:
         respuesta = 
                 AgregarRespuesta("Localidades Enviadas", cliente, LocalDateTime.now().format(formato_Fecha));
         
-        if(!respuesta.first()){
+        if(respuesta.first() == -1){
             System.err.println(respuesta.second());
         }
-        
-        Principal_Frame.Obtener_Solicitudes();
-        Principal_Frame.Obtener_Respuestas();
         
         return response;
     }
