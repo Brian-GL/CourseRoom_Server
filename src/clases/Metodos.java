@@ -4,6 +4,7 @@
  */
 package clases;
 
+import com.mysql.cj.jdbc.Blob;
 import datos.estructuras.Par;
 import frames.Principal_Frame;
 import java.io.BufferedReader;
@@ -267,6 +268,43 @@ public class Metodos {
         return response;
     }
     
+    private Par<Integer, String> AgregarUsuario(String CorreoElectronico,String Contrasenia ,String Nombre,
+    String Paterno,String Materno,String Genero,String FechaNacimiento,Float PromedioGeneral,String TipoUsuario,
+    String Descripcion, byte[] Imagen) throws SQLException, IOException{
+        Par<Integer, String> par = new Par<>(-1,"");
+        
+        byte[] bytes;
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_AgregarUsuario(?,?,?,?,?,?,?,?,?,?,?)}")){
+            ejecutor.setString("_CorreoElectronico", CorreoElectronico);
+            ejecutor.setString("_Contrasenia", Contrasenia);
+            ejecutor.setString("_Nombre", Nombre);
+            ejecutor.setString("_Paterno", Paterno);
+            ejecutor.setString("_Materno", Materno);
+            ejecutor.setString("_Genero", Genero);
+            ejecutor.setString("_FechaNacimiento", FechaNacimiento);
+            ejecutor.setFloat("_PromedioGeneral", PromedioGeneral);
+            ejecutor.setString("_TipoUsuario", TipoUsuario);
+            ejecutor.setString("_Descripcion", Descripcion);
+            Blob blob = new Blob(Imagen,null);
+            ejecutor.setBlob("_Imagen", blob);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        bytes = resultado.getString("Mensaje").getBytes();
+                        bytes = Base64.getEncoder().encode(bytes);
+                        codificacion = new String(bytes);
+                        par.second(codificacion);
+                        par.first(resultado.getInt("Codigo"));
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return par;
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Metodos para rpc">
@@ -470,6 +508,66 @@ public class Metodos {
         return response;
     }
     
+    public Vector<Object> Agregar_Usuario(String CorreoElectronico,String Contrasenia ,String Nombre,
+        String Paterno,String Materno,String Genero,String FechaNacimiento,Float PromedioGeneral,String TipoUsuario,
+        String Descripcion, byte[] Imagen, String cliente) throws SQLException, IOException{
+        
+        CorreoElectronico = Decodificacion(CorreoElectronico);
+        Contrasenia = Decodificacion(Contrasenia);
+        Nombre = Decodificacion(Nombre); 
+        Paterno = Decodificacion(Paterno);
+        Materno = Decodificacion(Materno);
+        Genero = Decodificacion(Genero);
+        FechaNacimiento = Decodificacion(FechaNacimiento);
+        TipoUsuario = Decodificacion(TipoUsuario);
+        Descripcion = Decodificacion(Descripcion);
+        
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = 
+                AgregarSolicitud("Agregar Nuevo Usuario", cliente, LocalDateTime.now().format(formato_Fecha));
+        
+        if(respuesta.first() == -1){
+            System.err.println(respuesta.second());
+        }
+        
+        //Agregar Usuario:
+        respuesta =
+                AgregarUsuario(CorreoElectronico, Contrasenia, Nombre, Paterno, Materno, Genero, FechaNacimiento, PromedioGeneral, TipoUsuario, Descripcion, Imagen);
+        
+        
+        if(respuesta.first() == -1){
+            
+            //Agregar respuesta:
+            respuesta = 
+                    AgregarRespuesta("Usuario No Agregado", cliente, LocalDateTime.now().format(formato_Fecha));
+
+            if(respuesta.first() == -1){
+                System.err.println(respuesta.second());
+            }else{
+
+            }
+            
+        }else{
+            
+            //Agregar respuesta:
+            respuesta = 
+                    AgregarRespuesta("Usuario Agregado", cliente, LocalDateTime.now().format(formato_Fecha));
+
+            if(respuesta.first() == -1){
+                System.err.println(respuesta.second());
+            }else{
+
+            }
+        }
+        
+        Vector<Object> response = new Vector<>();
+        
+        response.add(respuesta.first());
+        response.add(respuesta.second());
+        
+        return response;
+        
+    }
     
 //    public Vector<Vector<String>> ObtenerRespuestas(){
 //        
