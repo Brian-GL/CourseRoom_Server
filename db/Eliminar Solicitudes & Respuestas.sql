@@ -1,4 +1,5 @@
 -- Eliminar solicitudes y respuestas:
+USE courseroom_server;
 DELETE FROM tb_solicitudes WHERE IdSolicitud > 0;
 DELETE FROM tb_respuestas WHERE IdRespuesta > 0;
 

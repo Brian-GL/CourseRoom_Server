@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `courseroom_server` /*!40100 DEFAULT CHARACTER SE
 USE `courseroom_server`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: localhost    Database: courseroom_server
+-- Host: 127.0.0.1    Database: courseroom_server
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -28,9 +28,10 @@ CREATE TABLE `tb_respuestas` (
   `IdRespuesta` int NOT NULL AUTO_INCREMENT,
   `Respuesta` varchar(256) NOT NULL,
   `Cliente` varchar(80) NOT NULL,
-  `FechaRespuesta` varchar(100) NOT NULL,
+  `DireccionIP` varchar(256) DEFAULT NULL,
+  `Fecha` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`IdRespuesta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +40,7 @@ CREATE TABLE `tb_respuestas` (
 
 LOCK TABLES `tb_respuestas` WRITE;
 /*!40000 ALTER TABLE `tb_respuestas` DISABLE KEYS */;
+INSERT INTO `tb_respuestas` VALUES (1,'Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:05'),(2,'Estados Enviados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:09'),(3,'Localidades Enviadas','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:10'),(4,'Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:47'),(5,'Estados Enviados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:50'),(6,'Localidades Enviadas','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:51'),(7,'Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:51'),(8,'Estados Enviados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:54'),(9,'Localidades Enviadas','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:54'),(10,'Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:05'),(11,'Estados Enviados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:07'),(12,'Localidades Enviadas','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:08'),(13,'Usuario Agregado Con ID 1','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:44'),(14,'Imagen Enviada Y Obtenida Desde: https://picsum.photos/500/700','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:07'),(15,'Estados Enviados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:10'),(16,'Localidades Enviadas','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:10'),(17,'Usuario Agregado Con ID 2','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:24:18');
 /*!40000 ALTER TABLE `tb_respuestas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,9 +55,10 @@ CREATE TABLE `tb_solicitudes` (
   `IdSolicitud` int NOT NULL AUTO_INCREMENT,
   `Solicitud` varchar(200) NOT NULL,
   `Cliente` varchar(80) NOT NULL,
-  `FechaSolicitud` varchar(100) NOT NULL,
+  `DireccionIP` varchar(256) DEFAULT NULL,
+  `Fecha` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`IdSolicitud`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,6 +67,7 @@ CREATE TABLE `tb_solicitudes` (
 
 LOCK TABLES `tb_solicitudes` WRITE;
 /*!40000 ALTER TABLE `tb_solicitudes` DISABLE KEYS */;
+INSERT INTO `tb_solicitudes` VALUES (1,'Obtener Imagen Inicio Sesión','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:02'),(2,'Obtener Estados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:09'),(3,'Obtener Localidades Del Estado AGUASCALIENTES','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:10'),(4,'Agregar Nuevo Usuario','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:03:37'),(5,'Obtener Imagen Inicio Sesión','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:44'),(6,'Obtener Estados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:50'),(7,'Obtener Localidades Del Estado AGUASCALIENTES','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:08:51'),(8,'Agregar Nuevo Usuario','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:09:32'),(9,'Obtener Imagen Inicio Sesión','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:49'),(10,'Obtener Estados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:53'),(11,'Obtener Localidades Del Estado AGUASCALIENTES','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:12:54'),(12,'Agregar Nuevo Usuario','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:13:22'),(13,'Obtener Imagen Inicio Sesión','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:02'),(14,'Obtener Estados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:07'),(15,'Obtener Localidades Del Estado AGUASCALIENTES','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:08'),(16,'Agregar Nuevo Usuario','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:19:38'),(17,'Obtener Imagen Inicio Sesión','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:04'),(18,'Obtener Estados','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:09'),(19,'Obtener Localidades Del Estado AGUASCALIENTES','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:10'),(20,'Agregar Nuevo Usuario','C6CC0026-C2C2-11E8-B5F5-E86A64292601','177.245.217.103','sábado 26/03/22 21:23:39');
 /*!40000 ALTER TABLE `tb_solicitudes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +78,7 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'courseroom_server'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `sp_crs_AgregarRespuesta` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_AgregarRespuesta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -84,20 +88,20 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crs_AgregarRespuesta`(
+CREATE DEFINER=`courseroom_server`@`localhost` PROCEDURE `sp_AgregarRespuesta`(
 	IN _Respuesta VARCHAR(100),
     IN _Cliente VARCHAR(45),
-    IN _FechaRespuesta VARCHAR(75)
+    IN _DireccionIP VARCHAR(256)
 )
 BEGIN
-
 	IF _Respuesta IS NULL OR LENGTH(_Respuesta) = 0 
-		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0  THEN
-        SELECT -1 AS "Codigo", 'La Respuesta O El Cliente Tienen Valores Nulos' AS "Mensaje";
+		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0
+        OR  _DireccionIP IS NULL OR LENGTH(_DireccionIP) = 0 THEN
+        SELECT -1 AS "Codigo", 'El Formato De Entrada De Algún Parámetro Es Incorrecto' AS "Mensaje";
 	ELSE 
-		
-        INSERT INTO tb_respuestas(Respuesta, Cliente, FechaRespuesta)
-		VALUES (_Respuesta, _Cliente, IF(_FechaRespuesta IS NULL OR LENGTH(_FechaRespuesta) = 0, DATE_FORMAT(NOW(), '%d/%m/%y %T'), _FechaRespuesta));
+		SET lc_time_names = 'es_MX';
+        INSERT INTO tb_respuestas(Respuesta, Cliente, DireccionIP, Fecha)
+		VALUES (_Respuesta, _Cliente, _DireccionIP, CONCAT(DAYNAME(NOW()),' ',DATE_FORMAT(NOW(), '%d/%m/%y %T')));
         SELECT LAST_INSERT_ID() AS "Codigo", 'OK' AS "Mensaje";
        
 	END IF;
@@ -107,7 +111,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_crs_AgregarSolicitud` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_AgregarSolicitud` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -117,31 +121,30 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crs_AgregarSolicitud`(
+CREATE DEFINER=`courseroom_server`@`localhost` PROCEDURE `sp_AgregarSolicitud`(
 	IN _Solicitud VARCHAR(100),
-	IN _Cliente VARCHAR(45),
-	IN _FechaSolicitud VARCHAR(75)
+    IN _Cliente VARCHAR(45),
+    IN _DireccionIP VARCHAR(256)
 )
 BEGIN
 
 	IF _Solicitud IS NULL OR LENGTH(_Solicitud) = 0 
-		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0  THEN
-        SELECT -1 AS "Codigo", 'La Solicitud O El Cliente Tienen Valores Nulos' AS "Mensaje";
-	ELSE
-    
-		INSERT INTO tb_solicitudes(Solicitud, Cliente, FechaSolicitud)
-		VALUES (_Solicitud, _Cliente, IF(_FechaSolicitud IS NULL OR LENGTH(_FechaSolicitud) = 0, DATE_FORMAT(NOW(), '%d/%m/%y %T'), _FechaSolicitud));
-		SELECT LAST_INSERT_ID() AS "Codigo", 'OK' AS "Mensaje";
-        
+		OR  _Cliente IS NULL OR LENGTH(_Cliente) = 0
+        OR  _DireccionIP IS NULL OR LENGTH(_DireccionIP) = 0 THEN
+        SELECT -1 AS "Codigo", 'El Formato De Entrada De Algún Parámetro Es Incorrecto' AS "Mensaje";
+	ELSE 
+		SET lc_time_names = 'es_MX';
+        INSERT INTO tb_solicitudes(Solicitud, Cliente, DireccionIP, Fecha)
+		VALUES (_Solicitud, _Cliente, _DireccionIP, CONCAT(DAYNAME(NOW()),' ',DATE_FORMAT(NOW(), '%d/%m/%y %T')));
+        SELECT LAST_INSERT_ID() AS "Codigo", 'OK' AS "Mensaje";
 	END IF;
-
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_crs_ObtenerRespuestas` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ObtenerRespuestas` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -151,17 +154,17 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crs_ObtenerRespuestas`()
+CREATE DEFINER=`courseroom_server`@`localhost` PROCEDURE `sp_ObtenerRespuestas`()
 BEGIN
-	SELECT IdRespuesta, Respuesta, Cliente, FechaRespuesta FROM tb_respuestas 
-    ORDER BY IdRespuesta DESC LIMIT 200;
+	SELECT IdRespuesta, Respuesta, Cliente, DireccionIP, Fecha FROM tb_respuestas 
+    ORDER BY IdRespuesta DESC LIMIT 250;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_crs_ObtenerSolicitudes` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ObtenerSolicitudes` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -171,10 +174,10 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_crs_ObtenerSolicitudes`()
+CREATE DEFINER=`courseroom_server`@`localhost` PROCEDURE `sp_ObtenerSolicitudes`()
 BEGIN
-	SELECT IdSolicitud, Solicitud, Cliente, FechaSolicitud FROM tb_solicitudes 
-    ORDER BY IdSolicitud DESC LIMIT 200;
+	SELECT IdSolicitud, Solicitud, Cliente, DireccionIP, Fecha FROM tb_solicitudes 
+    ORDER BY IdSolicitud DESC LIMIT 250;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -191,4 +194,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-19 18:18:00
+-- Dump completed on 2022-03-26 21:26:22

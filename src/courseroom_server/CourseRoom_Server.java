@@ -5,7 +5,7 @@
 package courseroom_server;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import frames.Principal_Frame;
+import frames.CourseRoom_Server_Frame;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.UIManager;
@@ -20,7 +20,7 @@ public class CourseRoom_Server {
     public static void main(String args[]) throws ClassNotFoundException, UnsupportedLookAndFeelException, SQLException, IOException {
         FlatDarkLaf ui = new FlatDarkLaf();
         UIManager.setLookAndFeel(ui);
-        Principal_Frame principal_Frame = new Principal_Frame();
+        CourseRoom_Server_Frame principal_Frame = new CourseRoom_Server_Frame();
         principal_Frame.setVisible(true);
         
     }
