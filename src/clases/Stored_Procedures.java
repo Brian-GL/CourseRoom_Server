@@ -377,6 +377,8 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Fabricante"));
                         fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Uuid"));
+                        fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("UltimaConexion"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("DireccionIP"));
