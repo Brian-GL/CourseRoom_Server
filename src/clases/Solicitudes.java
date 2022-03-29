@@ -575,6 +575,50 @@ public class Solicitudes {
         return response;
     }
     
+    public Vector<Object> Actualizar_Imagen_Perfil(int id_Usuario, byte[] imagen, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Actualizar Imagen Perfil Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ActualizarImagenPerfil(id_Usuario,imagen);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Imagen Actualizada Del Usuario Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+
+        return response;
+
+    }
+    
     public void Cerrar_Conexion(){
         stored_Procedures.Cerrar_Conexion();
     }

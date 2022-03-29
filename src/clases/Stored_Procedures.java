@@ -110,7 +110,7 @@ public class Stored_Procedures {
             ejecutor.setString("_FechaNacimiento", fecha_Nacimiento);
             ejecutor.setString("_TipoUsuario", tipo_Usuario);
             ejecutor.setBlob("_Imagen", blob);
-            ejecutor.setDouble("_PromedioGeneral", promedio_General == -1 ? null : promedio_General);
+            ejecutor.setDouble("_PromedioGeneral", promedio_General);
             ejecutor.setString("_Descripcion", descripcion);
             
             try (ResultSet resultado = ejecutor.executeQuery()){
@@ -288,6 +288,37 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+        }
+        
+        return respuesta;
+        
+    }
+    
+    
+    public Vector<Object> sp_ActualizarImagenPerfil(int id_Usuario, byte[] imagen){
+        
+        Vector<Object> respuesta = new Vector<>();
+        Blob blob = new Blob(imagen,null);
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarImagenPerfil(?,?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            ejecutor.setBlob("_Imagen", blob);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
         }
         
         return respuesta;
