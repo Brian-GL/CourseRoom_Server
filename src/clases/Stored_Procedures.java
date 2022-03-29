@@ -255,6 +255,9 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
                         respuesta.add(codificacion);
                         
+                        codificacion = Codificacion(resultado.getString("Contrasenia"));
+                        respuesta.add(codificacion);
+                        
                         break;
                     }
                 }
@@ -319,6 +322,73 @@ public class Stored_Procedures {
         } catch(SQLException ex){
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+        
+    }
+    
+    
+    public Vector<Object> sp_CerrarSesion(int id_Usuario, int id_Sesion){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_CerrarSesion(?,?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            ejecutor.setInt("_IdSesion", id_Sesion);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerSesiones(int id_Usuario){
+        
+        Vector<Vector<Object>> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerSesiones(?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdSesion"));
+                        codificacion = Codificacion(resultado.getString("Dispositivo"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Fabricante"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("UltimaConexion"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("DireccionIP"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        fila.add(codificacion);
+                        respuesta.add(fila);
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
         }
         
         return respuesta;

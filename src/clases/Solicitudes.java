@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -43,58 +46,19 @@ public class Solicitudes {
     private Servidor_DB respuestas;
     
     private Solicitudes(){
-        try{
-            respuestas = Servidor_DB.getInstance();
-            stored_Procedures = Stored_Procedures.getInstance();
-            
-            //Crear las propiedades para mandar el correo
-            Properties propiedades = new Properties();
-            propiedades.put("mail.smtp.host", "smtp.outlook.com");
-            propiedades.put("mail.smtp.starttls.enable", "true");
-            propiedades.put("mail.smtp.port", "587");
-            propiedades.put("mail.smtp.auth", "true");
-            // Obtener la sesion
-            sesion = Session.getInstance(propiedades, null);
+       
+        respuestas = Servidor_DB.getInstance();
+        stored_Procedures = Stored_Procedures.getInstance();
 
-            // Leer la plantilla
-            try (InputStream stream_Entrada = getClass().getResourceAsStream("/recursos/html/mensaje.html")) {
-                try (BufferedReader lector_Buffered = new BufferedReader(new InputStreamReader(stream_Entrada))) {
-                    // Almacenar el contenido de la plantilla en un StringBuffer
-                    String linea;
-                    mensaje_HTML = new StringBuilder();
+        //Crear las propiedades para mandar el correo
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.outlook.com");
+        propiedades.put("mail.smtp.starttls.enable", "true");
+        propiedades.put("mail.smtp.port", "587");
+        propiedades.put("mail.smtp.auth", "true");
 
-                    while ((linea = lector_Buffered.readLine()) != null) {
-                        mensaje_HTML.append(linea);
-                    }
-
-                }
-            }
-
-            // Crear la parte del mensaje HTML
-            parte_Cuerpo_MIME_HTML = new MimeBodyPart();
-            parte_Cuerpo_MIME_HTML.setContent(mensaje_HTML.toString(), "text/html");
-
-            // Crear el cuerpo del mensaje
-            mensaje_MIME = new MimeMessage(sesion);
-
-            // Agregar el asunto al correo
-            mensaje_MIME.setSubject("CourseRoom -  Mensaje De Recuperación.");
-
-            // Agregar quien envía el correo
-            mensaje_MIME.setFrom(new InternetAddress("Course_Room@outlook.com", "CourseRoom Mensaje De Recuperación"));
-
-            // Crear el multiparte para agregar la parte del mensaje anterior
-            multiparte = new MimeMultipart();
-
-            // Agregar la parte del mensaje  de recuperación HTML al multiPart
-            multiparte.addBodyPart(parte_Cuerpo_MIME_HTML);
-
-            direccion_Internet = new InternetAddress();
-
-        }
-        catch (IOException | MessagingException ex) {
-
-        }
+        // Obtener la sesion
+        sesion = Session.getInstance(propiedades, null);
     }
     
     public static Solicitudes getInstance() {
@@ -219,7 +183,7 @@ public class Solicitudes {
 
         //Agregar solicitud:
         Par<Integer, String> respuesta
-                = respuestas.Agregar_Solicitud(Concatenar("Recuperar Credenciales Al Correo " ,correo_Electronico), cliente, ip);
+                = respuestas.Agregar_Solicitud(Concatenar("Recuperar Credenciales Del Correo " ,correo_Electronico), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -230,6 +194,44 @@ public class Solicitudes {
 
         if(!contrasena.isEmpty() && !contrasena.isBlank()){
             try {
+                
+                // Leer la plantilla
+                try (InputStream stream_Entrada = getClass().getResourceAsStream("/recursos/html/mensaje.html")) {
+                    try (BufferedReader lector_Buffered = new BufferedReader(new InputStreamReader(stream_Entrada))) {
+                        // Almacenar el contenido de la plantilla en un StringBuffer
+                        String linea;
+                        mensaje_HTML = new StringBuilder();
+
+                        while ((linea = lector_Buffered.readLine()) != null) {
+                            mensaje_HTML.append(linea);
+                        }
+
+                    }
+                } catch (IOException ex) { 
+                    
+                }
+
+                // Crear la parte del mensaje HTML
+                parte_Cuerpo_MIME_HTML = new MimeBodyPart();
+                parte_Cuerpo_MIME_HTML.setContent(mensaje_HTML.toString(), "text/html");
+
+                // Crear el cuerpo del mensaje
+                mensaje_MIME = new MimeMessage(sesion);
+
+                // Agregar el asunto al correo
+                mensaje_MIME.setSubject("CourseRoom -  Mensaje De Recuperación.");
+
+                // Agregar quien envía el correo
+                mensaje_MIME.setFrom(new InternetAddress("Course_Room@outlook.com", "CourseRoom Mensaje De Recuperación"));
+
+                // Crear el multiparte para agregar la parte del mensaje anterior
+                multiparte = new MimeMultipart();
+
+                // Agregar la parte del mensaje  de recuperación HTML al multiPart
+                multiparte.addBodyPart(parte_Cuerpo_MIME_HTML);
+
+                direccion_Internet = new InternetAddress();
+                
                 contrasena = Decodificacion(contrasena);
                 
                 // Destinatario
@@ -267,17 +269,19 @@ public class Solicitudes {
                 
                 response = Boolean.TRUE;
 
-            } catch (MessagingException ex) {
+            } catch (MessagingException | UnsupportedEncodingException ex) {
                 System.out.println("Recuperar_Credenciales(): " + ex.getMessage());
                 
                 //Agregar respuesta:
                 respuesta
-                        = respuestas.Agregar_Respuesta("Credenciales Enviadas Al Correo: " + correo_Electronico, cliente, ip);
+                        = respuestas.Agregar_Respuesta(Concatenar("Credenciales Enviadas Al Correo ", correo_Electronico), cliente, ip);
 
                 if (respuesta.first() == -1) {
                     System.err.println(respuesta.second());
                 }
             }
+            //Agregar respuesta:
+            
         }
         
         return response;
@@ -329,7 +333,7 @@ public class Solicitudes {
 
         //Agregar solicitud:
         Par<Integer, String> respuesta
-                = respuestas.Agregar_Solicitud(Concatenar("Obtener Localidades Del Estado ", estado), cliente, ip);
+                = respuestas.Agregar_Solicitud(Concatenar("Obtener Localidades Del Estado De ", estado), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -340,7 +344,7 @@ public class Solicitudes {
         if(response.capacity() > 0){
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta("Localidades Enviadas", cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Localidades Enviadas Del Estado De ",estado), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -407,6 +411,87 @@ public class Solicitudes {
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
             }
+            
+            //Enviar mensaje de bienvenida:
+            
+            try {
+                
+                // Leer la plantilla
+                try (InputStream stream_Entrada = getClass().getResourceAsStream("/recursos/html/bienvenida.html")) {
+                    try (BufferedReader lector_Buffered = new BufferedReader(new InputStreamReader(stream_Entrada))) {
+                        // Almacenar el contenido de la plantilla en un StringBuffer
+                        String linea;
+                        mensaje_HTML = new StringBuilder();
+
+                        while ((linea = lector_Buffered.readLine()) != null) {
+                            mensaje_HTML.append(linea);
+                        }
+
+                    }
+                } catch (IOException ex) { 
+                    
+                }
+
+                // Crear la parte del mensaje HTML
+                parte_Cuerpo_MIME_HTML = new MimeBodyPart();
+                parte_Cuerpo_MIME_HTML.setContent(mensaje_HTML.toString(), "text/html");
+
+                // Crear el cuerpo del mensaje
+                mensaje_MIME = new MimeMessage(sesion);
+
+                // Agregar el asunto al correo
+                mensaje_MIME.setSubject("CourseRoom -  Mensaje De Bienvenida.");
+
+                // Agregar quien envía el correo
+                mensaje_MIME.setFrom(new InternetAddress("Course_Room@outlook.com", "CourseRoom Mensaje De Bienvenida"));
+
+                // Crear el multiparte para agregar la parte del mensaje anterior
+                multiparte = new MimeMultipart();
+
+                // Agregar la parte del mensaje  de recuperación HTML al multiPart
+                multiparte.addBodyPart(parte_Cuerpo_MIME_HTML);
+
+                direccion_Internet = new InternetAddress();
+                
+                contrasenia = Decodificacion(contrasenia);
+                // Destinatario
+                direccion_Internet.setAddress(correo_Electronico);
+
+                // Agregar destinatario al mensaje
+                mensaje_MIME.setRecipient(Message.RecipientType.TO, direccion_Internet);
+
+                // Crear la parte del mensaje HTML
+                MimeBodyPart mimeBodyPartMensaje = new MimeBodyPart();
+                mimeBodyPartMensaje.setFileName("Credenciales.txt");
+                mimeBodyPartMensaje.setText("Contraseña: " + contrasenia);
+
+                // Agregar la parte del mensaje HTML al multiPart
+                multiparte.addBodyPart(mimeBodyPartMensaje);
+
+                // Agregar el multiparte al cuerpo del mensaje
+                mensaje_MIME.setContent(multiparte);
+
+                // Enviar el mensaje
+                try (Transport transporte = sesion.getTransport("smtp")) {
+
+                    byte[] decoded_Correo = Base64.getDecoder().decode("Q291cnNlX1Jvb21Ab3V0bG9vay5jb20=");
+                    byte[] decoded_Password = Base64.getDecoder().decode("Y3VjZWlVREc=");
+                    String decodificacion_Correo = new String(decoded_Correo);
+                    String decodificacion_Password = new String(decoded_Password);
+
+                    String servidor = sesion.getProperty("mail.smtp.host");
+                    int puerto = Integer.parseInt(sesion.getProperty("mail.smtp.port"));
+                    transporte.connect(servidor, puerto, decodificacion_Correo, decodificacion_Password);
+
+                    transporte.sendMessage(mensaje_MIME, mensaje_MIME.getAllRecipients());
+
+                }
+                
+            } catch (MessagingException ex) {
+                System.out.println("Mensaje De Bienvenida(): " + ex.getMessage());
+                
+            }
+            
         }
 
 
@@ -423,7 +508,7 @@ public class Solicitudes {
         ip = Decodificacion(ip);
         
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud("Obtener Usuario Para Iniciar Sesion", cliente, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Inicio De Sesión Del Correo ",correo_Electronico), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -445,7 +530,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Usuario Iniciando Sesion Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Sesión Iniciada Del Usuario", ((Integer)response.get(0)).toString()), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -467,7 +552,7 @@ public class Solicitudes {
         ip = Decodificacion(ip);
 
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud("Agregar Nuevo Usuario", uuid, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Sesión Del Usuario ",String.valueOf(id_Usuario)), uuid, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -491,7 +576,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Sesion Agregada Con ID ", ((Integer)response.get(0)).toString()), uuid, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Sesion Agregada Del Usuario ",String.valueOf(id_Usuario)," Con ID ", ((Integer)response.get(0)).toString()), uuid, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -510,7 +595,7 @@ public class Solicitudes {
 
         //Agregar solicitud:
         Par<Integer, String> respuesta
-                = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Perfil Del Usuario Con ID: ",String.valueOf(id_Usuario)), cliente, ip);
+                = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Perfil Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -521,7 +606,7 @@ public class Solicitudes {
         if(response.capacity() > 0){
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta("Datos De Perfil Enviados", cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos De Perfil Enviados Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -529,7 +614,7 @@ public class Solicitudes {
         }else{
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta("Datos De Perfil Vacíos Enviados", cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos De Perfil Vacíos Enviados Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -546,7 +631,7 @@ public class Solicitudes {
 
         //Agregar solicitud:
         Par<Integer, String> respuesta
-                = respuestas.Agregar_Solicitud(Concatenar("Obtener Imagen Perfil Del Usuario Con ID: ",String.valueOf(id_Usuario)), cliente, ip);
+                = respuestas.Agregar_Solicitud(Concatenar("Obtener Imagen Perfil Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -557,7 +642,7 @@ public class Solicitudes {
         if(response.length > 0){
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta("Datos De Imagen Perfil Enviados", cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos De Imagen Perfil Enviados Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -565,7 +650,7 @@ public class Solicitudes {
         }else{
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta("Datos De Imagen Perfil Vacíos Enviados", cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos De Imagen Perfil Vacíos Enviados Al Usuario ",String.valueOf(id_Usuario)),  cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -607,7 +692,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Imagen Actualizada Del Usuario Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Imagen Actualizada Del Usuario ", String.valueOf(id_Usuario)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -617,6 +702,86 @@ public class Solicitudes {
 
         return response;
 
+    }
+    
+    public Vector<Object> Cerrar_Sesion(int id_Usuario, int id_Sesion, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Cerrar Sesión ",String.valueOf(id_Sesion)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_CerrarSesion(id_Usuario,id_Sesion);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Sesión Cerrada ",String.valueOf(id_Sesion)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+
+        return response;
+
+    }
+    
+    public Vector<Vector<Object>> Obtener_Sesiones_Usuario(int id_Usuario, String cliente, String ip) throws SQLException {
+
+        ip = Decodificacion(ip);
+        cliente = Decodificacion(cliente);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta
+                = respuestas.Agregar_Solicitud(Concatenar("Obtener Sesiones Del usuario ", String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        Vector<Vector<Object>> response = stored_Procedures.sp_ObtenerSesiones(id_Usuario);
+
+        if(response.capacity() > 0){
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Sesiones Enviadas Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }else{
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Sesiones Vacías Enviadas Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
     }
     
     public void Cerrar_Conexion(){
