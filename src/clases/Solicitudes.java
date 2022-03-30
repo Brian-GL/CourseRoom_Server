@@ -784,6 +784,56 @@ public class Solicitudes {
         return response;
     }
     
+    public Vector<Object> Actualizar_Datos_Personales(int id_Usuario, String nombre, String paterno, String materno, 
+            String genero, String fecha_Nacimiento, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        paterno = Decodificacion(paterno);
+        materno = Decodificacion(materno);
+        genero = Decodificacion(genero);
+        fecha_Nacimiento = Decodificacion(fecha_Nacimiento);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Actualizar Datos Personales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Actualizar Datos Usuario:
+        response
+                = stored_Procedures.sp_ActualizarDatosPersonales(id_Usuario,nombre, paterno, materno, genero, fecha_Nacimiento);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos Personales Actualizados Del Usuario ",String.valueOf(id_Usuario)," Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+
+        return response;
+        
+    }
+    
     public void Cerrar_Conexion(){
         stored_Procedures.Cerrar_Conexion();
     }

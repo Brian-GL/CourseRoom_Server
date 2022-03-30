@@ -397,6 +397,46 @@ public class Stored_Procedures {
         
     }
     
+    
+    public Vector<Object> sp_ActualizarDatosPersonales(int id_Usuario, String nombre, String paterno, String materno, 
+            String genero, String fecha_Nacimiento){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarDatosPersonales(?,?,?,?,?,?)}")){
+            
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            ejecutor.setString("_Nombre",nombre);
+            ejecutor.setString("_Paterno",paterno);
+            ejecutor.setString("_Materno",materno);
+            ejecutor.setString("_Genero",genero);
+            ejecutor.setString("_FechaNacimiento",fecha_Nacimiento);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+        
+    }
+    
+    
     public void Cerrar_Conexion(){
         try {
             db_CourseRoom_Conexion.close();
@@ -404,6 +444,5 @@ public class Stored_Procedures {
             
         }
     }
-    
     
 }
