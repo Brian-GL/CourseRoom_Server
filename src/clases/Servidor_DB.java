@@ -35,7 +35,6 @@ public class Servidor_DB {
     }
     
     private static class RespuestasHolder {
-
         private static final Servidor_DB INSTANCE = new Servidor_DB();
     }
     
