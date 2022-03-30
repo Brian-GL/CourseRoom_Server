@@ -13,7 +13,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author LENOVO
  */
 public class CourseRoom_Server {
     
