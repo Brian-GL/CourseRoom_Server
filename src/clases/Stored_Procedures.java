@@ -399,12 +399,12 @@ public class Stored_Procedures {
     
     
     public Vector<Object> sp_ActualizarDatosPersonales(int id_Usuario, String nombre, String paterno, String materno, 
-            String genero, String fecha_Nacimiento){
+            String genero, String fecha_Nacimiento, int id_Localidad){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarDatosPersonales(?,?,?,?,?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarDatosPersonales(?,?,?,?,?,?,?)}")){
             
             ejecutor.setInt("_IdUsuario",id_Usuario);
             ejecutor.setString("_Nombre",nombre);
@@ -412,6 +412,7 @@ public class Stored_Procedures {
             ejecutor.setString("_Materno",materno);
             ejecutor.setString("_Genero",genero);
             ejecutor.setString("_FechaNacimiento",fecha_Nacimiento);
+            ejecutor.setInt("_IdLocalidad",id_Localidad);
 
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){

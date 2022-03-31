@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -454,19 +452,12 @@ public class Solicitudes {
                 direccion_Internet = new InternetAddress();
                 
                 contrasenia = Decodificacion(contrasenia);
+                
                 // Destinatario
                 direccion_Internet.setAddress(correo_Electronico);
 
                 // Agregar destinatario al mensaje
                 mensaje_MIME.setRecipient(Message.RecipientType.TO, direccion_Internet);
-
-                // Crear la parte del mensaje HTML
-                MimeBodyPart mimeBodyPartMensaje = new MimeBodyPart();
-                mimeBodyPartMensaje.setFileName("Credenciales.txt");
-                mimeBodyPartMensaje.setText("Contraseña: " + contrasenia);
-
-                // Agregar la parte del mensaje HTML al multiPart
-                multiparte.addBodyPart(mimeBodyPartMensaje);
 
                 // Agregar el multiparte al cuerpo del mensaje
                 mensaje_MIME.setContent(multiparte);
@@ -785,7 +776,7 @@ public class Solicitudes {
     }
     
     public Vector<Object> Actualizar_Datos_Personales(int id_Usuario, String nombre, String paterno, String materno, 
-            String genero, String fecha_Nacimiento, String cliente, String ip){
+            String genero, String fecha_Nacimiento, int id_Localidad, String cliente, String ip){
         
         Vector<Object> response;
         
@@ -806,7 +797,7 @@ public class Solicitudes {
 
         //Actualizar Datos Usuario:
         response
-                = stored_Procedures.sp_ActualizarDatosPersonales(id_Usuario,nombre, paterno, materno, genero, fecha_Nacimiento);
+                = stored_Procedures.sp_ActualizarDatosPersonales(id_Usuario,nombre, paterno, materno, genero, fecha_Nacimiento,id_Localidad);
 
         if ((Integer)response.get(0) == -1) {
 
