@@ -1063,6 +1063,191 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Object> sp_ObtenerArchivoMensajeChat(int id_Chat, int id_Mensaje) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivoMensajeChat(?,?)}")){
+            ejecutor.setInt("_IdChat",id_Chat);
+            ejecutor.setInt("_IdMensaje", id_Mensaje);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerArchivoMensajeCurso(int id_Curso, int id_Mensaje) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivoMensajeCurso(?,?)}")){
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdMensaje", id_Mensaje);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerArchivoMensajeGrupo(int id_Grupo, int id_Mensaje) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivoMensajeGrupo(?,?)}")){
+            ejecutor.setInt("_IdGrupo",id_Grupo);
+            ejecutor.setInt("_IdMensaje", id_Mensaje);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerArchivoMensajePregunta(int id_Pregunta, int id_Mensaje) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivoMensajePregunta(?,?)}")){
+            ejecutor.setInt("_IdPregunta",id_Pregunta);
+            ejecutor.setInt("_IdMensaje", id_Mensaje);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Tarea, int id_Mensaje) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivoMensajeTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea",id_Tarea);
+            ejecutor.setInt("_IdMensaje", id_Mensaje);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
     public Vector<Vector<Object>> sp_ObtenerArchivosSubidosTarea(int id_Tarea, int id_Usuario) throws SQLException{
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
@@ -1200,8 +1385,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
-            respuesta.add(-1);
-            respuesta.add(Codificacion(ex.getMessage()));
+            
         }
         
         return respuesta;
@@ -1224,82 +1408,95 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    
-    public Vector<String> sp_ObtenerEstados() throws SQLException{
-        Vector<String> response = new Vector<>();
-        String codificacion;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerEstados()}")){
-            try (ResultSet resultado = ejecutor.executeQuery()){
-                if(resultado != null){
-                    
-                    while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("Estado"));
-                        response.add(codificacion);
-                    }
-                }
-            }
-        }
-        
-        return response;
-        
-    }
-    
-    
-    public Vector<Vector<Object>> sp_ObtenerLocalidadesPorEstado(String estado) throws SQLException{
-        Vector<Vector<Object>> response = new Vector<>();
-        String codificacion;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerLocalidadesPorEstado(?)}")){
-            ejecutor.setString("_Estado", estado);
-            try (ResultSet resultado = ejecutor.executeQuery()){
-                if(resultado != null){
-                    Vector<Object> fila;
-                    while(resultado.next()){
-                        fila = new Vector<>();
-                        fila.add(resultado.getInt("IdLocalidad"));
-                        codificacion = Codificacion(resultado.getString("Localidad"));
-                        fila.add(codificacion);
-                        response.add(fila);
-                    }
-                }
-            }
-        }
-        
-        return response;
-        
-    }
-    
-    
-    
-    
-    
-    public Vector<Object> sp_ObtenerUsuario(String correo_Electronico,String contrasenia){
+    public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerUsuario(?,?)}")){
-            ejecutor.setString("_CorreoElectronico", correo_Electronico);
-            ejecutor.setString("_Contrasenia", contrasenia);
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesChatPersonal(?,?)}")){
+            ejecutor.setInt("_IdChat", id_Chat);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
             
             try(ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
-                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(resultado.getInt("IdUsuario"));
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         respuesta.add(codificacion);
                         break;
                     }
                 }
             }
         } catch(SQLException ex){
-            respuesta.add(-1);
-            respuesta.add(Codificacion(ex.getMessage()));
+            
         }
         
         return respuesta;
     }
     
+    public Vector<Object> sp_ObtenerDatosGeneralesCurso(int id_Curso){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesCurso(?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            
+            try(ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Descripcion"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("DescripcionProfesor"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        respuesta.add(codificacion);
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
+        }
+        
+        return respuesta;
+    }
     
+    public Vector<Object> sp_ObtenerDatosGeneralesGrupo(int id_Grupo){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesGrupo(?)}")){
+            ejecutor.setInt("_IdGrupo", id_Grupo);
+            
+            try(ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Descripcion"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        respuesta.add(codificacion);
+                        respuesta.add(resultado.getInt("IdCurso"));
+                        codificacion = Codificacion(resultado.getString("NombreCurso"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
+        }
+        
+        return respuesta;
+    }
     
     public Vector<Object> sp_ObtenerDatosPerfil(int id_Usuario){
         
@@ -1362,6 +1559,262 @@ public class Stored_Procedures {
         return respuesta;
     }
     
+    public Vector<Object> sp_ObtenerDatosPerfilChatPersonal(int id_Usuario){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosPerfilChatPersonal(?)}")){
+                ejecutor.setInt("_IdUsuario",id_Usuario);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Paterno"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Materno"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("CorreoElectronico"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Genero"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("TipoUsuario"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Object> sp_ObtenerDatosGeneralesPregunta(int id_Pregunta){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesPregunta(?)}")){
+            ejecutor.setInt("_IdPregunta",id_Pregunta);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Pregunta"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Descripcion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        respuesta.add(codificacion);
+                        
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Object> sp_ObtenerDatosGeneralesTareaPendiente(int id_Tarea_Pendiente, int id_Grupo){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesTareaPendiente(?,?)}")){
+            ejecutor.setInt("_IdTareaPendiente",id_Tarea_Pendiente);
+            ejecutor.setInt("_IdGrupo",id_Grupo);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Descripcion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("FechaFinalizacion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        respuesta.add(codificacion);
+                        
+                        respuesta.add(resultado.getInt("IdUsuario"));
+                        
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerDesempenoUsuario(int id_Usuario) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDesempenoUsuario(?)}")){
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdDesempeno"));
+                        fila.add(resultado.getDouble("Prediccion"));
+                        fila.add(resultado.getInt("NumeroTareasCalificadas"));
+                        codificacion = Codificacion(resultado.getString("RumboEstatus"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getInt("IdCurso"));
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getDouble("PromedioGeneral"));
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<String> sp_ObtenerEstados() throws SQLException{
+        Vector<String> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerEstados()}")){
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Estado"));
+                        response.add(codificacion);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerGrupos(int id_Usuario) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerGrupos(?)}")){
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdGrupo"));
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getInt("IdCurso"));
+                         codificacion = Codificacion(resultado.getString("NombreCurso"));
+                        fila.add(codificacion);
+                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public byte[] sp_ObtenerImagenCurso(int id_Curso){
+        
+        byte[] respuesta = new byte[]{};
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenCurso(?)}")){
+                ejecutor.setInt("_IdCurso",id_Curso);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        try(InputStream stream = resultado.getBlob("Imagen").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                        }
+                        break;
+                    }
+                }else{
+                    
+                }
+            }
+        } catch(SQLException ex){
+        }
+        
+        return respuesta;
+        
+    }
+    
+    public byte[] sp_ObtenerImagenGrupo(int id_Grupo){
+        
+        byte[] respuesta = new byte[]{};
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenGrupo(?)}")){
+                ejecutor.setInt("_IdGrupo",id_Grupo);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        try(InputStream stream = resultado.getBlob("Imagen").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                        }
+                        break;
+                    }
+                }else{
+                    
+                }
+            }
+        } catch(SQLException ex){
+        }
+        
+        return respuesta;
+        
+    }
+    
     public byte[] sp_ObtenerImagenPerfil(int id_Usuario){
         
         byte[] respuesta = new byte[]{};
@@ -1389,6 +1842,347 @@ public class Stored_Procedures {
         return respuesta;
         
     }
+    
+    public byte[] sp_ObtenerImagenPregunta(int id_Pregunta){
+        
+        byte[] respuesta = new byte[]{};
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenPregunta(?)}")){
+                ejecutor.setInt("_IdPregunta",id_Pregunta);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        try(InputStream stream = resultado.getBlob("Imagen").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                        }
+                        break;
+                    }
+                }else{
+                    
+                }
+            }
+        } catch(SQLException ex){
+        }
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<String> sp_ObtenerIntereses(int id_Usuario) throws SQLException{
+        Vector<String> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIntereses()}")){
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                ejecutor.setInt("_IdUsuario",id_Usuario);
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Tematica"));
+                        response.add(codificacion);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerLocalidadesPorEstado(String estado) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerLocalidadesPorEstado(?)}")){
+            ejecutor.setString("_Estado", estado);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdLocalidad"));
+                        codificacion = Codificacion(resultado.getString("Localidad"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMaterialesSubidosCurso(int id_Curso) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMaterialesSubidosCurso(?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMaterialSubido"));
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnviado"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerMaterialSubidoCurso(int id_Curso, int id_Material_Subido) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        byte[] archivo;
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMaterialSubidoCurso(?,?)}")){
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdMaterialSubido", id_Material_Subido);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
+                        respuesta.add(codificacion);
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            archivo = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            archivo = new byte[]{};
+                        }
+                        
+                        respuesta.add(archivo);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMensajesChat(int id_Chat) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesChat(?)}")){
+            ejecutor.setInt("_IdChat", id_Chat);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMensaje"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMensajesCurso(int id_Curso) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesCurso(?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMensaje"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMensajesGrupo(int id_Grupo) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesGrupo(?)}")){
+            ejecutor.setInt("_IdGrupo", id_Grupo);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMensaje"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMensajesPregunta(int id_Pregunta) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesPregunta(?)}")){
+            ejecutor.setInt("_IdPregunta", id_Pregunta);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMensaje"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMensajesTarea(int id_Tarea) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesTarea(?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdMensaje"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerMiembrosGrupo(int id_Grupo) throws SQLException{
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMiembrosGrupo(?)}")){
+            ejecutor.setInt("_IdGrupo", id_Grupo);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdUsuario"));
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaIngreso"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        }
+        
+        return response;
+        
+    }
+    
+    
+    public Vector<Object> sp_ObtenerUsuario(String correo_Electronico,String contrasenia){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerUsuario(?,?)}")){
+            ejecutor.setString("_CorreoElectronico", correo_Electronico);
+            ejecutor.setString("_Contrasenia", contrasenia);
+            
+            try(ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+    }
+    
+    
+    
+    
+    
+    
     
     
     
