@@ -1194,7 +1194,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje){
+    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje) throws SQLException{
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
