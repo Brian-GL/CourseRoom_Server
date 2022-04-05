@@ -152,16 +152,14 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ActualizarDatosGeneralesGrupo(int id_Grupo,int id_Usuario, 
-            String nombre, String descripcion){
+    public Vector<Object> sp_ActualizarDatosGeneralesGrupo(int id_Grupo,String nombre, String descripcion){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarDatosGeneralesGrupo(?,?,?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ActualizarDatosGeneralesGrupo(?,?,?)}")){
             
             ejecutor.setInt("_IdGrupo",id_Grupo);
-            ejecutor.setInt("_IdUsuario",id_Usuario);
             ejecutor.setString("_Nombre",nombre);
             ejecutor.setString("_Descripcion",descripcion);
 
@@ -486,7 +484,7 @@ public class Stored_Procedures {
     }
     
     public Vector<Object> sp_AgregarTareaPendienteGrupo(int id_Grupo, String nombre,String descripcion, 
-            String fecha_Finalizacion, int id_Usuario_Cargo) throws SQLException, IOException{
+            String fecha_Finalizacion, int id_Usuario_Cargo){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
