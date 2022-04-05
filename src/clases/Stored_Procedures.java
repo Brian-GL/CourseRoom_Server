@@ -675,6 +675,41 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Object> sp_CambiarEstatusTareaPendienteGrupo(int id_Tarea_Pendiente,String nuevo_Estatus, int id_Usuario ){
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_CambiarEstatusTareaPendienteGrupo(?,?,?)}")){
+            
+            ejecutor.setInt("_IdTareaPendiente",id_Tarea_Pendiente);
+            ejecutor.setString("_NuevoEstatus",nuevo_Estatus);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+        
+    }
+    
     public Vector<Object> sp_CerrarSesion(int id_Usuario, int id_Sesion){
         
         Vector<Object> respuesta = new Vector<>();
@@ -931,7 +966,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoAdjuntoTarea(int id_Archivo_Adjunto) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoAdjuntoTarea(int id_Archivo_Adjunto){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -961,13 +996,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoCompartidoGrupo(int id_Archivo_Compartido) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoCompartidoGrupo(int id_Archivo_Compartido){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -997,13 +1034,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeChat(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajeChat(int id_Mensaje){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1033,13 +1072,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeCurso(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajeCurso(int id_Mensaje){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1069,13 +1110,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeGrupo(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajeGrupo(int id_Mensaje){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1105,13 +1148,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+           
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajePregunta(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajePregunta(int id_Mensaje) {
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1141,13 +1186,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1183,7 +1230,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoRetroalimentacionTarea(int id_Retroalimentacion) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoRetroalimentacionTarea(int id_Retroalimentacion){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1213,7 +1260,9 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
@@ -1303,7 +1352,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoSubidoTarea(int id_Archivo_Subido, int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoSubidoTarea(int id_Archivo_Subido, int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1334,6 +1383,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) { 
+            
         } 
         
         return respuesta;
@@ -1394,7 +1445,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerConfiguraciones(int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerConfiguraciones(int id_Usuario){
         
         Vector<Object> respuesta = new Vector<>();
         
@@ -1410,7 +1461,9 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
     }
