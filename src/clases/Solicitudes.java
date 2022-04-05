@@ -2208,9 +2208,9 @@ public class Solicitudes {
 
     }
 
-    public Boolean Recuperar_Credenciales(String correo_Electronico, String cliente, String ip) throws SQLException {
+    public boolean Recuperar_Credenciales(String correo_Electronico, String cliente, String ip) throws SQLException {
 
-        Boolean response = Boolean.FALSE;
+        boolean response = false;
         cliente = Decodificacion(cliente);
         correo_Electronico = Decodificacion(correo_Electronico);
         ip = Decodificacion(ip);
@@ -2301,7 +2301,7 @@ public class Solicitudes {
 
                 }
                 
-                response = Boolean.TRUE;
+                response = true;
 
             } catch (MessagingException | UnsupportedEncodingException ex) {
                 System.out.println("Recuperar_Credenciales(): " + ex.getMessage());

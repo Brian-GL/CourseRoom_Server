@@ -15,10 +15,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- *
- * @author LENOVO
- */
+
 public class Stored_Procedures {
     
     private Connection db_CourseRoom_Conexion;
@@ -1194,7 +1191,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje) throws SQLException{
+    public Vector<Object> sp_ObtenerArchivoMensajeTarea(int id_Mensaje){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
@@ -1224,7 +1221,9 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
