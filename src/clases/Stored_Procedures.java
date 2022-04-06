@@ -2049,15 +2049,14 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Object> sp_ObtenerMaterialSubidoCurso( int id_Material_Subido, int id_Curso) throws SQLException{
+    public Vector<Object> sp_ObtenerMaterialSubidoCurso( int id_Material_Subido){
         
         Vector<Object> respuesta = new Vector<>();
         byte[] archivo;
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMaterialSubidoCurso(?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMaterialSubidoCurso(?)}")){
             ejecutor.setInt("_IdMaterialSubido", id_Material_Subido);
-            ejecutor.setInt("_IdCurso",id_Curso);
 
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
@@ -2080,7 +2079,9 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) { 
+            
+        }
         
         return respuesta;
         
@@ -2104,6 +2105,8 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
                         fila.add(codificacion);
                         response.add(fila);
                     }
@@ -2134,6 +2137,8 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
                         fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
+                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
@@ -2162,6 +2167,8 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
                         fila.add(codificacion);
                         response.add(fila);
                     }
@@ -2192,6 +2199,8 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
                         fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
+                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
@@ -2220,6 +2229,8 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
                         fila.add(codificacion);
                         response.add(fila);
                     }
