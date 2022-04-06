@@ -1711,7 +1711,7 @@ public class Solicitudes {
         
     }
     
-    public Vector<Object> Obtener_Archivo_Mensaje_Tarea(int id_Mensaje, String cliente, String ip){
+    public Vector<Object> Obtener_Archivo_Mensaje_Tarea(int id_Mensaje, String cliente, String ip) throws SQLException{
         
         Vector<Object> response;
         
