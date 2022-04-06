@@ -2990,7 +2990,7 @@ public class Solicitudes {
         return response;
         
     }
-    
+
     public Vector<Vector<Object>> Obtener_Mensajes_Chat(int id_Chat, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
@@ -3522,16 +3522,15 @@ public class Solicitudes {
 
     }
     
-    public Vector<Vector<Object>> Obtener_Tematicas(String busqueda, String cliente, String ip) throws SQLException, IOException {
+    public Vector<Vector<Object>> Obtener_Tematicas(String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
         
-        busqueda = Decodificacion(busqueda);
         cliente = Decodificacion(cliente);
         ip = Decodificacion(ip);
 
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Tematicas De La Búsqueda ",busqueda), cliente, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud("Obtener Tematicas De La Búsqueda ", cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -3539,13 +3538,13 @@ public class Solicitudes {
 
         //Agregar Usuario:
         response
-                = stored_Procedures.sp_ObtenerTematicas(busqueda);
+                = stored_Procedures.sp_ObtenerTematicas();
 
         if (response.isEmpty()) {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviadas Temáticas Vacias De La Búsqueda ",busqueda), cliente, ip);
+                    = respuestas.Agregar_Respuesta("Enviadas Temáticas Vacias", cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3555,7 +3554,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta 
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviadas Temáticas De La Búsqueda ",busqueda), cliente, ip);
+                    = respuestas.Agregar_Respuesta("Enviadas Temáticas De La Búsqueda ", cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());

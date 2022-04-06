@@ -2470,14 +2470,13 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTematicas(String busqueda) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTematicas() throws SQLException{
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerTematicas(?)}")){
-            ejecutor.setString("_Busqueda", busqueda);
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerTematicas()}")){
 
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
