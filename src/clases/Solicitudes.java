@@ -2116,6 +2116,231 @@ public class Solicitudes {
 
     }
     
+    public Vector<Object> Obtener_Datos_Generales_Chat_Personal(int id_Chat, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Generales Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDatosGeneralesChatPersonal(id_Chat, id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
+    public Vector<Object> Obtener_Datos_Generales_Curso(int id_Curso, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Generales Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDatosGeneralesCurso(id_Curso);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
+    public Vector<Object> Obtener_Datos_Generales_Grupo(int id_Grupo, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Generales Del Grupo ",String.valueOf(id_Grupo)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDatosGeneralesGrupo(id_Grupo);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios Del Grupo ",String.valueOf(id_Grupo)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Del Grupo ",String.valueOf(id_Grupo)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
+    public Vector<Object> Obtener_Datos_Generales_Pregunta(int id_Pregunta, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Generales De La Pregunta ",String.valueOf(id_Pregunta)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDatosGeneralesPregunta(id_Pregunta);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios De La Pregunta ",String.valueOf(id_Pregunta)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales De La Pregunta ",String.valueOf(id_Pregunta)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
+    public Vector<Object> Obtener_Datos_Generales_Tarea(int id_Tarea, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Datos Generales De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDatosGeneralesTarea(id_Tarea, id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
     
     public Vector<Integer> Fecha_Hora_Servidor(String cliente, String ip) throws SQLException {
 
@@ -2314,7 +2539,7 @@ public class Solicitudes {
                     System.err.println(respuesta.second());
                 }
             }
-            //Agregar respuesta:
+            
             
         }
         

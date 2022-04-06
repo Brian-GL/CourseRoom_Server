@@ -1606,6 +1606,46 @@ public class Stored_Procedures {
         return respuesta;
     }
     
+    
+    public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Pregunta) throws SQLException{
+        
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesTarea(?)}")){
+            ejecutor.setInt("_IdPregunta",id_Pregunta);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        respuesta.add(resultado.getInt("IdUsuario"));
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Pregunta"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Descripcion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        respuesta.add(codificacion);
+                        
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        respuesta.add(codificacion);
+                        
+                        
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        return respuesta;
+    }
+    
+    
     public Vector<Object> sp_ObtenerDatosGeneralesTareaPendiente(int id_Tarea_Pendiente) throws SQLException{
         
         Vector<Object> respuesta = new Vector<>();
