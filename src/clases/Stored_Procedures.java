@@ -1607,23 +1607,21 @@ public class Stored_Procedures {
     }
     
     
-    public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Pregunta) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Tarea, int id_Usuario) throws SQLException{
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesTarea(?)}")){
-            ejecutor.setInt("_IdPregunta",id_Pregunta);
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea",id_Tarea);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
             
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
                         
-                        respuesta.add(resultado.getInt("IdUsuario"));
-                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
-                        respuesta.add(codificacion);
                         
-                        codificacion = Codificacion(resultado.getString("Pregunta"));
+                        codificacion = Codificacion(resultado.getString("Nombre"));
                         respuesta.add(codificacion);
                         
                         codificacion = Codificacion(resultado.getString("Descripcion"));
@@ -1632,8 +1630,10 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
                         respuesta.add(codificacion);
                         
-                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        codificacion = Codificacion(resultado.getString("FechaEntrega"));
                         respuesta.add(codificacion);
+                        
+                        respuesta.add(resultado.getBoolean("TareaGrupal"));
                         
                         
                         break;

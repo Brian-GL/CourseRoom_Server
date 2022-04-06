@@ -2318,7 +2318,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Vacios De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -2328,7 +2328,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta 
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales Del Chat Personal ",String.valueOf(id_Chat)), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Datos Generales De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
