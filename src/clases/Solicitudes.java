@@ -2675,6 +2675,43 @@ public class Solicitudes {
 
     }
     
+    public byte[] Obtener_Imagen_Chat_Personal(int id_Chat, int id_Usuario,String cliente, String ip) throws SQLException {
+
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta
+                = respuestas.Agregar_Solicitud(Concatenar("Obtener Imagen Del Chat ",String.valueOf(id_Chat)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        byte[] response = stored_Procedures.sp_ObtenerImagenChatPersonal(id_Chat, id_Usuario);
+
+        if(response.length > 0){
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos De Imagen Del Chat ",String.valueOf(id_Chat)," Enviados"), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }else{
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos Vacíos De Imagen Del Chat ",String.valueOf(id_Chat)," Enviados"), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
+    
     public byte[] Obtener_Imagen_Curso(int id_Curso,String cliente, String ip) throws SQLException {
 
         cliente = Decodificacion(cliente);

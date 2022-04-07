@@ -1861,6 +1861,35 @@ public class Stored_Procedures {
         
     }
     
+    public byte[] sp_ObtenerImagenChatPersonal(int id_Chat, int id_Usuario){
+        
+        byte[] respuesta = new byte[]{};
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenChatPersonal(?,?)}")){
+            ejecutor.setInt("_IdChat",id_Chat);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        
+                        try(InputStream stream = resultado.getBlob("Imagen").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                        }
+                        break;
+                    }
+                }else{
+                    
+                }
+            }
+        } catch(SQLException ex){
+        }
+        
+        return respuesta;
+        
+    }
+    
     public byte[] sp_ObtenerImagenCurso(int id_Curso){
         
         byte[] respuesta = new byte[]{};
