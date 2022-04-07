@@ -14,6 +14,8 @@ import java.util.Vector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Stored_Procedures {
@@ -1971,19 +1973,19 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerInteresesUsuario(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerInteresesUsuario(int id_Usuario){
         Vector<Vector<Object>> response = new Vector<>();
         Vector<Object> fila;
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerInteresesUsuario(?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
             try (ResultSet resultado = ejecutor.executeQuery()){
-                ejecutor.setInt("_IdUsuario",id_Usuario);
                 if(resultado != null){
-                    
                     while(resultado.next()){
                         fila = new Vector<>();
                         
                         fila.add(resultado.getInt("IdTematica"));
+                        
                         codificacion = Codificacion(resultado.getString("Tematica"));
                         fila.add(codificacion);
                         
@@ -1991,6 +1993,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
         }
         
         return response;

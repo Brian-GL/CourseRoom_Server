@@ -2834,8 +2834,7 @@ public class Solicitudes {
         }
 
         //Agregar Usuario:
-        response
-                = stored_Procedures.sp_ObtenerInteresesUsuario(id_Usuario);
+        response = stored_Procedures.sp_ObtenerInteresesUsuario(id_Usuario);
 
         if (response.isEmpty()) {
 
@@ -3530,7 +3529,7 @@ public class Solicitudes {
         ip = Decodificacion(ip);
 
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud("Obtener Tematicas De La Búsqueda ", cliente, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud("Obtener Tematicas ", cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
@@ -3554,7 +3553,7 @@ public class Solicitudes {
 
             //Agregar respuesta:
             respuesta 
-                    = respuestas.Agregar_Respuesta("Enviadas Temáticas De La Búsqueda ", cliente, ip);
+                    = respuestas.Agregar_Respuesta("Enviadas Temáticas ", cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
