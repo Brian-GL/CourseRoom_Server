@@ -6,7 +6,7 @@ package frames;
 
 import clases.Celda_Renderer;
 import clases.Servidor_DB;
-import clases.Solicitudes;
+import clases.Metodos;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -30,7 +30,7 @@ public class CourseRoom_Server_Frame extends javax.swing.JFrame {
 
     private byte carta_Visible;
     private final WebServer webServer;
-    private Solicitudes solicitudes;
+    private Metodos solicitudes;
     private Servidor_DB respuestas;
     
     @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
@@ -40,7 +40,7 @@ public class CourseRoom_Server_Frame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
-        solicitudes = Solicitudes.getInstance() ;
+        solicitudes = Metodos.getInstance() ;
         respuestas = Servidor_DB.getInstance();
         
         webServer = new WebServer(9000);

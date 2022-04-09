@@ -32,7 +32,7 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author LENOVO
  */
-public class Solicitudes {
+public class Metodos {
     
     private Session sesion;
     private StringBuilder mensaje_HTML;
@@ -43,7 +43,7 @@ public class Solicitudes {
     private Stored_Procedures stored_Procedures;
     private Servidor_DB respuestas;
     
-    private Solicitudes(){
+    private Metodos(){
        
         respuestas = Servidor_DB.getInstance();
         stored_Procedures = Stored_Procedures.getInstance();
@@ -59,13 +59,13 @@ public class Solicitudes {
         sesion = Session.getInstance(propiedades, null);
     }
     
-    public static Solicitudes getInstance() {
+    public static Metodos getInstance() {
         return SolicitudesHolder.INSTANCE;
     }
     
     private static class SolicitudesHolder {
 
-        private static final Solicitudes INSTANCE = new Solicitudes();
+        private static final Metodos INSTANCE = new Metodos();
     }
     
     private String Decodificacion(String codificacion){
