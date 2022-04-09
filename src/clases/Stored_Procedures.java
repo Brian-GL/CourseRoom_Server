@@ -14,9 +14,6 @@ import java.util.Vector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 public class Stored_Procedures {
     
@@ -2314,8 +2311,6 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Pregunta"));
-                        fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("Descripcion"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
                         fila.add(codificacion);

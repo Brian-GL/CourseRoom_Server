@@ -491,7 +491,7 @@ public class Solicitudes {
         
     }
     
-    public Vector<Object> Agregar_Chat(int id_Usuario, int id_Usuario_Receptor , String cliente, String ip){
+    public Vector<Object> Agregar_Chat(int id_Usuario, int id_Usuario_Receptor, String cliente, String ip){
         
         Vector<Object> response;
         
@@ -595,7 +595,6 @@ public class Solicitudes {
             System.err.println(respuesta.second());
         }
 
-        
         response
                 = stored_Procedures.sp_AgregarPregunta(id_Usuario, pregunta, descripcion);
 
@@ -2710,7 +2709,6 @@ public class Solicitudes {
 
         return response;
     }
-    
     
     public byte[] Obtener_Imagen_Curso(int id_Curso,String cliente, String ip) throws SQLException {
 
