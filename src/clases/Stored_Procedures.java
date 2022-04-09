@@ -2424,6 +2424,8 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("FechaEntrega"));
                         fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        fila.add(codificacion);
                         respuesta.add(fila);
                     }
                 }
