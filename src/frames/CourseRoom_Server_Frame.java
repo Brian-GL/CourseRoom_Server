@@ -30,7 +30,7 @@ public class CourseRoom_Server_Frame extends javax.swing.JFrame {
 
     private byte carta_Visible;
     private final WebServer webServer;
-    private Metodos solicitudes;
+    private Metodos metodos;
     private Servidor_DB respuestas;
     
     @SuppressWarnings({"OverridableMethodCallInConstructor", "null"})
@@ -40,11 +40,11 @@ public class CourseRoom_Server_Frame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         
-        solicitudes = Metodos.getInstance() ;
+        metodos = Metodos.getInstance() ;
         respuestas = Servidor_DB.getInstance();
         
         webServer = new WebServer(9000);
-        webServer.addHandler("CourseRoom_Server", solicitudes);
+        webServer.addHandler("CourseRoom_Server", metodos);
         webServer.start();
         System.out.println("WebServer Starting At Port 9000");
        
@@ -328,7 +328,7 @@ public class CourseRoom_Server_Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         webServer.shutdown();
         respuestas.Cerrar_Conexion();
-        solicitudes.Cerrar_Conexion();
+        metodos.Cerrar_Conexion();
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_formWindowClosing
