@@ -418,7 +418,7 @@ public class Stored_Procedures {
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_AgregarPregunta(?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_AgregarPregunta(?,?,?)}")){
             
             ejecutor.setInt("_IdUsuario",id_Usuario);
             ejecutor.setString("_Pregunta",pregunta);
