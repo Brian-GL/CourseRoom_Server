@@ -1605,7 +1605,6 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    
     public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Tarea, int id_Usuario) throws SQLException{
         
         Vector<Object> respuesta = new Vector<>();
@@ -1640,7 +1639,6 @@ public class Stored_Procedures {
         
         return respuesta;
     }
-    
     
     public Vector<Object> sp_ObtenerDatosGeneralesTareaPendiente(int id_Tarea_Pendiente) throws SQLException{
         
