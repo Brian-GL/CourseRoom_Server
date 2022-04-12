@@ -103,7 +103,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -147,7 +147,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -193,7 +193,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -240,7 +240,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -290,7 +290,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -334,7 +334,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -378,7 +378,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -422,7 +422,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -469,7 +469,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -513,7 +513,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -557,7 +557,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -602,7 +602,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -649,7 +649,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), uuid, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), uuid, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -697,7 +697,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -753,7 +753,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1054,7 +1054,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1098,7 +1098,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1144,7 +1144,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1190,7 +1190,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1236,7 +1236,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1282,7 +1282,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1328,7 +1328,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1374,7 +1374,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1509,7 +1509,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3622,7 +3622,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3825,7 +3825,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3869,7 +3869,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3913,7 +3913,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -3957,7 +3957,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -4001,7 +4001,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -4045,7 +4045,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta((String)response.get(1), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());

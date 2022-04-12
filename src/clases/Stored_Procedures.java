@@ -1632,9 +1632,6 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("FechaEntrega"));
                         respuesta.add(codificacion);
                         
-                        respuesta.add(resultado.getBoolean("TareaGrupal"));
-                        
-                        
                         break;
                     }
                 }
