@@ -14,6 +14,8 @@ import java.util.Vector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Stored_Procedures {
     
@@ -1481,6 +1483,37 @@ public class Stored_Procedures {
         }
         
         return respuesta;
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerCursosNuevos(){
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerCursosNuevos()}")){
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdCurso"));
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getInt("IdUsuario"));
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("ListaTematicas"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getDouble("Puntuacion"));
+                        response.add(fila);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            
+        }
+        
+        return response;
     }
     
     public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario) throws SQLException{
