@@ -44,6 +44,37 @@ public class Stored_Procedures {
         return new String(bytes);
     }
     
+    public Vector<Object> sp_AbandonarCurso(int id_Curso,int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_AbandonarCurso(?,?)}")){
+            
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+    }
+    
     public Vector<Object> sp_AbandonarGrupo(int id_Grupo,int id_Usuario){
         
         Vector<Object> respuesta = new Vector<>();
@@ -735,8 +766,100 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Object> sp_EnviarArchivoAdjuntoTarea(int id_Tarea,String nombre_Archivo,byte[] archivo,String extension){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        Blob blob = new Blob(archivo,null);
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_EnviarArchivoAdjuntoTarea(?,?,?,?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            ejecutor.setString("_NombreArchivo", nombre_Archivo);
+            ejecutor.setBlob("_Archivo", blob);
+            ejecutor.setString("_Extension", extension);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Object> sp_EntregarTareaUsuario(int id_Tarea,int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_EntregarTareaUsuario(?,?)}")){
+            
+            ejecutor.setInt("_IdTarea",id_Tarea);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Object> sp_EnrolarUsuarioCurso(int id_Curso,int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_EnrolarUsuarioCurso(?,?)}")){
+            
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+    }
+    
     public Vector<Object> sp_EnviarArchivoCompartidoGrupo(int id_Grupo, int id_Usuario, String nombre_Archivo, byte[] archivo, 
-            String extension) throws SQLException, IOException{
+            String extension){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -767,6 +890,70 @@ public class Stored_Procedures {
         
         return respuesta;
     } 
+    
+    public Vector<Object> sp_EnviarMaterialCurso(int id_Curso, int id_Usuario, String nombre_Archivo, byte[] archivo, 
+            String extension){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        Blob blob = new Blob(archivo,null);
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_EnviarMaterialCurso(?,?,?,?,?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            ejecutor.setString("_NombreArchivo", nombre_Archivo);
+            ejecutor.setBlob("_Archivo", blob);
+            ejecutor.setString("_Extension", extension);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+    }
+    
+    public Vector<Object> sp_EnviarArchivoSubidoTarea(int id_Tarea, int id_Usuario, String nombre_Archivo, byte[] archivo, 
+            String extension){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        Blob blob = new Blob(archivo,null);
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_EnviarArchivoSubidoTarea(?,?,?,?,?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            ejecutor.setString("_NombreArchivo", nombre_Archivo);
+            ejecutor.setBlob("_Archivo", blob);
+            ejecutor.setString("_Extension", extension);
+            
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        
+        return respuesta;
+    }
     
     public Vector<Object> sp_EnviarMensajeChat(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
             int id_Chat) throws SQLException, IOException{
@@ -932,6 +1119,37 @@ public class Stored_Procedures {
         
         return respuesta;
     } 
+    
+    public Vector<Object> sp_FinalizarCurso(int id_Curso,int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCurso(?,?)}")){
+            
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(ex.getMessage());
+        }
+        
+        return respuesta;
+    }
     
     public Vector<Object> sp_MarcarPreguntaSolucionada(int id_Usuario, int id_Pregunta){
         
