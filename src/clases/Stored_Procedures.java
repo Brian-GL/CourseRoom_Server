@@ -736,7 +736,7 @@ public class Stored_Procedures {
     }
     
     public Vector<Object> sp_EnviarArchivoCompartidoGrupo(int id_Grupo, int id_Usuario, String nombre_Archivo, byte[] archivo, 
-            String extension) throws SQLException, IOException{
+            String extension){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -769,7 +769,7 @@ public class Stored_Procedures {
     } 
     
     public Vector<Object> sp_EnviarMensajeChat(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
-            int id_Chat) throws SQLException, IOException{
+            int id_Chat){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -2743,6 +2743,34 @@ public class Stored_Procedures {
         }
         return respuesta;
     }
+    
+    public Vector<Object> sp_RemoverTematicaCurso(int id_Tematica, int id_Curso){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_RemoverTematicaCurso(?,?)}")){
+            ejecutor.setInt("_IdTematica", id_Tematica);
+            ejecutor.setInt("_IdCurso",id_Curso);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        return respuesta;
+    }
+    
+    
     
     public void Cerrar_Conexion(){
         try {
