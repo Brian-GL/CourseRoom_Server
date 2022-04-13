@@ -100,6 +100,46 @@ public class Metodos {
         return constructor_Cadena.toString();
     }
     
+    public Vector<Object> Abandonar_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Abandonar Curso ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response = stored_Procedures.sp_AbandonarGrupo(id_Curso, id_Usuario);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Abandonado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+
+    }
+    
     public Vector<Object> Abandonar_Grupo(int id_Grupo, int id_Usuario,String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
