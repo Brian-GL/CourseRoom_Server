@@ -7,12 +7,15 @@ package clases;
 import datos.estructuras.Par;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -59,6 +62,22 @@ public class Metodos {
         sesion = Session.getInstance(propiedades, null);
     }
     
+    private void Enviar_Aviso(int id_Usuario){
+        
+        try (Socket socket = new Socket("localhost", 9001)) {
+            try(DataOutputStream enviar_Mensaje = new DataOutputStream(socket.getOutputStream())){
+                //Enviamos un mensaje
+                String mensaje = String.valueOf(id_Usuario);
+                enviar_Mensaje.writeUTF(mensaje);
+            } catch (IOException ex) {
+                
+            } 
+        } catch (IOException ex) {
+            
+        } 
+           
+    }
+        
     public static Metodos getInstance() {
         return SolicitudesHolder.INSTANCE;
     }
@@ -100,6 +119,8 @@ public class Metodos {
                 = stored_Procedures.sp_AbandonarGrupo(id_Grupo, id_Usuario);
 
         if ((Integer)response.get(0) == -1) {
+            
+            
 
             //Agregar respuesta:
             respuesta
@@ -424,6 +445,9 @@ public class Metodos {
             respuesta
                     = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
 
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario);
+            
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
             }
@@ -4065,6 +4089,52 @@ public class Metodos {
 
         return response;
         
+    }
+    
+    public Vector<Object> Remover_Tematica_Curso(int id_Tematica, int id_Curso, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = 
+                respuestas.Agregar_Solicitud(Concatenar("Remover Temática ",
+                        String.valueOf(id_Tematica), " Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response
+                = stored_Procedures.sp_RemoverTematicaCurso(id_Tematica, id_Curso);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Temática ",
+                            String.valueOf(id_Tematica)," Removida Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+
+        return response;
+    
     }
     
     public void Cerrar_Conexion(){
