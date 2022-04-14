@@ -2565,51 +2565,6 @@ public class Metodos {
 
     }
     
-    public Vector<Vector<Object>> Obtener_Cursos_Actuales(int id_Usuario,String cliente, String ip){
-        
-        Vector<Vector<Object>> response;
-        
-        cliente = Decodificacion(cliente);
-        ip = Decodificacion(ip);
-
-        //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
-
-        if (respuesta.first() == -1) {
-            System.err.println(respuesta.second());
-        }
-
-        //Agregar Usuario:
-        response
-                = stored_Procedures.sp_ObtenerCursosActuales(id_Usuario);
-
-        if (response.isEmpty()) {
-
-            //Agregar respuesta:
-            respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Vacios Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
-
-            if (respuesta.first() == -1) {
-                System.err.println(respuesta.second());
-            }
-
-        } else {
-
-            //Agregar respuesta:
-            respuesta 
-                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
-
-            if (respuesta.first() == -1) {
-                System.err.println(respuesta.second());
-            }
-            
-        }
-            
-            
-        return response;
-        
-    }
-    
     public Vector<Object> Obtener_Configuraciones(int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
@@ -2653,6 +2608,51 @@ public class Metodos {
             
         return response;
 
+    }
+    
+    public Vector<Vector<Object>> Obtener_Cursos_Actuales(int id_Usuario,String cliente, String ip){
+        
+        Vector<Vector<Object>> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerCursosActuales(id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Vacios Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+        
     }
     
     public Vector<Vector<Object>> Obtener_Cursos_Finalizados(int id_Usuario, String cliente, String ip){
