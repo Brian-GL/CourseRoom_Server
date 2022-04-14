@@ -1257,24 +1257,22 @@ public class Metodos {
 
     }
     
-    public Vector<Object> Enviar_Archivo_Adjunto_Tarea(int id_Tarea, String nombre_Archivo, byte[] archivo, String extension, String cliente, String ip) throws SQLException, IOException {
+    public Vector<Object> Enrolar_Usuario_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
         
-        nombre_Archivo = Decodificacion(nombre_Archivo);
-        extension= Decodificacion(extension);
         cliente = Decodificacion(cliente);
         ip = Decodificacion(ip);
 
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Enviar Archivo Adjunto De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Enrolar Usuario ",String.valueOf(id_Usuario)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
         }
 
         //Agregar Usuario:
-        response = stored_Procedures.sp_EnviarArchivoAdjuntoTarea(id_Tarea, nombre_Archivo, archivo, extension);
+        response = stored_Procedures.sp_EnrolarUsuarioCurso(id_Curso,id_Usuario);
 
         if ((Integer)response.get(0) == -1) {
 
@@ -1286,9 +1284,12 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
-            respuesta = respuestas.Agregar_Respuesta(Concatenar("Archivo Adjunto Registrado Con ID ",String.valueOf((int)response.get(0))," De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+            respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Enrolado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -1342,22 +1343,24 @@ public class Metodos {
 
     }
     
-    public Vector<Object> Enrolar_Usuario_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+    public Vector<Object> Enviar_Archivo_Adjunto_Tarea(int id_Tarea, String nombre_Archivo, byte[] archivo, String extension, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
         
+        nombre_Archivo = Decodificacion(nombre_Archivo);
+        extension= Decodificacion(extension);
         cliente = Decodificacion(cliente);
         ip = Decodificacion(ip);
 
         //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Enrolar Usuario ",String.valueOf(id_Usuario)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Enviar Archivo Adjunto De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
 
         if (respuesta.first() == -1) {
             System.err.println(respuesta.second());
         }
 
         //Agregar Usuario:
-        response = stored_Procedures.sp_EnrolarUsuarioCurso(id_Curso,id_Usuario);
+        response = stored_Procedures.sp_EnviarArchivoAdjuntoTarea(id_Tarea, nombre_Archivo, archivo, extension);
 
         if ((Integer)response.get(0) == -1) {
 
@@ -1369,12 +1372,9 @@ public class Metodos {
             }
 
         } else {
-            
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
-            respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Enrolado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+            respuesta = respuestas.Agregar_Respuesta(Concatenar("Archivo Adjunto Registrado Con ID ",String.valueOf((int)response.get(0))," De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
