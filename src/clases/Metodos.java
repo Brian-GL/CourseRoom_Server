@@ -7,15 +7,16 @@ package clases;
 import datos.estructuras.Par;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -62,20 +63,55 @@ public class Metodos {
         sesion = Session.getInstance(propiedades, null);
     }
     
-    private void Enviar_Aviso(int id_Usuario){
+    
+    private void Enviar_Aviso(int id_Usuario, String ip){
         
-        try (Socket socket = new Socket("localhost", 9001)) {
-            try(DataOutputStream enviar_Mensaje = new DataOutputStream(socket.getOutputStream())){
-                //Enviamos un mensaje
-                String mensaje = String.valueOf(id_Usuario);
-                enviar_Mensaje.writeUTF(mensaje);
+        String simpleMessage = String.valueOf(id_Usuario);
+        byte bandera = 0;
+        
+        byte[] buffer = new byte[128];
+        
+        //Usuario:
+        buffer[0] = (byte) simpleMessage.length();
+			
+        //Creamos un valor auxiliar (copia) que nos obtendrá los bytes de la cadena.
+        byte[] copia = simpleMessage.getBytes();
+
+        //Creamos la copia del valor auxiliar hacia nuestro arreglo de bytes
+        for(int i = 1; i <= simpleMessage.length();i++){
+            buffer[i] = copia[i-1];
+        }
+        
+        int indice = simpleMessage.length()+1;
+        buffer[indice] = (byte) ip.length();
+        indice++;
+        
+        //Creamos un valor auxiliar (copia) que nos obtendrá los bytes de la cadena.
+        copia = ip.getBytes();
+
+        //Creamos la copia del valor auxiliar hacia nuestro arreglo de bytes
+        for(int i = 0; i < ip.length();i++,indice++){
+            buffer[indice] = copia[i];
+        }
+       
+        
+        while(bandera < 60){
+            try(DatagramSocket socketSender = new DatagramSocket()){
+
+                DatagramPacket datagramPacket = new DatagramPacket(buffer,buffer.length,
+                        InetAddress.getByName("localhost")
+                        ,9001);
+
+                socketSender.send(datagramPacket);
+                bandera = 100;
+            } catch (SocketException ex) {
+                System.err.println(ex.getMessage());
+                bandera++;
             } catch (IOException ex) {
-                
-            } 
-        } catch (IOException ex) {
-            
-        } 
-           
+                System.err.println(ex.getMessage());
+                bandera++;
+            }    
+        }
     }
         
     public static Metodos getInstance() {
@@ -484,15 +520,15 @@ public class Metodos {
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
-
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario);
             
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -721,6 +757,9 @@ public class Metodos {
 
         } else {
 
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Sesion Agregada Del Usuario ",String.valueOf(id_Usuario)," Con ID ", ((Integer)response.get(0)).toString()), uuid, ip);
@@ -2469,6 +2508,51 @@ public class Metodos {
             
         return response;
 
+    }
+    
+    public Vector<Vector<Object>> Obtener_Cursos_Actuales(int id_Usuario,String cliente, String ip){
+        
+        Vector<Vector<Object>> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerCursosActuales(id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Vacios Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Cursos Actuales Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+        
     }
     
     public Vector<Object> Obtener_Configuraciones(int id_Usuario, String cliente, String ip) throws SQLException, IOException {
