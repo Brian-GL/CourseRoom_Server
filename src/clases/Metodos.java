@@ -255,6 +255,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -301,6 +304,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -398,6 +404,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -580,6 +589,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -624,6 +636,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -668,6 +683,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -713,6 +731,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -760,9 +781,6 @@ public class Metodos {
             }
 
         } else {
-
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
             
             //Agregar respuesta:
             respuesta
@@ -984,6 +1002,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta =
@@ -1030,6 +1051,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta =
@@ -1112,6 +1136,9 @@ public class Metodos {
                 = stored_Procedures.sp_BuscarTareas(busqueda, id_Usuario);
 
         if (response.isEmpty()) {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -1168,6 +1195,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -1296,6 +1326,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Tarea Entregada ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1336,6 +1369,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Enrolado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1380,6 +1416,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -1424,6 +1463,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Archivo Subido De La Tarea ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1466,6 +1508,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Material Enviado Del Usuario ",String.valueOf(id_Usuario)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
@@ -1827,6 +1872,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Finalizado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1869,6 +1917,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4514,6 +4565,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4558,6 +4612,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4602,6 +4659,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4646,6 +4706,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4687,6 +4750,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Removido El Material ",String.valueOf(id_Material_Subido), " Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -4730,6 +4796,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4774,6 +4843,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Avisar al notificador que el usuario tiene una nueva notificacion:
+            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
