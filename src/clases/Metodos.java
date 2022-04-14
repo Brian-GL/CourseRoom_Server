@@ -164,6 +164,8 @@ public class Metodos {
 
         } else {
 
+            Enviar_Aviso(id_Usuario, ip);
+            
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Abandonado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
@@ -207,6 +209,8 @@ public class Metodos {
             }
 
         } else {
+            
+            Enviar_Aviso(id_Usuario, ip);
 
             //Agregar respuesta:
             respuesta
