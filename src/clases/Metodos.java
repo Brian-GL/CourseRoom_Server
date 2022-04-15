@@ -63,13 +63,12 @@ public class Metodos {
         sesion = Session.getInstance(propiedades, null);
     }
     
-    
-    private void Enviar_Aviso(int id_Usuario, String ip){
+    private void Enviar_Aviso(int id_Usuario, int tipo_Aviso){
         
         String simpleMessage = String.valueOf(id_Usuario);
         byte bandera = 0;
         
-        byte[] buffer = new byte[128];
+        byte[] buffer = new byte[16];
         
         //Usuario:
         buffer[0] = (byte) simpleMessage.length();
@@ -83,17 +82,7 @@ public class Metodos {
         }
         
         int indice = simpleMessage.length()+1;
-        buffer[indice] = (byte) ip.length();
-        indice++;
-        
-        //Creamos un valor auxiliar (copia) que nos obtendrá los bytes de la cadena.
-        copia = ip.getBytes();
-
-        //Creamos la copia del valor auxiliar hacia nuestro arreglo de bytes
-        for(int i = 0; i < ip.length();i++,indice++){
-            buffer[indice] = copia[i];
-        }
-       
+        buffer[indice] = (byte) tipo_Aviso;
         
         while(bandera < 60){
             try(DatagramSocket socketSender = new DatagramSocket()){
@@ -163,9 +152,10 @@ public class Metodos {
             }
 
         } else {
-
-            Enviar_Aviso(id_Usuario, ip);
             
+            //Enviar aviso al profesor del curso:
+            Enviar_Aviso((int)response.get(0), 0);
+
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Abandonado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
@@ -198,8 +188,6 @@ public class Metodos {
 
         if ((Integer)response.get(0) == -1) {
             
-            
-
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
@@ -210,8 +198,14 @@ public class Metodos {
 
         } else {
             
-            Enviar_Aviso(id_Usuario, ip);
-
+            
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosGrupo(id_Grupo, id_Usuario);
+            
+            //Enviar aviso a los demás del grupo:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0), 0);
+            }
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Grupo Abandonado ",String.valueOf(id_Grupo)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -255,9 +249,6 @@ public class Metodos {
             }
 
         } else {
-            
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -305,9 +296,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
-
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Datos De Autenticación Actualizados Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -405,8 +393,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta
@@ -540,8 +527,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta
@@ -590,8 +576,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           
 
             //Agregar respuesta:
             respuesta
@@ -637,8 +622,8 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           //Enviar aviso usuario receptor:
+           Enviar_Aviso(id_Usuario_Receptor, 0);
 
             //Agregar respuesta:
             respuesta
@@ -684,8 +669,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -732,8 +715,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -830,6 +811,10 @@ public class Metodos {
 
         } else {
 
+            
+            //Enviar aviso usuario a cargo:
+           Enviar_Aviso(id_Usuario_Cargo, 0);
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Tarea Pendiente Agregada Del Grupo ",String.valueOf(id_Grupo)," Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
@@ -1003,8 +988,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta =
@@ -1052,8 +1036,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           
 
             //Agregar respuesta:
             respuesta =
@@ -1137,9 +1120,7 @@ public class Metodos {
 
         if (response.isEmpty()) {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
-
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Enviada Busqueda Vacía Tareas Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1196,8 +1177,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -1285,8 +1264,9 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            //Enviar aviso al profesor del curso:
+            Enviar_Aviso((int)response.get(0), 0);
+           
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Enrolado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1328,8 +1308,8 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            //Enviar aviso al profesor del curso:
+            Enviar_Aviso((int)response.get(0), 0);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Tarea Entregada ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1417,8 +1397,12 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosGrupo(id_Grupo, id_Usuario);
+            
+            //Enviar aviso a los demás del grupo:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0), 0);
+            }
 
             //Agregar respuesta:
             respuesta
@@ -1464,8 +1448,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Archivo Subido De La Tarea ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1509,8 +1492,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Material Enviado Del Usuario ",String.valueOf(id_Usuario)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
@@ -1873,8 +1855,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Finalizado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1918,8 +1899,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           
 
             //Agregar respuesta:
             respuesta
@@ -4566,8 +4546,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
@@ -4613,8 +4591,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+            
 
             //Agregar respuesta:
             respuesta
@@ -4660,9 +4637,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
-
+           
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Chat Personal ",String.valueOf(id_Chat)," Removido Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -4707,8 +4682,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
+           
 
             //Agregar respuesta:
             respuesta
@@ -4751,8 +4725,6 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Removido El Material ",String.valueOf(id_Material_Subido), " Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -4797,9 +4769,7 @@ public class Metodos {
 
         } else {
             
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
-
+           
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Agregado Voto Del Miembro ",String.valueOf(id_Usuario), " Del Grupo ",String.valueOf(id_Grupo)), cliente, ip);
@@ -4843,9 +4813,6 @@ public class Metodos {
             }
 
         } else {
-            
-            //Avisar al notificador que el usuario tiene una nueva notificacion:
-            Enviar_Aviso(id_Usuario,ip);
 
             //Agregar respuesta:
             respuesta
