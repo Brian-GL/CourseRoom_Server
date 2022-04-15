@@ -1492,7 +1492,12 @@ public class Metodos {
 
         } else {
             
-           
+           Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosCurso(id_Curso, id_Usuario);
+            
+            //Enviar aviso a los demás del curso:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0), 0);
+            }
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Material Enviado Del Usuario ",String.valueOf(id_Usuario)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
@@ -1537,6 +1542,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Enviar aviso al usuario:
+            Enviar_Aviso((int)response.get(0), 1);
 
             //Agregar respuesta:
             respuesta
@@ -1584,6 +1592,13 @@ public class Metodos {
 
         } else {
 
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosCurso(id_Curso, id_Usuario_Emisor);
+            
+            //Enviar aviso a los demás del curso:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0), 5);
+            }    
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Mensaje Enviado Al Curso ",String.valueOf(id_Curso)," Con ID ",String.valueOf(response.elementAt(0))), cliente, ip);
@@ -1629,6 +1644,13 @@ public class Metodos {
             }
 
         } else {
+            
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosGrupo(id_Grupo, id_Usuario_Emisor);
+            
+            //Enviar aviso a los demás del grupo:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0), 3);
+            }
 
             //Agregar respuesta:
             respuesta
@@ -1675,6 +1697,9 @@ public class Metodos {
             }
 
         } else {
+            
+            //Enviar aviso al usuario:
+            Enviar_Aviso((int)response.get(0), 2);
 
             //Agregar respuesta:
             respuesta

@@ -2215,6 +2215,26 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Integer> sp_ObtenerIDsUsuariosCurso(int id_Curso, int id_Usuario){
+        Vector<Integer> response = new Vector<>();
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIDsUsuariosCurso(?,?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        response.add(resultado.getInt("IdUsuario"));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            
+        }
+        
+        return response;
+    }
+    
     public Vector<Integer> sp_ObtenerIDsUsuariosGrupo(int id_Grupo, int id_Usuario){
         Vector<Integer> response = new Vector<>();
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIDsUsuariosGrupo(?,?)}")){
