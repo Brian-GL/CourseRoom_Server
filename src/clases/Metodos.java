@@ -63,7 +63,7 @@ public class Metodos {
         sesion = Session.getInstance(propiedades, null);
     }
     
-    private void Enviar_Aviso(int id_Usuario, int tipo_Aviso){
+    private void Enviar_Aviso(int id_Usuario){
         
         String simpleMessage = String.valueOf(id_Usuario);
         byte bandera = 0;
@@ -80,9 +80,6 @@ public class Metodos {
         for(int i = 1; i <= simpleMessage.length();i++){
             buffer[i] = copia[i-1];
         }
-        
-        int indice = simpleMessage.length()+1;
-        buffer[indice] = (byte) tipo_Aviso;
         
         while(bandera < 60){
             try(DatagramSocket socketSender = new DatagramSocket()){
@@ -154,7 +151,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al profesor del curso:
-            Enviar_Aviso((int)response.get(0), 0);
+            Enviar_Aviso((int)response.get(0));
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Abandonado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -203,7 +200,7 @@ public class Metodos {
             
             //Enviar aviso a los demás del grupo:
             while(!usuarios.isEmpty()){
-                Enviar_Aviso((int)usuarios.remove(0), 0);
+                Enviar_Aviso((int)usuarios.remove(0));
             }
             
             //Agregar respuesta:
@@ -623,7 +620,7 @@ public class Metodos {
         } else {
             
            //Enviar aviso usuario receptor:
-           Enviar_Aviso(id_Usuario_Receptor, 0);
+           Enviar_Aviso(id_Usuario_Receptor);
 
             //Agregar respuesta:
             respuesta
@@ -813,7 +810,7 @@ public class Metodos {
 
             
             //Enviar aviso usuario a cargo:
-           Enviar_Aviso(id_Usuario_Cargo, 0);
+           Enviar_Aviso(id_Usuario_Cargo);
             
             //Agregar respuesta:
             respuesta
@@ -1265,7 +1262,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al profesor del curso:
-            Enviar_Aviso((int)response.get(0), 0);
+            Enviar_Aviso((int)response.get(0));
            
 
             //Agregar respuesta:
@@ -1309,7 +1306,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al profesor del curso:
-            Enviar_Aviso((int)response.get(0), 0);
+            Enviar_Aviso((int)response.get(0));
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Tarea Entregada ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -1401,7 +1398,7 @@ public class Metodos {
             
             //Enviar aviso a los demás del grupo:
             while(!usuarios.isEmpty()){
-                Enviar_Aviso((int)usuarios.remove(0), 0);
+                Enviar_Aviso((int)usuarios.remove(0));
             }
 
             //Agregar respuesta:
@@ -1496,7 +1493,7 @@ public class Metodos {
             
             //Enviar aviso a los demás del curso:
             while(!usuarios.isEmpty()){
-                Enviar_Aviso((int)usuarios.remove(0), 0);
+                Enviar_Aviso((int)usuarios.remove(0));
             }
 
             //Agregar respuesta:
@@ -1544,7 +1541,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al usuario:
-            Enviar_Aviso((int)response.get(0), 1);
+            Enviar_Aviso((int)response.get(0));
 
             //Agregar respuesta:
             respuesta
@@ -1596,7 +1593,7 @@ public class Metodos {
             
             //Enviar aviso a los demás del curso:
             while(!usuarios.isEmpty()){
-                Enviar_Aviso((int)usuarios.remove(0), 5);
+                Enviar_Aviso((int)usuarios.remove(0));
             }    
             
             //Agregar respuesta:
@@ -1649,7 +1646,7 @@ public class Metodos {
             
             //Enviar aviso a los demás del grupo:
             while(!usuarios.isEmpty()){
-                Enviar_Aviso((int)usuarios.remove(0), 3);
+                Enviar_Aviso((int)usuarios.remove(0));
             }
 
             //Agregar respuesta:
@@ -1699,7 +1696,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al usuario:
-            Enviar_Aviso((int)response.get(0), 2);
+            Enviar_Aviso((int)response.get(0));
 
             //Agregar respuesta:
             respuesta
@@ -1747,6 +1744,14 @@ public class Metodos {
 
         } else {
 
+            
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosTarea(id_Tarea, id_Usuario_Emisor);
+            
+            //Enviar aviso a los demás de la tarea:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0));
+            }
+            
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Mensaje Enviado A La Tarea ",String.valueOf(id_Tarea)," Con ID ",String.valueOf(response.elementAt(0))), cliente, ip);
@@ -1880,7 +1885,8 @@ public class Metodos {
 
         } else {
             
-            
+            //Enviar aviso al profesor del curso:
+            Enviar_Aviso((int)response.get(0));
 
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Curso Finalizado ",String.valueOf(id_Curso)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
@@ -3516,6 +3522,8 @@ public class Metodos {
     
     public Vector<Vector<Object>> Obtener_Localidades_Por_Estado(String estado, String cliente, String ip) throws SQLException {
 
+        Vector<Vector<Object>> response;
+        
         estado = Decodificacion(estado);
         ip = Decodificacion(ip);
         cliente = Decodificacion(cliente);
@@ -3528,7 +3536,7 @@ public class Metodos {
             System.err.println(respuesta.second());
         }
 
-        Vector<Vector<Object>> response = stored_Procedures.sp_ObtenerLocalidadesPorEstado(estado);
+        response = stored_Procedures.sp_ObtenerLocalidadesPorEstado(estado);
 
         if(response.isEmpty()){
             //Agregar respuesta:
@@ -4044,6 +4052,7 @@ public class Metodos {
     
     public Vector<Vector<Object>> Obtener_Sesiones(int id_Usuario, String cliente, String ip) throws SQLException {
 
+        Vector<Vector<Object>> response;
         ip = Decodificacion(ip);
         cliente = Decodificacion(cliente);
 
@@ -4055,7 +4064,7 @@ public class Metodos {
             System.err.println(respuesta.second());
         }
 
-        Vector<Vector<Object>> response = stored_Procedures.sp_ObtenerSesiones(id_Usuario);
+        response = stored_Procedures.sp_ObtenerSesiones(id_Usuario);
 
         if(response.isEmpty()){
             //Agregar respuesta:
@@ -4337,6 +4346,47 @@ public class Metodos {
             
         return response;
 
+    }
+    
+    public Vector<Object> Obtener_Ultimo_Aviso(int id_Usuario, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+        
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Último Aviso Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response = stored_Procedures.sp_ObtenerUltimoAviso(id_Usuario);
+        
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviando Último Aviso Vácio Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviando Último Aviso Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+        
+        return response;
+        
     }
     
     public Vector<Object> Obtener_Usuario(String correo_Electronico, String contrasenia, String cliente, String ip){

@@ -546,7 +546,7 @@ public class Stored_Procedures {
     
     public Vector<Object> sp_AgregarUsuario(String correo_Electronico,String contrasenia ,String nombre,
         String paterno,String materno, int id_Localidad, String genero,String fecha_Nacimiento, String tipo_Usuario,
-        byte[] Imagen, double promedio_General,String descripcion) throws SQLException, IOException{
+        byte[] Imagen, double promedio_General,String descripcion){
         
         Vector<Object> respuesta = new Vector<>();
         Blob blob = new Blob(Imagen,null);
@@ -585,7 +585,7 @@ public class Stored_Procedures {
         return respuesta;
     } 
     
-    public Vector<Vector<Object>> sp_BuscarChatsPersonales(String busqueda, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_BuscarChatsPersonales(String busqueda, int id_Usuario){
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_BuscarChatsPersonales(?,?)}")){
@@ -607,13 +607,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_BuscarGrupos(String busqueda, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_BuscarGrupos(String busqueda, int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_BuscarGrupos(?,?)}")){
@@ -636,13 +638,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_BuscarPreguntas(String busqueda) throws SQLException{
+    public Vector<Vector<Object>> sp_BuscarPreguntas(String busqueda) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_BuscarPreguntas(?)}")){
@@ -665,13 +669,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_BuscarTareas(String busqueda, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_BuscarTareas(String busqueda, int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_BuscarTareas(?,?)}")){
@@ -698,6 +704,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
@@ -991,7 +999,7 @@ public class Stored_Procedures {
     } 
     
     public Vector<Object> sp_EnviarMensajeCurso(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
-            int id_Curso) throws SQLException, IOException{
+            int id_Curso){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1024,7 +1032,7 @@ public class Stored_Procedures {
     } 
     
     public Vector<Object> sp_EnviarMensajeGrupo(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
-            int id_Grupo) throws SQLException, IOException{
+            int id_Grupo){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1057,7 +1065,7 @@ public class Stored_Procedures {
     } 
     
     public Vector<Object> sp_EnviarMensajePregunta(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
-            int id_Pregunta) throws SQLException, IOException{
+            int id_Pregunta){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1090,7 +1098,7 @@ public class Stored_Procedures {
     } 
     
     public Vector<Object> sp_EnviarMensajeTarea(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor,
-            int id_Tarea) throws SQLException, IOException{
+            int id_Tarea){
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1212,8 +1220,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1250,8 +1258,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1288,8 +1296,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1326,8 +1334,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1364,8 +1372,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-           
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1402,8 +1410,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1440,8 +1448,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1478,8 +1486,8 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1517,15 +1525,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerArchivosAdjuntosTarea(int id_Tarea) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerArchivosAdjuntosTarea(int id_Tarea) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivosAdjuntosTarea(?)}")){
@@ -1546,13 +1554,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerArchivosCompartidosGrupo(int id_Grupo) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerArchivosCompartidosGrupo(int id_Grupo) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivosCompartidosGrupo(?)}")){
@@ -1575,13 +1585,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerArchivosSubidosTarea(int id_Tarea, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerArchivosSubidosTarea(int id_Tarea, int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerArchivosSubidosTarea(?,?)}")){
@@ -1603,13 +1615,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerAvisos(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerAvisos(int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerAvisos(?)}")){
@@ -1630,13 +1644,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerChatsPersonales(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerChatsPersonales(int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerChatsPersonales(?)}")){
@@ -1657,6 +1673,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
@@ -1686,7 +1704,7 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    public String sp_ObtenerCredenciales(String correo_Electronico) throws SQLException{
+    public String sp_ObtenerCredenciales(String correo_Electronico) {
         String respuesta = new String();
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerCredenciales(?)}")){
             ejecutor.setString("_CorreoElectronico", correo_Electronico);
@@ -1698,6 +1716,9 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            respuesta = "No se pudo obtener la credencial solicitada";
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -1729,7 +1750,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            
+            System.err.println(ex);
         }
         
         return response;
@@ -1761,7 +1782,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            
+            System.err.println(ex);
         }
         
         return response;
@@ -1792,13 +1813,13 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            
+            System.err.println(ex);
         }
         
         return response;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1817,12 +1838,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesCurso(int id_Curso) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesCurso(int id_Curso) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1847,12 +1870,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesGrupo(int id_Grupo) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesGrupo(int id_Grupo) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1877,12 +1902,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesPregunta(int id_Pregunta) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesPregunta(int id_Pregunta) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1915,12 +1942,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Tarea, int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesTarea(int id_Tarea, int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1950,12 +1979,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesTareaPendiente(int id_Tarea_Pendiente) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosGeneralesTareaPendiente(int id_Tarea_Pendiente) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -1991,11 +2022,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        }  catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosPerfil(int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosPerfil(int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -2049,11 +2083,14 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         } 
+        
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosPerfilChatPersonal(int id_Usuario) throws SQLException{
+    public Vector<Object> sp_ObtenerDatosPerfilChatPersonal(int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
@@ -2087,12 +2124,14 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
     }
     
-    public Vector<Vector<Object>> sp_ObtenerDesempenoUsuario(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerDesempenoUsuario(int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDesempenoUsuario(?)}")){
@@ -2115,13 +2154,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<String> sp_ObtenerEstados() throws SQLException{
+    public Vector<String> sp_ObtenerEstados() {
         Vector<String> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerEstados()}")){
@@ -2134,13 +2175,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<String> sp_ObtenerFechaActualizacionTareaSubida(int id_Tarea,int id_Usuario) throws SQLException{
+    public Vector<String> sp_ObtenerFechaActualizacionTareaSubida(int id_Tarea,int id_Usuario) {
         Vector<String> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerFechaActualizacionTareaSubida(?,?)}")){
@@ -2155,13 +2198,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerGrupos(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerGrupos(int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerGrupos(?)}")){
@@ -2183,13 +2228,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerGruposCurso(int id_Curso) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerGruposCurso(int id_Curso) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerGruposCurso(?)}")){
@@ -2209,6 +2256,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
@@ -2229,7 +2278,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            
+            System.err.println(ex);
         }
         
         return response;
@@ -2249,7 +2298,27 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            
+            System.err.println(ex);
+        }
+        
+        return response;
+    }
+    
+    public Vector<Integer> sp_ObtenerIDsUsuariosTarea(int id_Tarea, int id_Usuario){
+        Vector<Integer> response = new Vector<>();
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIDsUsuariosTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        response.add(resultado.getInt("IdUsuario"));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
@@ -2277,7 +2346,8 @@ public class Stored_Procedures {
                     
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -2305,7 +2375,8 @@ public class Stored_Procedures {
                     
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -2333,7 +2404,8 @@ public class Stored_Procedures {
                     
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -2361,7 +2433,8 @@ public class Stored_Procedures {
                     
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -2389,7 +2462,8 @@ public class Stored_Procedures {
                     
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
@@ -2424,7 +2498,7 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerLocalidadesPorEstado(String estado) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerLocalidadesPorEstado(String estado) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerLocalidadesPorEstado(?)}")){
@@ -2441,13 +2515,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMaterialesSubidosCurso(int id_Curso) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMaterialesSubidosCurso(int id_Curso) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMaterialesSubidosCurso(?)}")){
@@ -2470,6 +2546,8 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
@@ -2506,15 +2584,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } catch (SQLException ex) { 
-            
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMensajesChat(int id_Chat) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMensajesChat(int id_Chat) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesChat(?)}")){
@@ -2539,13 +2617,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMensajesCurso(int id_Curso) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMensajesCurso(int id_Curso) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesCurso(?)}")){
@@ -2570,13 +2650,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMensajesGrupo(int id_Grupo) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMensajesGrupo(int id_Grupo) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesGrupo(?)}")){
@@ -2601,13 +2683,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMensajesPregunta(int id_Pregunta) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMensajesPregunta(int id_Pregunta) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesPregunta(?)}")){
@@ -2632,13 +2716,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMensajesTarea(int id_Tarea) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMensajesTarea(int id_Tarea) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMensajesTarea(?)}")){
@@ -2663,13 +2749,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMiembrosCurso(int id_Curso) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMiembrosCurso(int id_Curso) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMiembrosCurso(?)}")){
@@ -2688,13 +2776,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerMiembrosGrupo(int id_Grupo) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerMiembrosGrupo(int id_Grupo) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerMiembrosGrupo(?)}")){
@@ -2713,13 +2803,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerPreguntas(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerPreguntas(int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPreguntas(?)}")){
@@ -2742,13 +2834,15 @@ public class Stored_Procedures {
                     }
                 }
             }
+        } catch (SQLException ex) {
+            System.err.println(ex);
         }
         
         return response;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerRetroalimentacionesTarea(int id_Tarea,int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerRetroalimentacionesTarea(int id_Tarea,int id_Usuario) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2777,13 +2871,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerSesiones(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerSesiones(int id_Usuario) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2815,13 +2911,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTareasCurso(int id_Curso, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTareasCurso(int id_Curso, int id_Usuario) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2850,13 +2948,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTareasEstudiante(int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTareasEstudiante(int id_Usuario) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2887,13 +2987,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTareasMes(int mes, int id_Usuario) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTareasMes(int mes, int id_Usuario) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2919,13 +3021,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTareasPendientesGrupo(int id_Grupo) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTareasPendientesGrupo(int id_Grupo) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2951,13 +3055,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTematicas() throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTematicas() {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -2978,13 +3084,15 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerTematicasCurso(int id_Curso) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerTematicasCurso(int id_Curso) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -3006,9 +3114,40 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
+        
+    }
+    
+    public Vector<Object> sp_ObtenerUltimoAviso(int id_Usuario){
+        Vector<Object> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerUltimoAviso(?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        response.add(resultado.getInt("IdAviso"));
+                        codificacion = Codificacion(resultado.getString("TipoAviso"));
+                        response.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Aviso"));
+                        response.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaEnvio"));
+                        response.add(codificacion);
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        
+        return response;
         
     }
     
@@ -3039,7 +3178,7 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    public Vector<Vector<Object>> sp_ObtenerUsuariosParaChatear(String busqueda) throws SQLException{
+    public Vector<Vector<Object>> sp_ObtenerUsuariosParaChatear(String busqueda) {
         
         Vector<Vector<Object>> respuesta = new Vector<>();
         Vector<Object> fila;
@@ -3061,7 +3200,9 @@ public class Stored_Procedures {
                     }
                 }
             }
-        } 
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
         
         return respuesta;
         
