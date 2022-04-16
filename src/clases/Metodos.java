@@ -3086,6 +3086,51 @@ public class Metodos {
         return response;
     }
     
+    public Vector<Vector<Object>> Obtener_Desempeno_Usuario_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Vector<Object>> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Desempeño Del Usuario ",String.valueOf(id_Usuario), " En El Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_ObtenerDesempenoUsuarioCurso(id_Curso, id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviado Desempeño Vacio Del Usuario ",String.valueOf(id_Usuario)," En El Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviado Desempeño Del Usuario ",String.valueOf(id_Usuario)," En El Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
     public Vector<Vector<Object>> Obtener_Desempeno_Usuario(int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
@@ -4582,7 +4627,7 @@ public class Metodos {
                 if (respuesta.first() == -1) {
                     System.err.println(respuesta.second());
                 }
-            }
+            } 
             
             
         }
