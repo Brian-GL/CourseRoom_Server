@@ -2611,8 +2611,6 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
                         fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
-                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
@@ -2643,8 +2641,6 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
-                        fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
                         fila.add(codificacion);
                         response.add(fila);
                     }
@@ -2677,8 +2673,6 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
                         fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
-                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
@@ -2710,8 +2704,6 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
                         fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
-                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
@@ -2742,8 +2734,6 @@ public class Stored_Procedures {
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Extension"));
-                        fila.add(codificacion);
-                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
                         fila.add(codificacion);
                         response.add(fila);
                     }
