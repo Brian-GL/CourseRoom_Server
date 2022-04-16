@@ -14,8 +14,6 @@ import java.util.Vector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Stored_Procedures {
     
@@ -2142,14 +2140,16 @@ public class Stored_Procedures {
                     while(resultado.next()){
                         fila = new Vector<>();
                         fila.add(resultado.getInt("IdDesempeno"));
-                        fila.add(resultado.getDouble("Prediccion"));
-                        fila.add(resultado.getInt("NumeroTareasCalificadas"));
-                        codificacion = Codificacion(resultado.getString("RumboEstatus"));
-                        fila.add(codificacion);
                         fila.add(resultado.getInt("IdCurso"));
                         codificacion = Codificacion(resultado.getString("Nombre"));
                         fila.add(codificacion);
+                        fila.add(resultado.getDouble("PromedioCurso"));
                         fila.add(resultado.getDouble("PromedioGeneral"));
+                        codificacion = Codificacion(resultado.getString("RumboEstatus"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getDouble("Prediccion"));
+                        codificacion = Codificacion(resultado.getString("FechaRegistro"));
+                        fila.add(codificacion);
                         response.add(fila);
                     }
                 }
