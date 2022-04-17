@@ -727,6 +727,51 @@ public class Metodos {
         
     }
     
+    public Vector<Object> Agregar_Respuesta_Cuestionario(int id_Curso,int id_Usuario, int id_Pregunta, String respuesta, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        respuesta = Decodificacion(respuesta);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> resultado = respuestas.Agregar_Solicitud(Concatenar("Agregar Respuesta Del Usuario ",String.valueOf(id_Usuario), " En El Cuestionario Del Curso ",String.valueOf(id_Curso), " De La Pregunta ", String.valueOf(id_Pregunta)), cliente, ip);
+
+        if (resultado.first() == -1) {
+            System.err.println(resultado.second());
+        }
+
+        response
+                = stored_Procedures.sp_AgregarRespuestaCuestionario(id_Curso, id_Usuario, id_Pregunta, respuesta);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            resultado
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (resultado.first() == -1) {
+                System.err.println(resultado.second());
+            }
+
+        } else {
+            
+
+            //Agregar respuesta:
+            resultado
+                    = respuestas.Agregar_Respuesta(Concatenar("Agregada Respuesta Del Usuario ",String.valueOf(id_Usuario), " En El Cuestionario Del Curso ",String.valueOf(id_Curso), " De La Pregunta ", String.valueOf(id_Pregunta)), cliente, ip);
+
+            if (resultado.first() == -1) {
+                System.err.println(resultado.second());
+            }
+        }
+
+
+        return response;
+    
+    }
+    
     public Vector<Object> Agregar_Sesion(int id_Usuario, String dispositivo, String fabricante,
         String uuid, String ip){
         
@@ -4992,6 +5037,38 @@ public class Metodos {
 
         return response;
     
+    }
+    
+    public Vector<Object> Validacion_Contestar_Cuestionario(int id_Curso, int id_Usuario, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = 
+                respuestas.Agregar_Solicitud(Concatenar("El Usuario ",
+                        String.valueOf(id_Usuario), " Pide Confirmación Para Contestar El Cuestionario Del Curso ",
+                        String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response
+                = stored_Procedures.sp_ValidacionContestarCuestionario(id_Curso, id_Usuario);
+
+       
+        //Agregar respuesta:
+        respuesta
+                = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        return response;
     }
     
     public void Cerrar_Conexion(){

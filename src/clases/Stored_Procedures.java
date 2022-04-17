@@ -478,6 +478,42 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Object> sp_AgregarRespuestaCuestionario(int id_Curso,int id_Usuario, int id_Pregunta, String respuesta ){
+        
+        Vector<Object> response = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_AgregarRespuestaCuestionario(?,?,?,?)}")){
+            
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            ejecutor.setInt("_IdPregunta",id_Pregunta);
+            ejecutor.setString("_Respuesta",respuesta);
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        response.add(resultado.getInt("Codigo"));
+                        response.add(codificacion);
+                        
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            response.add(-1);
+            response.add(ex.getMessage());
+        }
+        
+        return response;
+        
+    }
+    
+    
     public Vector<Object> sp_AgregarSesion(int id_Usuario, String dispositivo, String fabricante,
         String uuid, String ip){
         
@@ -3453,11 +3489,38 @@ public class Stored_Procedures {
         return respuesta;
     }
     
+    public Vector<Object> sp_ValidacionContestarCuestionario(int id_Curso, int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ValidacionContestarCuestionario(?,?)}")){
+            ejecutor.setInt("_IdCurso",id_Curso);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            
+
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Codigo"));
+                        respuesta.add(codificacion);
+
+                        break;
+                    }
+                }
+            }
+        } catch(SQLException ex){
+            respuesta.add(-1);
+            respuesta.add(Codificacion(ex.getMessage()));
+        }
+        return respuesta;
+    }
+    
     public void Cerrar_Conexion(){
         try {
             db_CourseRoom_Conexion.close();
         } catch (SQLException ex) {
-            
+            System.err.println(ex.getMessage());
         }
     }
     
