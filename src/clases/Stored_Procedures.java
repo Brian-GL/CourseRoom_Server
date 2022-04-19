@@ -2508,12 +2508,11 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    public Vector<Vector<Object>> sp_ObtenerDesempenoUsuarioCurso(int id_Curso,int id_Usuario) {
+    public Vector<Vector<Object>> sp_ObtenerDesempenoCurso(int id_Curso) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDesempenoUsuarioCurso(?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDesempenoCurso(?)}")){
             ejecutor.setInt("_IdCurso", id_Curso);
-            ejecutor.setInt("_IdUsuario", id_Usuario);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     Vector<Object> fila;
@@ -2524,7 +2523,6 @@ public class Stored_Procedures {
                         fila.add(codificacion);
                         fila.add(resultado.getDouble("Calificacion"));
                         fila.add(resultado.getDouble("PromedioCurso"));
-                        fila.add(resultado.getDouble("PromedioGeneral"));
                         fila.add(resultado.getDouble("PrediccionPromedio"));
                         codificacion = Codificacion(resultado.getString("RumboEstatusPromedio"));
                         fila.add(codificacion);
@@ -2559,11 +2557,50 @@ public class Stored_Procedures {
                     while(resultado.next()){
                         fila = new Vector<>();
                         fila.add(resultado.getInt("IdDesempenoCurso"));
+                        fila.add(resultado.getInt("IdCurso"));
+                        codificacion = Codificacion(resultado.getString("NombreCurso"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getDouble("PromedioCurso"));
+                        fila.add(resultado.getDouble("PromedioGeneral"));
+                        fila.add(resultado.getDouble("PrediccionPromedio"));
+                        codificacion = Codificacion(resultado.getString("RumboEstatusPromedio"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getDouble("Puntualidad"));
+                        fila.add(resultado.getDouble("PromedioPuntualidad"));
+                        fila.add(resultado.getDouble("PrediccionPuntualidad"));
+                        codificacion = Codificacion(resultado.getString("RumboEstatusPuntualidad"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getBoolean("Rezago"));
+                        codificacion = Codificacion(resultado.getString("FechaRegistro"));
+                        fila.add(codificacion);
+                        response.add(fila);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        
+        return response;
+        
+    }
+    
+    public Vector<Vector<Object>> sp_ObtenerDesempenoUsuarioCurso(int id_Curso,int id_Usuario) {
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDesempenoUsuarioCurso(?,?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdDesempenoCurso"));
                         codificacion = Codificacion(resultado.getString("TareaCalificada"));
                         fila.add(codificacion);
                         fila.add(resultado.getDouble("Calificacion"));
                         fila.add(resultado.getDouble("PromedioCurso"));
-                        fila.add(resultado.getDouble("PromedioGeneral"));
                         fila.add(resultado.getDouble("PrediccionPromedio"));
                         codificacion = Codificacion(resultado.getString("RumboEstatusPromedio"));
                         fila.add(codificacion);
