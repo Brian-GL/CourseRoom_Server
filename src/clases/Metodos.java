@@ -307,6 +307,50 @@ public class Metodos {
         
     }
     
+    public Vector<Object> Actualizar_Datos_Generales_Curso(int id_Curso, String nombre, 
+            String descripcion, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        descripcion = Decodificacion(descripcion);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Actualizar Datos Generales Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response = stored_Procedures.sp_ActualizarDatosGeneralesCurso(id_Curso, nombre, descripcion);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos Generales Actualizados Del Curso ", String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+        
+    }
+    
     public Vector<Object> Actualizar_Datos_Generales_Grupo(int id_Grupo, String nombre, 
             String descripcion, String cliente, String ip){
         
@@ -343,6 +387,51 @@ public class Metodos {
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Datos Generales Actualizados Del Grupo ", String.valueOf(id_Grupo)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+
+        return response;
+        
+    }
+    
+    public Vector<Object> Actualizar_Datos_Generales_Tarea(int id_Tarea, String nombre, 
+            String descripcion, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        descripcion = Decodificacion(descripcion);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Actualizar Datos Generales De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response = stored_Procedures.sp_ActualizarDatosGeneralesGrupo(id_Tarea, nombre, descripcion);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Datos Generales Actualizados De La Tarea ", String.valueOf(id_Tarea)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -636,6 +725,49 @@ public class Metodos {
         
     }
     
+    public Vector<Object> Agregar_Curso(String nombre, String descripcion, int id_Profesor, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        descripcion = Decodificacion(descripcion);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Curso Del Profesor ",String.valueOf(id_Profesor)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response = stored_Procedures.sp_AgregarCurso(nombre, descripcion, id_Profesor);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Curso Agregado Con ID ", String.valueOf(response.elementAt(0))), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+        
+    }
+    
     public Vector<Object> Agregar_Interes(int id_Usuario, int id_Tematica , String cliente, String ip){
         
         Vector<Object> response;
@@ -819,6 +951,52 @@ public class Metodos {
         
     }
     
+    public Vector<Object> Agregar_Tarea(int id_Curso, String nombre, String descripcion, String fecha_Entrega, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        descripcion = Decodificacion(descripcion);
+        fecha_Entrega = Decodificacion(fecha_Entrega);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Tarea Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_AgregarTarea(id_Curso, nombre, descripcion, fecha_Entrega);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Tarea Agregada Del Curso ",String.valueOf(id_Curso)," Con ID ", ((Integer)response.get(0)).toString()), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+        
+    }
+    
     public Vector<Object> Agregar_Tarea_Pendiente_Grupo(int id_Grupo, String nombre, String descripcion, String fecha_Finalizacion,
         int id_Usuario_Cargo, String cliente, String ip){
         
@@ -866,6 +1044,49 @@ public class Metodos {
             }
         }
 
+
+        return response;
+        
+    }
+    
+    public Vector<Object> Agregar_Tematica(int id_Curso, int id_Tematica, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Tematica Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_AgregarTematica(id_Curso, id_Tematica);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Tematica Agregada ",String.valueOf(id_Tematica)," Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
 
         return response;
         
