@@ -1414,11 +1414,11 @@ public class Stored_Procedures {
         return respuesta;
     } 
     
-    public Vector<Object> sp_FinalizarCurso(int id_Curso,int id_Usuario){
+    public Vector<Object> sp_FinalizarCursoUsuario(int id_Curso,int id_Usuario){
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCurso(?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCursoUsuario(?,?)}")){
             
             ejecutor.setInt("_IdCurso",id_Curso);
             ejecutor.setInt("_IdUsuario",id_Usuario);

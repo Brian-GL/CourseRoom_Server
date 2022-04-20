@@ -2138,7 +2138,7 @@ public class Metodos {
         }
 
         //Agregar Usuario:
-        response = stored_Procedures.sp_FinalizarCurso(id_Curso, id_Usuario);
+        response = stored_Procedures.sp_FinalizarCursoUsuario(id_Curso, id_Usuario);
 
         if ((Integer)response.get(0) == -1) {
 
