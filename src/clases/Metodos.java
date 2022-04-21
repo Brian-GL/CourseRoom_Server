@@ -4901,6 +4901,47 @@ public class Metodos {
         return response;
 
     }
+    
+    public Vector<Object> Remover_Archivo_Adjunto_Tarea(int id_Archivo_Adjunto, int id_Tarea, String cliente, String ip){
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Remover Archivo Adjunto ",String.valueOf(id_Archivo_Adjunto), " De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        
+        response
+                = stored_Procedures.sp_RemoverArchivoAdjuntoTarea(id_Archivo_Adjunto, id_Tarea);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Archivo Adjunto ",String.valueOf(id_Archivo_Adjunto)," Removido De La Tarea ",String.valueOf(id_Tarea)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+        
+        return response;
+    }
 
     public Vector<Object> Remover_Archivo_Compartido_Grupo(int id_Archivo_Compartido, int id_Usuario , String cliente, String ip){
         
@@ -5038,6 +5079,86 @@ public class Metodos {
         
     }
     
+    public Vector<Object> Remover_Curso(int id_Curso, int id_Profesor, String cliente, String ip){
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Remover Curso ",String.valueOf(id_Curso), " Del Profesor ",String.valueOf(id_Profesor)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response
+                = stored_Procedures.sp_RemoverCurso(id_Curso, id_Profesor);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Curso ",String.valueOf(id_Curso)," Removido Del Profesor ",String.valueOf(id_Profesor)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
+    public Vector<Object> Remover_Grupo(int id_Grupo, int id_Curso, String cliente, String ip){
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Remover Grupo ",String.valueOf(id_Grupo), " Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response
+                = stored_Procedures.sp_RemoverGrupo(id_Grupo, id_Curso);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Grupo ",String.valueOf(id_Grupo)," Removido Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
     public Vector<Object> Remover_Interes_Usuario(int id_Tematica, int id_Usuario , String cliente, String ip){
         
         Vector<Object> response;
@@ -5123,6 +5244,46 @@ public class Metodos {
 
         return response;
         
+    }
+    
+    public Vector<Object> Remover_Miembro_Curso(int id_Curso, int id_Usuario, String cliente, String ip){
+        Vector<Object> response;
+
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Remover Miembro ", String.valueOf(id_Usuario), " Del Curso ", String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response
+                = stored_Procedures.sp_RemoverMiembroCurso(id_Curso, id_Usuario);
+
+        if ((Integer) response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String) response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Miembro ", String.valueOf(id_Usuario), " Removido Del Curso ", String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
     }
     
     public Vector<Object> Remover_Voto_Miembro_Grupo(int id_Grupo, int id_Usuario , String cliente, String ip){
@@ -5213,6 +5374,51 @@ public class Metodos {
         return response;
         
     }
+    
+    public Vector<Object> Remover_Tarea(int id_Tarea, int id_Profesor , String cliente, String ip){
+        Vector<Object> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Remover Tarea ",String.valueOf(id_Tarea), " Del Profesor ",String.valueOf(id_Profesor)), cliente, ip);
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response
+                = stored_Procedures.sp_RemoverTarea(id_Tarea, id_Profesor);
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            Vector<Integer> usuarios = stored_Procedures.sp_ObtenerIDsUsuariosTarea(id_Tarea, id_Profesor);
+            
+            //Enviar aviso a los alumnos sobre eliminación de la tarea:
+            while(!usuarios.isEmpty()){
+                Enviar_Aviso((int)usuarios.remove(0));
+            }
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Tarea ",String.valueOf(id_Tarea)," Removida Del Profesor ",String.valueOf(id_Profesor)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+     }
     
     public Vector<Object> Remover_Tematica_Curso(int id_Tematica, int id_Curso, String cliente, String ip){
         
