@@ -4,6 +4,7 @@
  */
 package courseroom_server;
 
+//import clases.Algoritmos;
 import com.formdev.flatlaf.FlatDarkLaf;
 import frames.CourseRoom_Server_Frame;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class CourseRoom_Server {
     public static void main(String args[]) throws ClassNotFoundException, UnsupportedLookAndFeelException, SQLException, IOException {
         FlatDarkLaf ui = new FlatDarkLaf();
         UIManager.setLookAndFeel(ui);
+        //var al = new Algoritmos();
         CourseRoom_Server_Frame principal_Frame = new CourseRoom_Server_Frame();
         principal_Frame.setVisible(true);
         

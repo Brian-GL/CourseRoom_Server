@@ -3021,6 +3021,41 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Vector<Object>> sp_ObtenerImagenesEnviadasTarea(int id_Tarea, int id_Usuario){
+        Vector<Vector<Object>> response = new Vector<>();
+        Vector<Object> fila;
+        String codificacion;
+        byte[] respuesta;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenesEnviadasTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea",id_Tarea);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            respuesta = new byte[]{};
+                        }
+                        
+                        fila.add(respuesta);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        
+                        response.add(fila);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
+        return response;
+    }
+    
     public byte[] sp_ObtenerImagenGrupo(int id_Grupo){
         
         byte[] respuesta = new byte[]{};
@@ -3439,6 +3474,42 @@ public class Stored_Procedures {
         return response;
         
     }
+    
+    public Vector<Vector<Object>> sp_ObtenerPDFsEnviadosTarea(int id_Tarea, int id_Usuario){
+        Vector<Vector<Object>> response = new Vector<>();
+        Vector<Object> fila;
+        String codificacion;
+        byte[] respuesta;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPDFsEnviadosTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea",id_Tarea);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        
+                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
+                            respuesta = stream.readAllBytes();
+                        } catch (IOException ex) {
+                            respuesta = new byte[]{};
+                        }
+                        
+                        fila.add(respuesta);
+                        
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        fila.add(codificacion);
+                        
+                        response.add(fila);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
+        return response;
+    }
+    
     
     public Vector<Vector<Object>> sp_ObtenerMiembrosGrupo(int id_Grupo) {
         Vector<Vector<Object>> response = new Vector<>();
