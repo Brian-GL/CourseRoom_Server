@@ -2821,9 +2821,9 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<String> sp_ObtenerFechaActualizacionTareaSubida(int id_Tarea,int id_Usuario) {
-        Vector<String> response = new Vector<>();
-        String codificacion;
+    public String sp_ObtenerFechaActualizacionTareaSubida(int id_Tarea,int id_Usuario) {
+        String response = new String();
+      
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerFechaActualizacionTareaSubida(?,?)}")){
             ejecutor.setInt("_IdTarea", id_Tarea);
             ejecutor.setInt("_IdUsuario", id_Usuario);
@@ -2831,8 +2831,8 @@ public class Stored_Procedures {
                 if(resultado != null){
                     
                     while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("FechaSubida"));
-                        response.add(codificacion);
+                        response = Codificacion(resultado.getString("FechaSubida"));
+                        break;
                     }
                 }
             }
@@ -2841,7 +2841,6 @@ public class Stored_Procedures {
         }
         
         return response;
-        
     }
     
     public Vector<Vector<Object>> sp_ObtenerGrupos(int id_Usuario) {
