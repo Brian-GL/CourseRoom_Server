@@ -2123,7 +2123,7 @@ public class Metodos {
 
     }
 
-    public Vector<Object> Finalizar_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+    public Vector<Object> Finalizar_Curso_Usuario(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
         
