@@ -3509,7 +3509,6 @@ public class Stored_Procedures {
         return response;
     }
     
-    
     public Vector<Vector<Object>> sp_ObtenerMiembrosGrupo(int id_Grupo) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
@@ -3537,18 +3536,15 @@ public class Stored_Procedures {
         
     }
     
-    public Vector<Vector<Object>> sp_ObtenerNumeroMiembrosCurso(int id_Curso) {
-        Vector<Vector<Object>> response = new Vector<>();
-        String codificacion;
+    public int sp_ObtenerNumeroMiembrosCurso(int id_Curso) {
+        int response = -1;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerNumeroMiembrosCurso(?)}")){
             ejecutor.setInt("_IdCurso", id_Curso);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
-                    Vector<Object> fila;
                     while(resultado.next()){
-                        fila = new Vector<>();
-                        fila.add(resultado.getInt("NumeroMiembros"));
-                        response.add(fila);
+                        response = resultado.getInt("NumeroMiembros");
+                        break;
                     }
                 }
             }

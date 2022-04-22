@@ -768,48 +768,6 @@ public class Metodos {
         
     }
     
-    public Vector<Object> Agregar_Grupo(String nombre, String descripcion, int id_Curso, String cliente, String ip){
-        
-        Vector<Object> response;
-        
-        nombre = Decodificacion(nombre);
-        descripcion = Decodificacion(descripcion);
-        cliente = Decodificacion(cliente);
-        ip = Decodificacion(ip);
-
-        //Agregar solicitud:
-        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Grupo Del Curso ",String.valueOf(id_Curso)), cliente, ip);
-
-        if (respuesta.first() == -1) {
-            System.err.println(respuesta.second());
-        }
-        
-        response = stored_Procedures.sp_AgregarGrupo(nombre, descripcion, id_Curso);
-
-        if ((Integer)response.get(0) == -1) {
-
-            //Agregar respuesta:
-            respuesta = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
-
-            if (respuesta.first() == -1) {
-                System.err.println(respuesta.second());
-            }
-
-        } else {
-
-            //Agregar respuesta:
-            respuesta
-                    = respuestas.Agregar_Respuesta(Concatenar("Grupo Agregado Con ID ", String.valueOf(response.elementAt(0))), cliente, ip);
-
-            if (respuesta.first() == -1) {
-                System.err.println(respuesta.second());
-            }
-        }
-
-        return response;
-        
-    }
-    
     public Vector<Object> Agregar_Desempeno_Usuario(String tarea_Calificada, double calificacion, double promedio_Curso,
             double promedio_General, double prediccion_Promedio, String rumbo_Estatus_Promedio, double puntualidad,
             double promedio_Puntualidad, double prediccion_Puntualidad, String rumbo_Estatus_Puntualidad,
@@ -848,6 +806,48 @@ public class Metodos {
             //Agregar respuesta:
             respuesta
                     = respuestas.Agregar_Respuesta(Concatenar("Desempeno Agregado Del Usuario Con ID ", String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+        
+    }
+    
+    public Vector<Object> Agregar_Grupo(String nombre, String descripcion, int id_Curso, String cliente, String ip){
+        
+        Vector<Object> response;
+        
+        nombre = Decodificacion(nombre);
+        descripcion = Decodificacion(descripcion);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Agregar Grupo Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+        
+        response = stored_Procedures.sp_AgregarGrupo(nombre, descripcion, id_Curso);
+
+        if ((Integer)response.get(0) == -1) {
+
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Grupo Agregado Con ID ", String.valueOf(response.elementAt(0))), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -4302,6 +4302,49 @@ public class Metodos {
         return response;
     }
     
+    public Vector<Vector<Object>> Obtener_Info_Grupos_Curso(int id_Curso, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Vector<Object>> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Informacion De Los Grupos Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response = stored_Procedures.sp_ObtenerInfoGruposCurso(id_Curso);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviada La Informacion Vacia De Los Grupos Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviada La Informacion De Los Grupos Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }   
+            
+        return response;
+
+    }
+    
     public Vector<Vector<Object>> Obtener_Intereses_Usuario(int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
@@ -4786,6 +4829,74 @@ public class Metodos {
 
     }
     
+    public double Obtener_Nuevo_Promedio_General(int id_Usuario, int id_Curso, double nuevo_Promedio, String cliente, String ip) throws SQLException {
+        double response;
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Nuevo Promedio General Del Usuario", String.valueOf(id_Usuario), " Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response = stored_Procedures.sp_ObtenerNuevoPromedioGeneral(id_Usuario,id_Curso,nuevo_Promedio);
+
+        if(response == -1){
+        
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta("Enviado Nuevo Promedio General Vacio", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }else{
+            respuesta = respuestas.Agregar_Respuesta("Enviado Nuevo Promedio General", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
+    public int Obtener_Numero_Miembros_Curso(int id_Curso, String cliente, String ip) throws SQLException {
+        int response;
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Numeros De Miembros Del Curso", String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response = stored_Procedures.sp_ObtenerNumeroMiembrosCurso(id_Curso);
+
+        if(response == -1){
+        
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta("Enviado Numero De Miembros Vacio", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }else{
+            respuesta = respuestas.Agregar_Respuesta("Enviado Numero De Miembros", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
     public Vector<Vector<Object>> Obtener_Preguntas(int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
@@ -4829,6 +4940,108 @@ public class Metodos {
             
         return response;
 
+    }
+    
+    public double Obtener_Promedio_Curso(int id_Curso, int id_Usuario, String cliente, String ip) throws SQLException {
+        double response;
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Promedio Del Curso ", String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response = stored_Procedures.sp_ObtenerPromedioCurso(id_Curso,id_Usuario);
+
+        if(response == -1){
+        
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta("Enviado El Promedio Vacio Del Curso", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }else{
+            respuesta = respuestas.Agregar_Respuesta("Enviado El Promedio Del Curso", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
+    public double Obtener_Promedio_Puntualidad(int id_Usuario, String cliente, String ip) throws SQLException {
+        double response;
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Promedio De La Puntualidad Del Usuario", String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response = stored_Procedures.sp_ObtenerPromedioPuntualidad(id_Usuario);
+
+        if(response == -1){
+        
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta("Enviado El Promedio Vacio De La Puntualidad", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }else{
+            respuesta = respuestas.Agregar_Respuesta("Enviado El Promedio De La Puntualidad", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
+    }
+    
+    public double Obtener_Puntualidad(int id_Tarea, int id_Usuario, String cliente, String ip) throws SQLException {
+        double response;
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Puntualidad Del Usuario", String.valueOf(id_Usuario), " Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        response = stored_Procedures.sp_ObtenerPuntualidad(id_Tarea,id_Usuario);
+
+        if(response == -1){
+        
+            //Agregar respuesta:
+            respuesta = respuestas.Agregar_Respuesta("Enviada La Puntualidad Vacia", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }else{
+            respuesta = respuestas.Agregar_Respuesta("Enviada La Puntualidad", cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+        }
+
+        return response;
     }
     
     public Vector<Vector<Object>> Obtener_Retroalimentaciones_Tarea(int id_Tarea, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
@@ -5420,6 +5633,49 @@ public class Metodos {
             
         }
             
+            
+        return response;
+
+    }
+    
+    public Vector<Vector<Object>> Obtener_Usuarios_Sin_Grupo(int id_Curso, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Vector<Object>> response;
+        
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Obtener Usuarios Sin Grupo Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response = stored_Procedures.sp_ObtenerUsuariosSinGrupo(id_Curso);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Los Usuarios Sin Grupos Vacios Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+
+            //Agregar respuesta:
+            respuesta 
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviados Los Usuarios Sin Grupos Del Curso ",String.valueOf(id_Curso)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }   
             
         return response;
 
