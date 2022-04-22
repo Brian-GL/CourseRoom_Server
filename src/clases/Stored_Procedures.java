@@ -1523,14 +1523,14 @@ public class Stored_Procedures {
         return respuesta;
     } 
     
-    public Vector<Object> sp_FinalizarCurso(int id_Curso,int id_Usuario){
+    public Vector<Object> sp_FinalizarCursoProfesor(int id_Curso,int id_Profesor){
         Vector<Object> respuesta = new Vector<>();
         String codificacion;
         
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCurso(?,?)}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCursoProfesor(?,?)}")){
             
             ejecutor.setInt("_IdCurso",id_Curso);
-            ejecutor.setInt("_IdUsuario",id_Usuario);
+            ejecutor.setInt("_IdProfesor",id_Profesor);
 
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
@@ -1562,37 +1562,6 @@ public class Stored_Procedures {
             
             ejecutor.setInt("_IdCurso",id_Curso);
             ejecutor.setInt("_IdUsuario",id_Usuario);
-
-            try (ResultSet resultado = ejecutor.executeQuery()){
-                if(resultado != null){
-                    
-                    while(resultado.next()){
-                        
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
-                        
-                        respuesta.add(resultado.getInt("Codigo"));
-                        respuesta.add(codificacion);
-                        
-                        break;
-                    }
-                }
-            }
-        } catch(SQLException ex){
-            respuesta.add(-1);
-            respuesta.add(ex.getMessage());
-        }
-        
-        return respuesta;
-    }
-    
-    public Vector<Object> sp_FinalizarCursoProfesor(int id_Curso,int id_Profesor){
-        Vector<Object> respuesta = new Vector<>();
-        String codificacion;
-        
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_FinalizarCursoProfesor(?,?)}")){
-            
-            ejecutor.setInt("_IdCurso",id_Curso);
-            ejecutor.setInt("_IdProfesor",id_Profesor);
 
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
