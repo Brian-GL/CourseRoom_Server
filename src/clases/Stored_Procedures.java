@@ -3536,14 +3536,16 @@ public class Stored_Procedures {
         
     }
     
-    public int sp_ObtenerNumeroMiembrosCurso(int id_Curso) {
-        int response = -1;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerNumeroMiembrosCurso(?)}")){
+    public double sp_ObtenerNuevoPromedioGeneral(int id_Usuario, int id_Curso, double nuevo_Promedio) {
+        double response = -1;;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerNuevoPromedioGeneral(?,?,?)}")){
+            ejecutor.setInt("_IdUsuario", id_Usuario);
             ejecutor.setInt("_IdCurso", id_Curso);
+            ejecutor.setDouble("_NuevoPromedio", nuevo_Promedio);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        response = resultado.getInt("NumeroMiembros");
+                        response = resultado.getDouble("NuevoPromedio");
                         break;
                     }
                 }
@@ -3556,16 +3558,14 @@ public class Stored_Procedures {
         
     }
     
-    public double sp_ObtenerNuevoPromedioGeneral(int id_Usuario, int id_Curso, double nuevo_Promedio) {
-        double response = -1;;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerNuevoPromedioGeneral(?,?,?)}")){
-            ejecutor.setInt("_IdUsuario", id_Usuario);
+    public int sp_ObtenerNumeroMiembrosCurso(int id_Curso) {
+        int response = -1;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerNumeroMiembrosCurso(?)}")){
             ejecutor.setInt("_IdCurso", id_Curso);
-            ejecutor.setDouble("_NuevoPromedio", nuevo_Promedio);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        response = resultado.getDouble("NuevoPromedio");
+                        response = resultado.getInt("NumeroMiembros");
                         break;
                     }
                 }
@@ -3609,15 +3609,15 @@ public class Stored_Procedures {
         
     }
     
-    public double sp_ObtenerPuntualidad(int id_Tarea, int id_Usuario) {
+    public double sp_ObtenerPromedioCurso(int id_Curso, int id_Usuario) {
         double response = -1;;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPuntualidad(?,?)}")){
-            ejecutor.setInt("_IdTarea", id_Tarea);
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPromedioCurso(?,?)}")){
+            ejecutor.setInt("_IdCurso", id_Curso);
             ejecutor.setInt("_IdUsuario", id_Usuario);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        response = resultado.getDouble("Puntualidad");
+                        response = resultado.getDouble("PromedioCurso");
                         break;
                     }
                 }
@@ -3650,15 +3650,15 @@ public class Stored_Procedures {
         
     }
     
-    public double sp_ObtenerPromedioCurso(int id_Curso, int id_Usuario) {
+    public double sp_ObtenerPuntualidad(int id_Tarea, int id_Usuario) {
         double response = -1;;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPromedioCurso(?,?)}")){
-            ejecutor.setInt("_IdCurso", id_Curso);
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerPuntualidad(?,?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
             ejecutor.setInt("_IdUsuario", id_Usuario);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        response = resultado.getDouble("PromedioCurso");
+                        response = resultado.getDouble("Puntualidad");
                         break;
                     }
                 }
