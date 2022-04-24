@@ -4,31 +4,34 @@
  */
 package clases;
 
+import com.mathworks.engine.EngineException;
+import com.mathworks.engine.MatlabEngine;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.RejectedExecutionException;
 
-//import com.mathworks.engine.MatlabEngine;
-//import java.util.concurrent.ExecutionException;
-//import java.util.concurrent.Future;
-//
-///**
-// *
-// * @author LENOVO
-// */
-//public class Algoritmos {
-//    
-//    public Algoritmos(){
-//        try {
-//            
-//            Future<String[]> eFuture = MatlabEngine.findMatlabAsync();
-//            String[] engines = eFuture.get();
-//            Future<MatlabEngine> engFuture = MatlabEngine.connectMatlabAsync(engines[0]);
-//            // Work on other thread
-//            MatlabEngine eng = engFuture.get();
-//            // Execute command on shared MATLAB session
-//            Future<Void> vFuture = eng.evalAsync("plot(1:10); print('myPlot','-djpeg')");
-//            eng.close();
-//        } catch (IllegalArgumentException | IllegalStateException | ExecutionException | InterruptedException ex) {
-//            System.err.println(ex.getMessage());
-//        } 
-//    }
-//    
-//}
+
+
+/**
+ *
+ * @author LENOVO
+ */
+public class Algoritmos {
+    
+    public Algoritmos(){
+        try {
+            MatlabEngine eng = MatlabEngine.startMatlab();
+            double[] a = {2.0 ,4.0, 6.0};
+            double[] roots = eng.feval("sqrt", a);
+            for (double e: roots) {
+                System.out.println(e);
+            }
+            eng.close();
+        } catch (EngineException ex) {
+            System.err.println(ex.getMessage());
+        } catch (InterruptedException | IllegalArgumentException | IllegalStateException | RejectedExecutionException | ExecutionException ex) {
+            System.err.println(ex.getMessage());
+        }
+       
+    }
+    
+}

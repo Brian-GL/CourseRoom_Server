@@ -4,7 +4,7 @@
  */
 package courseroom_server;
 
-//import clases.Algoritmos;
+import clases.Algoritmos;
 import com.formdev.flatlaf.FlatDarkLaf;
 import frames.CourseRoom_Server_Frame;
 import java.io.IOException;
