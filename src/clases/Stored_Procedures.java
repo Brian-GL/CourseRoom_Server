@@ -2562,6 +2562,11 @@ public class Stored_Procedures {
                 if(resultado != null){
                     while(resultado.next()){
                         
+                        respuesta.add(resultado.getInt("IdCurso"));
+                        
+                        codificacion = Codificacion(resultado.getString("NombreCurso"));
+                        respuesta.add(codificacion);
+                        
                         codificacion = Codificacion(resultado.getString("Nombre"));
                         respuesta.add(codificacion);
                         
