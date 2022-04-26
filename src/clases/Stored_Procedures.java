@@ -2301,10 +2301,11 @@ public class Stored_Procedures {
         return response;
     }
     
-    public Vector<Vector<Object>> sp_ObtenerCursosNuevos(){
+    public Vector<Vector<Object>> sp_ObtenerCursosNuevos(int id_Usuario){
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerCursosNuevos()}")){
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerCursosNuevos(?)}")){
+            ejecutor.setInt("_IdUsuario",id_Usuario);
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     Vector<Object> fila;
