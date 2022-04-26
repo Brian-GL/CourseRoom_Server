@@ -945,6 +945,40 @@ public class Stored_Procedures {
         
     }
     
+    public Vector<Vector<Object>> sp_BuscarCursos(String busqueda, int id_Usuario) {
+        Vector<Vector<Object>> response = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_BuscarCursos(?,?)}")){
+            ejecutor.setString("_Busqueda", busqueda);
+            ejecutor.setInt("_IdUsuario",id_Usuario);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    Vector<Object> fila;
+                    while(resultado.next()){
+                        fila = new Vector<>();
+                        fila.add(resultado.getInt("IdCurso"));
+                        codificacion = Codificacion(resultado.getString("Nombre"));
+                        fila.add(codificacion);
+                        fila.add(resultado.getInt("IdUsuario"));
+                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("ListaTematicas"));
+                        fila.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("FechaCreacion"));
+                        fila.add(codificacion);
+                        fila.add(Codificacion(resultado.getString("Estatus")));
+                        response.add(fila);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        
+        return response;
+        
+    }
+    
     public Vector<Vector<Object>> sp_BuscarGrupos(String busqueda, int id_Usuario) {
         Vector<Vector<Object>> response = new Vector<>();
         String codificacion;

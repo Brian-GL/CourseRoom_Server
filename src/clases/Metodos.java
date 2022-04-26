@@ -1438,6 +1438,55 @@ public class Metodos {
 
     }
     
+    public Vector<Vector<Object>> Buscar_Cursos(String busqueda, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+
+        Vector<Vector<Object>> response;
+        
+        busqueda = Decodificacion(busqueda);
+        cliente = Decodificacion(cliente);
+        ip = Decodificacion(ip);
+
+        //Agregar solicitud:
+        Par<Integer, String> respuesta = respuestas.Agregar_Solicitud(Concatenar("Buscar Cursos Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+        if (respuesta.first() == -1) {
+            System.err.println(respuesta.second());
+        }
+
+        //Agregar Usuario:
+        response
+                = stored_Procedures.sp_BuscarCursos(busqueda, id_Usuario);
+
+        if (response.isEmpty()) {
+
+            //Agregar respuesta:
+            respuesta
+                    = respuestas.Agregar_Respuesta(Concatenar("Enviada Busqueda Vacía Cursos Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+
+        } else {
+            
+            
+
+            //Agregar respuesta:
+            respuesta =
+                    respuestas.Agregar_Respuesta(Concatenar("Enviada Busqueda Cursos Al Usuario ",String.valueOf(id_Usuario)), cliente, ip);
+
+            if (respuesta.first() == -1) {
+                System.err.println(respuesta.second());
+            }
+            
+        }
+            
+            
+        return response;
+
+    }
+    
+    
     public Vector<Vector<Object>> Buscar_Grupos(String busqueda, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
 
         Vector<Vector<Object>> response;
