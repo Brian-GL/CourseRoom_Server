@@ -3674,7 +3674,7 @@ public class Metodos {
 
     }
     
-    public Vector<Object> Obtener_Datos_Generales_Tarea_Pendiente(int id_Tarea_Pendiente, int id_Usuario, String cliente, String ip) throws SQLException, IOException {
+    public Vector<Object> Obtener_Datos_Generales_Tarea_Pendiente(int id_Tarea_Pendiente,String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
         
