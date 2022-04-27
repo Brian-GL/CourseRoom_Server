@@ -2398,6 +2398,7 @@ public class Stored_Procedures {
             try(ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
+                        respuesta.add(resultado.getInt("IdProfesor"));
                         codificacion = Codificacion(resultado.getString("Nombre"));
                         respuesta.add(codificacion);
                         codificacion = Codificacion(resultado.getString("Descripcion"));
