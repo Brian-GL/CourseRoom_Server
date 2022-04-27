@@ -2333,6 +2333,34 @@ public class Stored_Procedures {
         return response;
     }
     
+    public Vector<Object> sp_ObtenerDatosEntregaTarea(int id_Tarea, int id_Usuario){
+        Vector<Object> respuesta = new Vector<>();
+        String codificacion;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosEntregaTarea(?,?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            ejecutor.setInt("_IdUsuario", id_Usuario);
+            
+            try(ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    while(resultado.next()){
+                        codificacion = Codificacion(resultado.getString("FechaSubida"));
+                        respuesta.add(codificacion);
+                        respuesta.add(resultado.getDouble("Calificacion"));
+                        codificacion = Codificacion(resultado.getString("FechaCalificacion"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Estatus"));
+                        respuesta.add(codificacion);
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException ex) { 
+            
+        }
+        
+        return respuesta;
+    }
+    
     public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario) {
         
         Vector<Object> respuesta = new Vector<>();
