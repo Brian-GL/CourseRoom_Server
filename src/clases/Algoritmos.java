@@ -7,7 +7,6 @@ package clases;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.RejectedExecutionException;
 
 /**
  *
@@ -17,26 +16,26 @@ public class Algoritmos {
     
     public Algoritmos(){
         try {
+            
+           // Start Matlab
             MatlabEngine eng = MatlabEngine.startMatlab();
-            double[] a = {2.0 ,4.0, 6.0};
-            double[] roots = eng.feval("sqrt", a);
+           String ruta = "cd '" + System.getProperty("user.dir")  + "/src/scripts/ProyectoFinal.m'";
+
+           System.out.println("Ruta: "+ruta);
+           // Change directory and evaluate your function
+           eng.eval(ruta);
+           
+           double[] roots = eng.feval("CNC", "Image_1.bmp", "Template.bmp");
+           
             for (double e: roots) {
                 System.out.println(e);
             }
-            eng.close();
-            
-//            // Start Matlab
-//            Future<MatlabEngine> engine = MatlabEngine.startMatlabAsync();
-//            MatlabEngine eng = engine.get();
-//            // Change directory and evaluate your function
-//            eng.eval("cd 'path/to/your/function'");
-//            eng.feval("yourFunction", param1, param2, ...);
-//            
-//            eng.close();
+           
+           eng.close();
             
         } catch (EngineException ex) {
             System.err.println(ex.getMessage());
-        } catch (InterruptedException | IllegalArgumentException | IllegalStateException | RejectedExecutionException | ExecutionException ex) {
+        } catch (InterruptedException | IllegalArgumentException | IllegalStateException | ExecutionException ex) {
             System.err.println(ex.getMessage());
         }
        

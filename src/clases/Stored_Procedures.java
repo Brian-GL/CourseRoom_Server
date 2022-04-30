@@ -927,6 +927,7 @@ public class Stored_Procedures {
                     while(resultado.next()){
                         fila = new Vector<>();
                         fila.add(resultado.getInt("IdChat"));
+                        fila.add(resultado.getInt("IdUsuario"));
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
@@ -2146,6 +2147,7 @@ public class Stored_Procedures {
                     while(resultado.next()){
                         fila = new Vector<>();
                         fila.add(resultado.getInt("IdChat"));
+                        fila.add(resultado.getInt("IdUsuario"));
                         codificacion = Codificacion(resultado.getString("NombreCompleto"));
                         fila.add(codificacion);
                         codificacion = Codificacion(resultado.getString("FechaCreacion"));
@@ -2361,31 +2363,6 @@ public class Stored_Procedures {
         return respuesta;
     }
     
-    public Vector<Object> sp_ObtenerDatosGeneralesChatPersonal(int id_Chat, int id_Usuario) {
-        
-        Vector<Object> respuesta = new Vector<>();
-        String codificacion;
-        
-        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerDatosGeneralesChatPersonal(?,?)}")){
-            ejecutor.setInt("_IdChat", id_Chat);
-            ejecutor.setInt("_IdUsuario", id_Usuario);
-            
-            try(ResultSet resultado = ejecutor.executeQuery()){
-                if(resultado != null){
-                    while(resultado.next()){
-                        respuesta.add(resultado.getInt("IdUsuario"));
-                        codificacion = Codificacion(resultado.getString("NombreCompleto"));
-                        respuesta.add(codificacion);
-                        break;
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex);
-        }
-        
-        return respuesta;
-    }
     
     public Vector<Object> sp_ObtenerDatosGeneralesCurso(int id_Curso) {
         
