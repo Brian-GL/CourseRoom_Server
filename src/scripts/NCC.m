@@ -27,8 +27,10 @@ function Evaluacion = NCC(Imagen,Plantilla,Individuo)
     SumatoriaDeLaPlantilla = 0.0;
     sum_2 = 0.0;
 
-    for i=1:W
-        for j=1:H
+
+
+    for i=1:W-1
+        for j=1:H-1
             SumatoriaDeLaImagen = SumatoriaDeLaImagen + double(Imagen(y+j,x+i))^2;
             SumatoriaDeLaPlantilla = SumatoriaDeLaPlantilla + double(Plantilla(j,i))^2;
             sum_2 = sum_2 + double(Imagen(y+j,x+i))*double(Plantilla(j,i));
