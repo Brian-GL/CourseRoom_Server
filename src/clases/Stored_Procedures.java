@@ -160,10 +160,10 @@ public class Stored_Procedures {
                 if(resultado != null){
                     
                     while(resultado.next()){
-                        
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                       
                         
                         respuesta.add(resultado.getInt("Codigo"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
                         respuesta.add(codificacion);
                         
                         break;
@@ -1376,8 +1376,9 @@ public class Stored_Procedures {
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Id"));
                         respuesta.add(resultado.getInt("Codigo"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
                         respuesta.add(codificacion);
                         
                         break;
@@ -1475,8 +1476,9 @@ public class Stored_Procedures {
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        respuesta.add(resultado.getInt("Id"));
                         respuesta.add(resultado.getInt("Codigo"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
                         respuesta.add(codificacion);
                         
                         break;
