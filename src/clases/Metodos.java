@@ -109,7 +109,7 @@ public class Metodos {
         });
     }
       
-    private void Enviar_Analisis_Imagen(int id_Usuario, int id_Tarea, int id_Archivo, String nombre_Archivo){
+    private void Enviar_Analisis_Imagen(int id_Usuario, int id_Tarea,String nombre_Archivo){
         
         SwingUtilities.invokeLater(() -> {
             byte bandera = 0;
@@ -120,10 +120,11 @@ public class Metodos {
             
             Vector<Object> analisis = new Vector();
             analisis.add(id_Profesor);
+            analisis.add(id_Usuario);
             analisis.add("Imagen");
             
             Vector<Object> fila = new Vector();
-            fila.add(id_Archivo);
+            fila.add(id_Tarea);
             fila.add(nombre_Archivo);
 
             Vector<Vector<Object>> vector = stored_Procedures.sp_ObtenerImagenesEnviadasTarea(id_Tarea, id_Usuario);
@@ -2038,7 +2039,7 @@ public class Metodos {
 
                 Descargar_Archivo_Imagen(id_Tarea, nombre_Archivo, archivo);
                 
-                Enviar_Analisis_Imagen(id_Usuario,id_Tarea, (int)response.get(0), nombre_Archivo);
+                Enviar_Analisis_Imagen(id_Usuario,id_Tarea, nombre_Archivo);
             
             }
             
