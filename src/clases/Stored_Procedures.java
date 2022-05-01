@@ -2956,6 +2956,28 @@ public class Stored_Procedures {
         
     }
     
+     
+    public int sp_ObtenerIdProfesorTarea(int id_Tarea){
+        int response = -1;
+        try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIdProfesorTarea(?)}")){
+            ejecutor.setInt("_IdTarea", id_Tarea);
+            try (ResultSet resultado = ejecutor.executeQuery()){
+                if(resultado != null){
+                    
+                    while(resultado.next()){
+                        response = resultado.getInt("IdProfesor");
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        
+        return response;
+    }
+    
+    
     public Vector<Integer> sp_ObtenerIDsUsuariosCurso(int id_Curso, int id_Usuario){
         Vector<Integer> response = new Vector<>();
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerIDsUsuariosCurso(?,?)}")){
@@ -3078,8 +3100,6 @@ public class Stored_Procedures {
     public Vector<Vector<Object>> sp_ObtenerImagenesEnviadasTarea(int id_Tarea, int id_Usuario){
         Vector<Vector<Object>> response = new Vector<>();
         Vector<Object> fila;
-        String codificacion;
-        byte[] respuesta;
         try (CallableStatement ejecutor = db_CourseRoom_Conexion.prepareCall("{CALL sp_ObtenerImagenesEnviadasTarea(?,?)}")){
             ejecutor.setInt("_IdTarea",id_Tarea);
             ejecutor.setInt("_IdUsuario",id_Usuario);
@@ -3087,17 +3107,10 @@ public class Stored_Procedures {
                 if(resultado != null){
                     while(resultado.next()){
                         fila = new Vector<>();
+                       
+                        fila.add(resultado.getInt("IdTarea"));
                         
-                        try(InputStream stream = resultado.getBlob("Archivo").getBinaryStream()){
-                            respuesta = stream.readAllBytes();
-                        } catch (IOException ex) {
-                            respuesta = new byte[]{};
-                        }
-                        
-                        fila.add(respuesta);
-                        
-                        codificacion = Codificacion(resultado.getString("Extension"));
-                        fila.add(codificacion);
+                        fila.add(resultado.getString("NombreArchivo"));
                         
                         response.add(fila);
                     }
@@ -4327,8 +4340,14 @@ public class Stored_Procedures {
             try (ResultSet resultado = ejecutor.executeQuery()){
                 if(resultado != null){
                     while(resultado.next()){
-                        codificacion = Codificacion(resultado.getString("Mensaje"));
+                        
+                        respuesta.add(resultado.getInt("IdTarea"));
+                        codificacion = Codificacion(resultado.getString("NombreArchivo"));
+                        respuesta.add(codificacion);
+                        codificacion = Codificacion(resultado.getString("Extension"));
+                        respuesta.add(codificacion);
                         respuesta.add(resultado.getInt("Codigo"));
+                        codificacion = Codificacion(resultado.getString("Mensaje"));
                         respuesta.add(codificacion);
                         
                         break;
@@ -4336,6 +4355,11 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            respuesta.add(-1);
+            codificacion = Codificacion("");
+            respuesta.add(codificacion);
+            codificacion = Codificacion("");
+            respuesta.add(codificacion);
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }

@@ -7,9 +7,11 @@ package clases;
 import datos.estructuras.Par;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -22,6 +24,8 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -31,6 +35,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.SwingUtilities;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -65,41 +71,95 @@ public class Metodos {
     
     private void Enviar_Aviso(int id_Usuario){
         
-        String simpleMessage = String.valueOf(id_Usuario);
-        byte bandera = 0;
-        
-        byte[] buffer = new byte[16];
-        
-        //Usuario:
-        buffer[0] = (byte) simpleMessage.length();
-			
-        //Creamos un valor auxiliar (copia) que nos obtendrá los bytes de la cadena.
-        byte[] copia = simpleMessage.getBytes();
+        SwingUtilities.invokeLater(() -> {
+            String simpleMessage = String.valueOf(id_Usuario);
+            byte bandera = 0;
 
-        //Creamos la copia del valor auxiliar hacia nuestro arreglo de bytes
-        for(int i = 1; i <= simpleMessage.length();i++){
-            buffer[i] = copia[i-1];
-        }
+            byte[] buffer = new byte[16];
+
+            //Usuario:
+            buffer[0] = (byte) simpleMessage.length();
+
+            //Creamos un valor auxiliar (copia) que nos obtendrá los bytes de la cadena.
+            byte[] copia = simpleMessage.getBytes();
+
+            //Creamos la copia del valor auxiliar hacia nuestro arreglo de bytes
+            for(int i = 1; i <= simpleMessage.length();i++){
+                buffer[i] = copia[i-1];
+            }
+
+            while(bandera < 60){
+                try(DatagramSocket socketSender = new DatagramSocket()){
+
+                    DatagramPacket datagramPacket = new DatagramPacket(buffer,buffer.length,
+                            InetAddress.getByName("localhost")
+                            ,9001);
+
+                    socketSender.send(datagramPacket);
+                    bandera = 100;
+                } catch (SocketException ex) {
+                    System.err.println(ex.getMessage());
+                    bandera++;
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                    bandera++;
+                }    
+            }
         
-        while(bandera < 60){
-            try(DatagramSocket socketSender = new DatagramSocket()){
+        });
+    }
+      
+    private void Enviar_Analisis_Imagen(int id_Usuario, int id_Tarea, int id_Archivo, String nombre_Archivo){
+        
+        SwingUtilities.invokeLater(() -> {
+            byte bandera = 0;
 
-                DatagramPacket datagramPacket = new DatagramPacket(buffer,buffer.length,
-                        InetAddress.getByName("localhost")
-                        ,9001);
+            byte[] buffer;
+            
+            int id_Profesor = stored_Procedures.sp_ObtenerIdProfesorTarea(id_Tarea);
+            
+            Vector<Object> analisis = new Vector();
+            analisis.add(id_Profesor);
+            analisis.add("Imagen");
+            
+            Vector<Object> fila = new Vector();
+            fila.add(id_Archivo);
+            fila.add(nombre_Archivo);
 
-                socketSender.send(datagramPacket);
-                bandera = 100;
-            } catch (SocketException ex) {
-                System.err.println(ex.getMessage());
-                bandera++;
+            Vector<Vector<Object>> vector = stored_Procedures.sp_ObtenerImagenesEnviadasTarea(id_Tarea, id_Usuario);
+            vector.add(fila);
+            vector.add(analisis);
+
+            try(ByteArrayOutputStream out = new ByteArrayOutputStream()){
+                try(ObjectOutputStream outputStream = new ObjectOutputStream(out)){
+                    outputStream.writeObject(vector);
+                    buffer = out.toByteArray();
+                    while (bandera < 60) {
+                        try (DatagramSocket socketSender = new DatagramSocket()) {
+
+                            DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length,
+                                    InetAddress.getByName("localhost"),
+                                     9003);
+
+                            socketSender.send(datagramPacket);
+                            bandera = 100;
+                        } catch (SocketException ex) {
+                            System.err.println(ex.getMessage());
+                            bandera++;
+                        } catch (IOException ex) {
+                            System.err.println(ex.getMessage());
+                            bandera++;
+                        }
+                    }
+                }
+
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
-                bandera++;
-            }    
-        }
+            }
+        });
     }
-        
+     
+    
     public static Metodos getInstance() {
         return SolicitudesHolder.INSTANCE;
     }
@@ -1971,8 +2031,17 @@ public class Metodos {
 
         } else {
             
-            
+            if(extension.equals("jpg") || extension.equals("JPG")
+                    || extension.equals("jpeg") || extension.equals("JPEG")){
+                
+                // Crear archivo para despues analizarlo con courseroom analyzer
 
+                Descargar_Archivo_Imagen(id_Tarea, nombre_Archivo, archivo);
+                
+                Enviar_Analisis_Imagen(id_Usuario,id_Tarea, (int)response.get(0), nombre_Archivo);
+            
+            }
+            
             //Agregar respuesta:
             respuesta = respuestas.Agregar_Respuesta(Concatenar("Archivo Subido De La Tarea ",String.valueOf(id_Tarea)," Del Usuario ",String.valueOf(id_Usuario)), cliente, ip);
 
@@ -5957,6 +6026,18 @@ public class Metodos {
 
         } else {
             
+            int id_Tarea = (int)response.get(0);
+            String nombre_Archivo = Decodificacion((String) response.get(1));
+            String extension = Decodificacion((String)response.get(2));
+            
+            
+            if(extension.equals("jpg") || extension.equals("JPG")
+                    || extension.equals("jpeg") || extension.equals("JPEG")){
+                // Crear archivo para despues analizarlo con courseroom analyzer
+
+                Remover_Archivo_Imagen(id_Tarea, nombre_Archivo);
+            
+            }
             
 
             //Agregar respuesta:
@@ -6468,6 +6549,45 @@ public class Metodos {
     
     public void Cerrar_Conexion(){
         stored_Procedures.Cerrar_Conexion();
+    }
+    
+    private void Descargar_Archivo_Imagen(int id_Tarea, String nombre_Archivo, byte[] archivo_Bytes){
+        
+        SwingUtilities.invokeLater(() -> {
+            
+            File archivo = new File(
+                    Concatenar(System.getProperty("user.dir"),"/archivos_subidos_tareas/",
+                            String.valueOf(id_Tarea),"_",nombre_Archivo));
+
+            if(!archivo.exists()){
+
+                    try {
+
+                       FileUtils.writeByteArrayToFile(archivo, archivo_Bytes);
+
+                    } catch (IOException ex) {
+                       System.err.println(ex.getMessage());
+                    }
+
+
+            }
+            
+        });
+    }
+    
+    private void Remover_Archivo_Imagen(int id_Tarea, String nombre_Archivo){
+        
+        SwingUtilities.invokeLater(() -> {
+            File archivo = new File(
+                    Concatenar(System.getProperty("user.dir"),"/archivos_subidos_tareas/",
+                            String.valueOf(id_Tarea),"_",nombre_Archivo));
+
+            if(archivo.exists()){
+
+                archivo.delete();    
+            }
+            
+        });
     }
     
 }
