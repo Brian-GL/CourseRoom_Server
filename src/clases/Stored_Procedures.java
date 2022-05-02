@@ -68,6 +68,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -100,6 +101,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -136,6 +138,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -171,6 +174,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -205,6 +209,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -239,6 +244,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -273,6 +279,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -312,6 +319,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -342,6 +350,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -372,6 +381,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -402,6 +412,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -438,6 +449,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -471,6 +483,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -505,6 +518,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -539,6 +553,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -586,6 +601,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -619,6 +635,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -653,6 +670,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -688,6 +706,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             response.add(-1);
             response.add(ex.getMessage());
         }
@@ -721,6 +740,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -751,6 +771,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -783,6 +804,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -811,6 +833,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -839,6 +862,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -880,6 +904,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -908,6 +933,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -939,7 +965,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -973,7 +999,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -1004,7 +1030,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -1035,7 +1061,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -1070,7 +1096,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -1099,6 +1125,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1133,6 +1160,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -1162,6 +1190,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1194,6 +1223,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -1225,6 +1255,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -1255,6 +1286,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1288,6 +1320,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1320,6 +1353,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1352,6 +1386,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1386,6 +1421,8 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
+            respuesta.add(-1);
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1419,6 +1456,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1452,6 +1490,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1486,6 +1525,8 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
+            respuesta.add(-1);
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1519,6 +1560,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1553,6 +1595,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1584,6 +1627,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -1615,6 +1659,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(ex.getMessage());
         }
@@ -1643,6 +1688,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -1682,7 +1728,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1720,7 +1766,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1758,7 +1804,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1796,7 +1842,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1834,7 +1880,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1872,7 +1918,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1910,7 +1956,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1948,7 +1994,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -1987,7 +2033,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2016,7 +2062,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2047,7 +2093,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2077,7 +2123,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2106,7 +2152,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2132,7 +2178,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) { 
-            
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2161,7 +2207,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2185,7 +2231,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) { 
-            
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2204,8 +2250,9 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
+            
             respuesta = "No se pudo obtener la credencial solicitada";
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2237,7 +2284,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2267,7 +2314,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2299,7 +2346,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2331,7 +2378,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2359,7 +2406,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) { 
-            
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2393,7 +2440,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2425,7 +2472,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2465,7 +2512,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2509,7 +2556,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2552,7 +2599,7 @@ public class Stored_Procedures {
                 }
             }
         }  catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2595,7 +2642,7 @@ public class Stored_Procedures {
                 }
             }
         }  catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2656,7 +2703,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         } 
         
         return respuesta;
@@ -2697,7 +2744,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -2734,7 +2781,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2773,7 +2820,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2812,7 +2859,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2848,7 +2895,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2869,7 +2916,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2892,7 +2939,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2921,7 +2968,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2949,7 +2996,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2971,7 +3018,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -2992,7 +3039,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3012,7 +3059,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3032,7 +3079,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3061,7 +3108,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3090,7 +3137,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3117,7 +3164,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3145,7 +3192,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3174,7 +3221,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3203,7 +3250,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3231,7 +3278,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3259,7 +3306,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3284,7 +3331,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3315,7 +3362,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3353,7 +3400,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3384,7 +3431,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3415,7 +3462,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3446,7 +3493,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3477,7 +3524,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3508,7 +3555,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3535,7 +3582,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3571,7 +3618,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3597,7 +3644,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3619,7 +3666,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3639,7 +3686,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3670,7 +3717,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3691,7 +3738,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3711,7 +3758,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3732,7 +3779,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -3769,7 +3816,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3809,7 +3856,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3848,7 +3895,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3885,7 +3932,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3922,7 +3969,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3961,7 +4008,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -3995,7 +4042,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4029,7 +4076,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4069,7 +4116,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4098,7 +4145,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4128,7 +4175,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4149,7 +4196,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -4178,7 +4225,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return response;
@@ -4205,6 +4252,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4235,7 +4283,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4265,7 +4313,7 @@ public class Stored_Procedures {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
         
         return respuesta;
@@ -4293,6 +4341,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4321,6 +4370,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4355,6 +4405,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             codificacion = Codificacion("");
             respuesta.add(codificacion);
@@ -4388,6 +4439,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4416,6 +4468,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4444,6 +4497,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4472,6 +4526,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4500,6 +4555,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4528,6 +4584,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4556,6 +4613,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4584,6 +4642,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4611,6 +4670,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4638,6 +4698,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4665,6 +4726,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4690,6 +4752,7 @@ public class Stored_Procedures {
                 }
             }
         } catch(SQLException ex){
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
             respuesta.add(-1);
             respuesta.add(Codificacion(ex.getMessage()));
         }
@@ -4700,7 +4763,7 @@ public class Stored_Procedures {
         try {
             db_CourseRoom_Conexion.close();
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex.getClass().getEnclosingMethod().getName()+" -> "+ex.getMessage());
         }
     }
     

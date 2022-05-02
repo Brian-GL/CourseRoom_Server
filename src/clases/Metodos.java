@@ -2259,7 +2259,8 @@ public class Metodos {
 
     }
     
-    public Vector<Object> Enviar_Mensaje_Pregunta(String mensaje, byte[] archivo, String extension, int id_Usuario_Emisor, int id_Pregunta,String cliente, String ip) throws SQLException, IOException {
+    public Vector<Object> Enviar_Mensaje_Pregunta(String mensaje, byte[] archivo, 
+            String extension, int id_Usuario_Emisor, int id_Pregunta,String cliente, String ip) throws SQLException, IOException {
 
         Vector<Object> response;
         
