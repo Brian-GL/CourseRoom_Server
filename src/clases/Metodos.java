@@ -160,7 +160,6 @@ public class Metodos {
         });
     }
      
-    
     public static Metodos getInstance() {
         return SolicitudesHolder.INSTANCE;
     }
@@ -2128,7 +2127,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(2)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -2137,7 +2136,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al usuario:
-            Enviar_Aviso((int)response.get(0));
+            Enviar_Aviso((int)response.get(1));
 
             //Agregar respuesta:
             respuesta
@@ -2284,7 +2283,7 @@ public class Metodos {
 
             //Agregar respuesta:
             respuesta
-                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(1)), cliente, ip);
+                    = respuestas.Agregar_Respuesta(Decodificacion((String)response.get(2)), cliente, ip);
 
             if (respuesta.first() == -1) {
                 System.err.println(respuesta.second());
@@ -2293,7 +2292,7 @@ public class Metodos {
         } else {
             
             //Enviar aviso al usuario:
-            Enviar_Aviso((int)response.get(0));
+            Enviar_Aviso((int)response.get(1));
 
             //Agregar respuesta:
             respuesta
